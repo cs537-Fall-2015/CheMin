@@ -1,0 +1,34 @@
+Created by Jonathan Young
+Date: May 14, 2015
+
+This is the generic framework everyone will be utilizing.
+
+The way this code works is as follows:
+
+- Each server is instantiated and run on separate threads
+
+- Each server houses its own module's class
+	
+	Server 1 -> MyClassHere
+	Server 2 -> MyClassHereTwo
+
+- Each client sends four messages to another module's server
+
+	Client 1 -> Server 2
+	Client 2 -> Server 1
+
+	1. The first message sent from client to server is a print statement that prints the server's current object
+
+	2. The second message tells the server to perform some calculations on its own object then save its object to a JSON file in memory
+
+	3. The third message tells the server to retrieve another module's object from its JSON file in memory
+
+	4. the last message tells the server to shut down
+
+- For demonstration purposes, whenever a client sends a message to the server, the server sends its JSON Object through the socket to the calling client. The happens everytime and should be handled correctly in your own applications.
+
+
+Running the code:
+
+Run configurations on MasterMain
+If you run into the socket in use error it's because your program did not terminate properly.
