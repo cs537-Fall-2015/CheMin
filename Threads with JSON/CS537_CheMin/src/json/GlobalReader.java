@@ -1,10 +1,5 @@
 package json;
 
-/*	
- * Created by: 	Jonathan Young
- * Date: 		May 14, 2015
- */
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
