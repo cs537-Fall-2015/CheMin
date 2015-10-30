@@ -1,0 +1,100 @@
+Main Loop
+[
+Create ServerChemin thread and start it
+Create powerserver thread and start it
+create telecom server thread and start it
+]
+
+Serverchemin
+[
+waits for orders from client 
+	If message: CHEMIN ON
+		Then 	CCU true
+			create CheminClient(9013->power) thread and start it
+	If message: POWER ON
+		Then if CCU
+			Then 	launch chemin process
+				create CheminClient(9002->Telecom) thread and start it		
+ 	If message: POWER OFF
+		Then free Chemin threads
+]
+
+Chemin Client
+[
+	if port 9013
+		Then send .json requirements file to powerClient
+
+	if port 9002	
+		Then send .json xrd image file to telecomClient
+]
+
+Chemin process
+[
+	if contamination removed 
+		then	turn on cryo cooler
+			wait 5
+			remove funnel contamination
+			wait 2 
+			if CHIMRA has sample 
+				then 	wait 2
+					if sample cell is clean 
+						then	wait 2
+							if funnel piezzo if on
+								then 	play music
+									wait 5 (for sample to go in sample cell)
+									turn on Sample cell piezzo
+									play music		
+									turn on CMIN Xray	
+									wait 10		
+									CMIN_read_CDD()????? booleen //each 30 seconds and compress
+									CMIN_create_XRD_JSON()
+	Chemin_power_OFF()
+]
+
+CMIN_create_XRD_JSON()
+{
+create .json file
+create json from image
+	create string from image
+		convert xraydiff.jpg image to array
+		write it into .json
+}
+
+Chemin_power_off()
+{
+turn cryo cooler off
+turn funnel piezzo off
+turn sample cell off
+turn xray off
+}
+
+
+Powerserver
+[
+waits for client message
+if receive message, print it
+	then create power client(9008->Cheminserver) thread and start it
+]
+
+PowerClient
+[
+print socket port
+if soket port is 9008
+	then 	send "POWER ON" to port 9008 (to chemin server)
+]
+
+Telecomserver
+[
+waits for client message
+if receive message print it
+	then create telecom client(9008->cheminserver) thread and start it
+]
+
+TelecomClient
+[
+print socket port
+if soket port is 9008
+	then 	send "Telecommunication has received file successfully" to port 9008 (to chemin server)
+
+]	
+

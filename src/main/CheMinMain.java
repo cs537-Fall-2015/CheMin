@@ -43,7 +43,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-
+//main
 public class CheMinMain {
 
 	public static void main(String[] args) {
