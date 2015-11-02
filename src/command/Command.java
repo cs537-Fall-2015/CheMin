@@ -1,4 +1,4 @@
-package Command;
+package command;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
