@@ -1,4 +1,4 @@
-package CCU;
+package ccu;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

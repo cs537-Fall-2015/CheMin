@@ -1,4 +1,4 @@
-package Power;
+package telecommunication;
 
 import generic.RoverClientRunnable;
 
@@ -11,9 +11,9 @@ import json.GlobalReader;
 
 import org.json.simple.JSONObject;
 
-public class Power_Client extends RoverClientRunnable{
+public class Telecom_Client extends RoverClientRunnable{
 	
-	public Power_Client(int port, InetAddress host)
+	public Telecom_Client(int port, InetAddress host)
 			throws UnknownHostException {
 		super(port, host);
 	}
@@ -24,11 +24,11 @@ public class Power_Client extends RoverClientRunnable{
 			System.out.println(getRoverSocket().getSocket().getPort());
 			if(getRoverSocket().getSocket().getPort()==9008){
 				ObjectOutputStream outstr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
-				outstr.writeObject("power on");
+				outstr.writeObject("File Received");
 				}
 		   }	        
         catch (Exception e) {
 			e.printStackTrace();
-		}
+		}		
 	}
 }

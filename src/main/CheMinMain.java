@@ -1,4 +1,4 @@
-package CheMin;
+package main;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,6 +27,8 @@ import generic.RoverThreadHandler;
 import json.Constants;
 import json.GlobalReader;
 import json.MyWriter;
+import power.Power_Server;
+import telecommunication.Telecom_Server;
 
 import java.util.Base64;
 import java.awt.image.BufferedImage;
@@ -35,9 +37,6 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javax.imageio.ImageIO;
-
-import Power.Power_Server;
-import Telecommunication.Telecom_Server;
 
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;

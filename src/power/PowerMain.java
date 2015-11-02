@@ -1,4 +1,4 @@
-package Power;
+package power;
 
 import java.io.IOException;
 import generic.RoverThreadHandler;

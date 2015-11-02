@@ -1,4 +1,4 @@
-package Telecommunication;
+package telecommunication;
 
 import java.io.IOException;
 
