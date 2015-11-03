@@ -6,9 +6,9 @@ import generic.RoverThreadHandler;
 public class PowerMain {
 
 	public static void main(String[] args) {
-		Power_Server ps=null;
+		Power ps=null;
 		try {
-			ps = new Power_Server(9013);
+			ps = new Power(9013);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

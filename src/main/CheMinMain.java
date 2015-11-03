@@ -7,28 +7,20 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import generic.RoverClientRunnable;
 import generic.RoverServerRunnable;
-import generic.RoverServerSocket;
-import generic.RoverSocket;
-import generic.RoverThread;
 import generic.RoverThreadHandler;
 
 import json.Constants;
 import json.GlobalReader;
-import json.MyWriter;
-import power.Power_Server;
-import telecommunication.Telecom_Server;
+import power.Power;
+import telecommunication.Telecom;
 
 import java.util.Base64;
 import java.awt.image.BufferedImage;
@@ -37,10 +29,6 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javax.imageio.ImageIO;
-
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 
 public class CheMinMain {
@@ -60,9 +48,10 @@ public class CheMinMain {
 			e.printStackTrace();
 		}
 		
-		Power_Server ps=null;
+		
+		Power ps=null;
 		try {
-			ps = new Power_Server(9013);
+			ps = new Power(9013);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -70,9 +59,9 @@ public class CheMinMain {
 		Thread serverPower=RoverThreadHandler.getRoverThreadHandler().getNewThread(ps);
 		serverPower.start();
 	
-		Telecom_Server ts=null;
+		Telecom ts=null;
 		try {
-			ts = new Telecom_Server(9002);
+			ts = new Telecom(9002);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,7 +96,7 @@ class CHEMIN_Server extends RoverServerRunnable {
 				// convert ObjectInputStream object to String
 				String message=inputFromAnotherObject.readObject().toString();
 				Thread t=Thread.currentThread();
-				t.sleep(7000);
+				Thread.sleep(7000);
 				System.out.println("Message Received is: "+message);
 				if(t.isInterrupted()){
 					message = "power off";
@@ -160,7 +149,6 @@ class CHEMIN_Server extends RoverServerRunnable {
 		}
 
 	}
-
 }
 
 class CHEMIN_Client extends RoverClientRunnable{
@@ -197,35 +185,32 @@ class CHEMIN_Client extends RoverClientRunnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
-
 }
 
 class CHEMIN {
 	private Thread t = null;
 	
 	boolean CHEMIN_Process() throws InterruptedException, IOException{
-		t=Thread.currentThread();
+		setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
-		t.sleep(2000);
+		Thread.sleep(2000);
 		if(CMIN_RemoveFunnelContamination()){
 			System.out.println("\t\tCryo Cooler On");
-			t.sleep(5000);
+			Thread.sleep(5000);
 			System.out.println("\t\t\tRemoving Funnel contamination");
-			t.sleep(2000);
+			Thread.sleep(2000);
 			if(CMIN_CheckCHIMRA()){
 				System.out.println("\t\t\t\tChecking if CHIMRA has Sample or not");
-				t.sleep(2000);
+				Thread.sleep(2000);
 				if(CMIN_RemoveSampleCellContamination()){
 					System.out.println("\t\t\t\t\t\tCleaning Sample cell ");
-					t.sleep(2000);
+					Thread.sleep(2000);
 					if(CMIN_FunnelPiezoOn()){
 						System.out.println("\t\t\t\t\t\tFunnel piezo is on now");
 							playMusic();
 						System.out.println("\t\t\t\t\t\t\t\tWait for 5 seconds:for sample to go in sample cell");
-						t.sleep(5000);
+						Thread.sleep(5000);
 						System.out.println("\t\t\t\t\t\t\t\t\t\tSample is in sample cell now");
 						
 						CMIN_SamlecellPiezoOn();
@@ -233,7 +218,7 @@ class CHEMIN {
 						System.out.println("\t\t\t\t\t\t\t\t\t\t\t\tSample cell piezo Started");
 						CMIN_XrayOn();
 						System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\tXrays are on now");
-						t.sleep(10000);
+						Thread.sleep(10000);
 						CMIN_ReadCCD();  //each 30 seconds and compress
 						if(CMIN_CreateXRDJson()){
 							
@@ -274,7 +259,7 @@ class CHEMIN {
 		return true;
 	}
 	
-	public boolean CMIN_RemoveSampleCellContamination(){   //for dilution
+	public boolean CMIN_RemoveSampleCellContamination(){ 
 		return true;
 	}
 	boolean CMIN_CheckCHIMRA(){
@@ -354,5 +339,13 @@ private JSONObject createJsonFromImage() throws IOException {
 		
 		String encoded = Base64.getEncoder().encodeToString(imageInByte);
 		return encoded;
+	}
+
+	public Thread getT() {
+		return t;
+	}
+
+	public void setT(Thread t) {
+		this.t = t;
 	}
 	}

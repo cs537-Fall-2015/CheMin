@@ -2,17 +2,18 @@ package power;
 
 import generic.RoverServerRunnable;
 import generic.RoverThreadHandler;
+import generic.RoverClientRunnable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import json.Constants;
-import json.MyWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-public class Power_Server extends RoverServerRunnable {
+public class Power extends RoverServerRunnable {
 
-	public Power_Server(int port) throws IOException {
+	public Power(int port) throws IOException {
 		super(port);
 	}
 	@Override
@@ -30,6 +31,28 @@ public class Power_Server extends RoverServerRunnable {
 		}catch(IOException e){
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class Power_Client extends RoverClientRunnable{
+	
+	public Power_Client(int port, InetAddress host)
+			throws UnknownHostException {
+		super(port, host);
+	}
+
+	@Override
+	public void run() {
+		try{
+			System.out.println(getRoverSocket().getSocket().getPort());
+			if(getRoverSocket().getSocket().getPort()==9008){
+				ObjectOutputStream outstr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
+				outstr.writeObject("power on");
+				}
+		   }	        
+        catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

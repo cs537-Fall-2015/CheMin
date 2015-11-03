@@ -7,9 +7,9 @@ import generic.RoverThreadHandler;
 public class TelecomMain {
 
 	public static void main(String[] args) {
-		Telecom_Server ps=null;
+		Telecom ps=null;
 		try {
-			ps = new Telecom_Server(9002);
+			ps = new Telecom(9002);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

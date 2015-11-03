@@ -5,14 +5,15 @@ import generic.RoverThreadHandler;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import generic.RoverClientRunnable;
+
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-import json.Constants;
-import json.MyWriter;
+public class Telecom extends RoverServerRunnable {
 
-public class Telecom_Server extends RoverServerRunnable {
-
-	public Telecom_Server(int port) throws IOException {
+	public Telecom(int port) throws IOException {
 		super(port);
 	}
 
@@ -33,5 +34,27 @@ public class Telecom_Server extends RoverServerRunnable {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+}
+
+class Telecom_Client extends RoverClientRunnable{
+	
+	public Telecom_Client(int port, InetAddress host)
+			throws UnknownHostException {
+		super(port, host);
+	}
+
+	@Override
+	public void run() {
+		try{
+			System.out.println(getRoverSocket().getSocket().getPort());
+			if(getRoverSocket().getSocket().getPort()==9008){
+				ObjectOutputStream outstr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
+				outstr.writeObject("File Received");
+				}
+		   }	        
+        catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 }
