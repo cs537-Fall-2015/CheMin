@@ -38,27 +38,26 @@ public class CheMinMain {
 		
 		int port_chemin = 9008;
 		
-		try {
-			
-			// Create a thread for CHEMIN SERVER one
-			CHEMIN_Server serverChemin = new CHEMIN_Server(port_chemin);
-			Thread server_chemin = RoverThreadHandler.getRoverThreadHandler().getNewThread(serverChemin);
-			server_chemin.start();
+		CHEMIN_Server serverChemin=null;
+		Power ps=null;
+		Telecom ts=null;
+		
+		try {	
+			serverChemin = new CHEMIN_Server(port_chemin);
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+		Thread server_chemin = RoverThreadHandler.getRoverThreadHandler().getNewThread(serverChemin);
+		server_chemin.start();
 		
-		Power ps=null;
 		try {
 			ps = new Power(9013);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		Thread serverPower=RoverThreadHandler.getRoverThreadHandler().getNewThread(ps);
 		serverPower.start();
-	
-		Telecom ts=null;
+		
 		try {
 			ts = new Telecom(9002);
 		} catch (IOException e) {
@@ -67,7 +66,7 @@ public class CheMinMain {
 		Thread servertele=RoverThreadHandler.getRoverThreadHandler().getNewThread(ts);
 		servertele.start();
 	}
-	}
+}
 
 class CHEMIN_Server extends RoverServerRunnable {
 
