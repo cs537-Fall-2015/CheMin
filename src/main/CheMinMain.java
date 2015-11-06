@@ -48,7 +48,6 @@ public class CheMinMain {
 			e.printStackTrace();
 		}
 		
-		
 		Power ps=null;
 		try {
 			ps = new Power(9013);
