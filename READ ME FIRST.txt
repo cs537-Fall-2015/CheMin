@@ -1,5 +1,15 @@
-1. Run Main File
-2. Run Command
-3. in Command -> Port No. should be 9008 and Command should be “chemin_on”
+/*
+
+Created by Rajnish Kumar
+
+*/
+
+1. Run Main File(main/CheMinMain.java)
+
+2. Run Command(command/Command.java)
+
+3. in Command -> Port No:9008->Command should be chemin_on.
+ 
 4. Chemin Will start working
-5. Send Command “power off” to terminate
+
+5. Send Command power_off to terminate
