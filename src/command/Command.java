@@ -17,22 +17,33 @@ import javax.swing.JTextField;
 public class Command extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
+	// Creating a text field for Port No.
 	JTextField portno;
+	
+	// Creating a text field for message
 	JTextField message;
+	
+
 	Command(){
 		JPanel blank=new JPanel();
+		
+		// Layout for Port No.
 		JPanel p1=new JPanel();
 		p1.setLayout(new GridLayout(1,2));
 		JLabel port=new JLabel("Port Number");
 		p1.add(port);
 		portno=new JTextField();
 		p1.add(portno);
+		
+		// Layout for Command
 		JPanel p2=new JPanel();
 		p2.setLayout(new GridLayout(1,2));
 		JLabel mesage=new JLabel("Command");
 		p2.add(mesage);
 		message=new JTextField();
 		p2.add(message);
+		
+		// Layout for message
 		JPanel p3=new JPanel();
 		p3.setLayout(new GridLayout(2,2));
 		p3.add(p1);
@@ -40,6 +51,8 @@ public class Command extends JFrame{
 		add(blank,BorderLayout.NORTH);
 		add(p3,BorderLayout.CENTER);
 		JButton submit=new JButton("Send");
+		
+		// Listen the action performed by send command
 		submit.addActionListener(new ActionListener() {
 			
 			@Override

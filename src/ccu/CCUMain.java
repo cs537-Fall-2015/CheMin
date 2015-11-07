@@ -19,13 +19,16 @@ import json.GlobalReader;
 public class CCUMain {
 		
 	public static void main(String[] args) {
+		// Define CCU port for 9008 
 		int ccuport=9008;
 		CCU_Server ccuserver=null;
 		try {
+			// Create new CCU server port
 			ccuserver = new CCU_Server(ccuport);
 		} catch (IOException e) {
 		  e.printStackTrace();
 		}
+		// get the thread for ccuserver and start it
 		Thread serverccu=RoverThreadHandler.getRoverThreadHandler().getNewThread(ccuserver);
 		serverccu.start();
 	}
@@ -44,6 +47,8 @@ class CCU_Server extends RoverServerRunnable {
 				System.out.println("CCU is trying to turn on CHEMIN");
 				//creating socket and waiting for client connection			
 				CCU_Client ccuserver=new CCU_Client(9008,null);
+				
+				// get thread for ccu server and start the thread fr cheimin_client
 				Thread cheminclient=RoverThreadHandler.getRoverThreadHandler().getNewThread(ccuserver);
 				cheminclient.start();
 				getRoverServerSocket().openSocket();
@@ -65,9 +70,15 @@ class CCU_Client extends RoverClientRunnable{
 	@Override
 	public void run() {
 		try{
+			
+			// Call the getPort method on the object returned by getSocket method
 			System.out.println(getRoverSocket().getPort());
 			ObjectOutputStream ostr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
+			
+			// read that object from GlobalReader
 			GlobalReader gr=new GlobalReader(Constants.ROOT_PATH+"1");
+			
+			// send that json object by output string to CHEMIN_Server
 			JSONObject json= gr.getJSONObject();
 			ostr.writeObject(json);
 			ObjectInputStream instr=new ObjectInputStream(getRoverSocket().getSocket().getInputStream());
@@ -75,6 +86,7 @@ class CCU_Client extends RoverClientRunnable{
 		}	 catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
+		// else print an error message
 		catch (Exception error) {
 			System.out.println("Client CCU: Error:" + error.getMessage());
 		} 	
