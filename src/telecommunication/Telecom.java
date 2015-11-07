@@ -15,29 +15,29 @@ public class Telecom extends RoverServerRunnable {
 
 	public void run() {
 		while(true)
-		try {				
+			try {				
 				System.out.println("Telecom Server -> Waiting for Request");
 				getRoverServerSocket().openSocket();
 				ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
 				String message=oinstr.readObject().toString();
 				System.out.println(message);
 				send_file_received_ack_to_chemin();
-		}catch(IOException e){
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+			}catch(IOException e){
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 	}
-	
+
 	public void send_file_received_ack_to_chemin() {
 		try{
 			System.out.println(getRoverServerSocket().getSocket().getPort());
 			if(getRoverServerSocket().getSocket().getPort()==9008){
 				ObjectOutputStream outstr=new ObjectOutputStream(getRoverServerSocket().getSocket().getOutputStream());
 				outstr.writeObject("File Received");
-				}
-		   }	        
-        catch (Exception e) {
+			}
+		}	        
+		catch (Exception e) {
 			e.printStackTrace();
 		}		
 	}

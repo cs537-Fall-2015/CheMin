@@ -26,11 +26,11 @@ import json.GlobalReader;
 
 public class Chemin_process extends RoverServerRunnable{
 	private Thread t = null;
-	
+
 	public Chemin_process(int port) throws IOException {
 		super(port);
 	}
-	
+
 	boolean launch_Chemin_Process() throws InterruptedException, IOException {
 		setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
@@ -48,11 +48,11 @@ public class Chemin_process extends RoverServerRunnable{
 					Thread.sleep(2000);
 					if(CMIN_FunnelPiezoOn()){
 						System.out.println("\t\t\t\t\t\tFunnel piezo is on now");
-							playMusic();
+						playMusic();
 						System.out.println("\t\t\t\t\t\t\t\tWait for 5 seconds:for sample to go in sample cell");
 						Thread.sleep(5000);
 						System.out.println("\t\t\t\t\t\t\t\t\t\tSample is in sample cell now");
-						
+
 						CMIN_SamlecellPiezoOn();
 						playMusic();
 						System.out.println("\t\t\t\t\t\t\t\t\t\t\t\tSample cell piezo Started");
@@ -61,7 +61,7 @@ public class Chemin_process extends RoverServerRunnable{
 						Thread.sleep(10000);
 						CMIN_ReadCCD();  //each 30 seconds and compress
 						if(CMIN_CreateXRDJson()){
-							
+
 						}
 					}
 				}else{
@@ -76,42 +76,48 @@ public class Chemin_process extends RoverServerRunnable{
 			System.out.println("Contamination not removed yet!! Remove Contamination first");
 			return false;
 		}
-		
+
 		CHEMIN_POWER_OFF();
-		
+
 		return true;				
 	}
 
-	void send_information() {
+	void send_requirments_to_power() {
 		try{
-			
-			if(getRoverSocket().getSocket().getPort()==9013){
-				ObjectOutputStream outstr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
+			if(getRoverServerSocket().getSocket().getPort()==9013){
+				ObjectOutputStream outstr=new ObjectOutputStream(getRoverServerSocket().getSocket().getOutputStream());
 				System.out.println("CHEMIN-->Power roup");
 				System.out.println("CHEMIN-->Sending you my requirements in a json file");
 				GlobalReader gr=new GlobalReader(Constants.ROOT_PATH+"PowerRequirement");
 				JSONObject json= gr.getJSONObject();
 				outstr.writeObject(json);
 			}
-				
-				if(getRoverSocket().getSocket().getPort()==9002){
-					System.out.println("contacting to tele success");
-					ObjectOutputStream ostr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
-					ostr.writeObject("Chemin--> telecommunication: Read this image json");
-					GlobalReader gr2=new GlobalReader(Constants.ROOT_PATH+"XrdDiffraction");
-					JSONObject jsonTele= gr2.getJSONObject();
-					ostr.writeObject(jsonTele);
-				}
-			
-		}	        
-        catch (Exception e) {
+		}
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
 	}
-	
+
+	void send_image_to_telecom() {
+		try{
+			if(getRoverServerSocket().getSocket().getPort()==9002){
+				System.out.println("contacting to tele success");
+				ObjectOutputStream ostr=new ObjectOutputStream(getRoverServerSocket().getSocket().getOutputStream());
+				ostr.writeObject("Chemin--> telecommunication: Read this image json");
+				GlobalReader gr2=new GlobalReader(Constants.ROOT_PATH+"XrdDiffraction");
+				JSONObject jsonTele= gr2.getJSONObject();
+				ostr.writeObject(jsonTele);
+			}
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}	        
+
 	public void CHEMIN_POWER_OFF() {
-		
+
 		System.out.println(" Cryo Cooler off !");
 		CMIN_FunnelPiezoOff();
 		System.out.println("Funnel Piezo off !");
@@ -124,24 +130,24 @@ public class Chemin_process extends RoverServerRunnable{
 	public boolean CMIN_RemoveFunnelContamination(){
 		return true;
 	}
-	
+
 	public boolean CMIN_RemoveSampleCellContamination(){ 
 		return true;
 	}
 	boolean CMIN_CheckCHIMRA(){
 		return true;
 	}
-	
+
 	public boolean CMIN_FunnelPiezoOn() {
-		
+
 		return true;
 	}
 	public boolean CMIN_FunnelPiezoOff(){
 		return true;
 	}
-	
+
 	public boolean CMIN_SamlecellPiezoOn(){
-		
+
 		return true;
 	}
 
@@ -170,23 +176,23 @@ public class Chemin_process extends RoverServerRunnable{
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(jsonObject.toString());
 		bw.close();
-		
+
 		return true;
 	}
-	
-private  MediaPlayer playMusic() {
-		
+
+	private  MediaPlayer playMusic() {
+
 		new JFXPanel();
 		String bip = Constants.ROOT_PATH+"Voice.mp3";
 		Media hit = new Media(new File(bip).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(hit);
 		mediaPlayer.play();
-		
+
 		return mediaPlayer;
 	}
-	
-private JSONObject createJsonFromImage() throws IOException {
-		
+
+	private JSONObject createJsonFromImage() throws IOException {
+
 		String encodedImage = getStringFromImage();
 
 		JSONObject jsonObj = (JSONObject) JSONValue.parse("{\"image\":\"" + encodedImage + "\"}");
@@ -194,15 +200,15 @@ private JSONObject createJsonFromImage() throws IOException {
 	}
 
 	private static String getStringFromImage() throws IOException {
-		
+
 		BufferedImage originalImage = ImageIO.read(new File(Constants.ROOT_PATH+"xrayDiffraction.jpg"));
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write( originalImage, "jpg", baos );
 		baos.flush();
-	
+
 		byte[] imageInByte = baos.toByteArray();
 		baos.close();
-		
+
 		String encoded = Base64.getEncoder().encodeToString(imageInByte);
 		return encoded;
 	}
@@ -214,6 +220,6 @@ private JSONObject createJsonFromImage() throws IOException {
 	public void setT(Thread t) {
 		this.t = t;
 	}
-	}
+}
 
 

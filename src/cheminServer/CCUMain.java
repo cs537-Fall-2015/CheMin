@@ -17,14 +17,14 @@ import json.Constants;
 import json.GlobalReader;
 
 public class CCUMain {
-		
+
 	public static void main(String[] args) {
 		int ccuport=9008;
 		CCU_Server ccuserver=null;
 		try {
 			ccuserver = new CCU_Server(ccuport);
 		} catch (IOException e) {
-		  e.printStackTrace();
+			e.printStackTrace();
 		}
 		Thread serverccu=RoverThreadHandler.getRoverThreadHandler().getNewThread(ccuserver);
 		serverccu.start();
@@ -37,19 +37,19 @@ class CCU_Server extends RoverServerRunnable {
 
 	@Override
 	public void run() {
-		
+
 		while(true){
-		try {
+			try {
 				System.out.println("CCU is trying to turn on CHEMIN");
 				//creating socket and waiting for client connection			
 				CCU_Client ccuserver=new CCU_Client(9008,null);
 				Thread cheminclient=RoverThreadHandler.getRoverThreadHandler().getNewThread(ccuserver);
 				cheminclient.start();
 				getRoverServerSocket().openSocket();
-				
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 }
