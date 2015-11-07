@@ -1,14 +1,15 @@
 package telecommunication;
 
+import generic.RoverServerRunnable;
+import generic.RoverThreadHandler;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import generic.RoverClientRunnable;
+
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
-import generic.RoverClientRunnable;
-import generic.RoverServerRunnable;
-import generic.RoverThreadHandler;
 
 public class Telecom extends RoverServerRunnable {
 
@@ -34,18 +35,6 @@ public class Telecom extends RoverServerRunnable {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		Telecom ps=null;
-		try {
-			ps = new Telecom(9002);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Thread serverPower=RoverThreadHandler.getRoverThreadHandler().getNewThread(ps);
-		serverPower.start();
-	}
-
 }
 
 class Telecom_Client extends RoverClientRunnable{

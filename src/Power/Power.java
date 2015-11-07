@@ -1,14 +1,15 @@
 package power;
 
+import generic.RoverServerRunnable;
+import generic.RoverThreadHandler;
+import generic.RoverClientRunnable;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
-import generic.RoverClientRunnable;
-import generic.RoverServerRunnable;
-import generic.RoverThreadHandler;
 
 public class Power extends RoverServerRunnable {
 
@@ -32,18 +33,6 @@ public class Power extends RoverServerRunnable {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static void main(String[] args) {
-		int powerport = 9013;
-		Power powerserver=null;
-		try {
-			powerserver = new Power(powerport);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Thread serverPower=RoverThreadHandler.getRoverThreadHandler().getNewThread(powerserver);
-		serverPower.start();
 	}
 }
 
