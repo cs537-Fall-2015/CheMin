@@ -18,6 +18,10 @@ public class Telecom extends RoverServerRunnable {
 			try {				
 				System.out.println("Telecom Server -> Waiting for Request");
 				getRoverServerSocket().openSocket();
+				/*
+				 * at this stage, Telecom can receive the following commands:
+				 * 		.json file created by chemin_process which it will send
+				 */
 				ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
 				String message=oinstr.readObject().toString();
 				System.out.println(message);

@@ -17,7 +17,6 @@ public class CheMinMain {
 		CHEMIN_Server serverChemin=null;
 		Power power=null;
 		Telecom telecom=null;
-		Chemin_process processChemin=null;
 
 		try {	
 			serverChemin = new CHEMIN_Server(port_chemin);
@@ -42,14 +41,5 @@ public class CheMinMain {
 		}
 		Thread thread_tele=RoverThreadHandler.getRoverThreadHandler().getNewThread(telecom);
 		thread_tele.start();
-
-		try {
-			processChemin = new Chemin_process(9018);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Thread thread_process_chemin=RoverThreadHandler.getRoverThreadHandler().getNewThread(processChemin);
-		thread_process_chemin.start();
-	}
 }
 

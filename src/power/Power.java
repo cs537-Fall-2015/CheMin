@@ -16,6 +16,11 @@ public class Power extends RoverServerRunnable {
 		try {				
 			System.out.println("Power Server -> Waiting for Request");
 			getRoverServerSocket().openSocket();
+			/*
+			 * at this stage, Power can receive the following commands:
+			 * 		POWER_ON	:	turns the power ON and send a message to CHEMIN_process to say that power is set 
+			 * 		POWER_OFF 	:	turns the power OFF and send a message to CHEMIN_process to say that power is shut
+			 */
 			ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
 			String message=oinstr.readObject().toString();
 			System.out.println(message);

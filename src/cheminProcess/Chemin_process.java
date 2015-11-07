@@ -6,9 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Base64;
 
 import javax.imageio.ImageIO;
@@ -16,7 +15,6 @@ import javax.imageio.ImageIO;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import generic.RoverClientRunnable;
 import generic.RoverServerRunnable;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
@@ -26,11 +24,51 @@ import json.GlobalReader;
 
 public class Chemin_process extends RoverServerRunnable{
 	private Thread t = null;
+	private boolean power_is_on = false;
 
 	public Chemin_process(int port) throws IOException {
 		super(port);
 	}
 
+	public void run() {
+		try {				
+			System.out.println("Chemin process -> Waiting for Request");
+			getRoverServerSocket().openSocket();
+			/*		------------------------> NEED TO BE DONE <-------------------------------
+			 * at this stage, Chemin process can receive the following commands:
+			 * 		POWER_IS_ON (from power)	:	chemin knows that it is turned on and is ready to receive orders to start working 
+			 * 		POWER_IS_OFF (from power)	:	chemin knows that the power has been turned off and needs to stop everything immediatly
+			 * 		CHEMIN_START				:	Full chemin cycle starting (required: Power_is_on)
+			 * 		----> other commands yet to come
+			 */
+			ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
+			String message=oinstr.readObject().toString();
+			System.out.println(message);
+			// TO BE CONTINUED HERE 
+			if(message.toLowerCase()=="POWER_IS_ON" && getRoverServerSocket().getSocket().getPort()==POWER_SOCKET) //to be corrected
+			{
+				power_is_on = true;
+			}
+			if(message.toLowerCase()=="POWER_IS_OFF" && getRoverServerSocket().getSocket().getPort()==POWER_SOCKET) //to be corrected
+			{
+				power_is_on = true;
+			}
+			if(getRoverServerSocket().getSocket().getPort()==CHEMIN_SERVER_SOCKET) //to be corrected
+			{
+				switch (message.toLowerCase()){
+				case "CHEMIN_START": 
+					launch_Chemin_Process();
+					break;
+				}
+			}
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	boolean launch_Chemin_Process() throws InterruptedException, IOException {
 		setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
