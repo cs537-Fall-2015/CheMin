@@ -1,8 +1,10 @@
-package cheminProcess;
+package cheminServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import cheminProcess.CHEMIN;
+import cheminProcess.CHEMIN_Client;
 import generic.RoverServerRunnable;
 import generic.RoverThreadHandler;
 

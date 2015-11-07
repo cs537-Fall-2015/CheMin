@@ -2,11 +2,11 @@ package main;
 
 import java.io.IOException;
 
+import cheminServer.CHEMIN_Server;
 import generic.RoverThreadHandler;
 
 import power.Power;
 import telecommunication.Telecom;
-import cheminProcess.CHEMIN_Server;
 
 public class CheMinMain {
 
@@ -15,32 +15,41 @@ public class CheMinMain {
 		int port_chemin = 9008;
 		
 		CHEMIN_Server serverChemin=null;
-		Power ps=null;
-		Telecom ts=null;
+		Power power=null;
+		Telecom telecom=null;
+		CHEMIN_process processChemin=null;
 		
 		try {	
 			serverChemin = new CHEMIN_Server(port_chemin);
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
-		Thread server_chemin = RoverThreadHandler.getRoverThreadHandler().getNewThread(serverChemin);
-		server_chemin.start();
+		Thread thread_server_chemin = RoverThreadHandler.getRoverThreadHandler().getNewThread(serverChemin);
+		thread_server_chemin.start();
 		
 		try {
-			ps = new Power(9013);
+			power = new Power(9013);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Thread serverPower=RoverThreadHandler.getRoverThreadHandler().getNewThread(ps);
-		serverPower.start();
+		Thread thread_power=RoverThreadHandler.getRoverThreadHandler().getNewThread(power);
+		thread_power.start();
 		
 		try {
-			ts = new Telecom(9002);
+			telecom = new Telecom(9002);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Thread servertele=RoverThreadHandler.getRoverThreadHandler().getNewThread(ts);
-		servertele.start();
+		Thread thread_tele=RoverThreadHandler.getRoverThreadHandler().getNewThread(telecom);
+		thread_tele.start();
+		
+		try {
+			processChemin = new CHEMIN_process(9018);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Thread thread_process_chemin=RoverThreadHandler.getRoverThreadHandler().getNewThread(processChemin);
+		thread_process_chemin.start();
 	}
 }
 

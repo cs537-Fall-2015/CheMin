@@ -34,17 +34,9 @@ public class Power extends RoverServerRunnable {
 			e.printStackTrace();
 		}
 	}
-}
-
-class Power_Client extends RoverClientRunnable{
 	
-	public Power_Client(int port, InetAddress host)
-			throws UnknownHostException {
-		super(port, host);
-	}
-
-	@Override
-	public void run() {
+	
+	public void send_power_on_to_chemin_process() {
 		try{
 			System.out.println(getRoverSocket().getSocket().getPort());
 			if(getRoverSocket().getSocket().getPort()==9008){
@@ -57,3 +49,4 @@ class Power_Client extends RoverClientRunnable{
 		}
 	}
 }
+

@@ -1,4 +1,4 @@
-package ccu;
+package cheminServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
