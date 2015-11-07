@@ -82,7 +82,7 @@ public class Chemin_process extends RoverServerRunnable{
 		return true;				
 	}
 
-	void run() {
+	void send_information() {
 		try{
 			
 			if(getRoverSocket().getSocket().getPort()==9013){
