@@ -167,7 +167,7 @@ class CHEMIN {
 	public boolean CMIN_CreateXRDJson() throws IOException{
 		JSONObject jsonObject = createJsonFromImage();
 
-		File file = new File("XrdDiffraction.json");
+		File file = new File(Constants.ROOT_PATH+"XrdDiffraction.json");
 
 		if (!file.exists()) {
 			file.createNewFile();
@@ -184,7 +184,7 @@ class CHEMIN {
 private  MediaPlayer playMusic() {
 		
 		new JFXPanel();
-		String bip = "Voice.mp3";
+		String bip = Constants.ROOT_PATH+"Voice.mp3";
 		Media hit = new Media(new File(bip).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(hit);
 		mediaPlayer.play();
@@ -202,7 +202,7 @@ private JSONObject createJsonFromImage() throws IOException {
 
 	private static String getStringFromImage() throws IOException {
 		
-		BufferedImage originalImage = ImageIO.read(new File("xrayDiffraction.jpg"));
+		BufferedImage originalImage = ImageIO.read(new File(Constants.ROOT_PATH+"xrayDiffraction.jpg"));
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write( originalImage, "jpg", baos );
 		baos.flush();
