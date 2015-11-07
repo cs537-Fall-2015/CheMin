@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import cheminServer.CHEMIN_Server;
 import generic.RoverThreadHandler;
-
+import cheminProcess.Chemin_process;
 import power.Power;
 import telecommunication.Telecom;
 
@@ -17,7 +17,7 @@ public class CheMinMain {
 		CHEMIN_Server serverChemin=null;
 		Power power=null;
 		Telecom telecom=null;
-		CHEMIN_process processChemin=null;
+		Chemin_process processChemin=null;
 		
 		try {	
 			serverChemin = new CHEMIN_Server(port_chemin);
@@ -44,7 +44,7 @@ public class CheMinMain {
 		thread_tele.start();
 		
 		try {
-			processChemin = new CHEMIN_process(9018);
+			processChemin = new Chemin_process(9018);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

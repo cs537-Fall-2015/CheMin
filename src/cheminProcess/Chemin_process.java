@@ -17,54 +17,21 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import generic.RoverClientRunnable;
+import generic.RoverServerRunnable;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import json.Constants;
 import json.GlobalReader;
 
-
-class CHEMIN_Client extends RoverClientRunnable{
-	
-	public CHEMIN_Client(int port, InetAddress host)
-			throws UnknownHostException {
-		super(port, host);
-	}
-
-	@Override
-	public void run() {
-		try{
-			
-			if(getRoverSocket().getSocket().getPort()==9013){
-				ObjectOutputStream outstr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
-				System.out.println("CHEMIN-->Power roup");
-				System.out.println("CHEMIN-->Sending you my requirements in a json file");
-				GlobalReader gr=new GlobalReader(Constants.ROOT_PATH+"PowerRequirement");
-				JSONObject json= gr.getJSONObject();
-				outstr.writeObject(json);
-			}
-				
-				if(getRoverSocket().getSocket().getPort()==9002){
-					System.out.println("contacting to tele success");
-					ObjectOutputStream ostr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
-					ostr.writeObject("Chemin--> telecommunication: Read this image json");
-					GlobalReader gr2=new GlobalReader(Constants.ROOT_PATH+"XrdDiffraction");
-					JSONObject jsonTele= gr2.getJSONObject();
-					ostr.writeObject(jsonTele);
-				}
-			
-}	        
-        catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-}
-
-class CHEMIN {
+public class Chemin_process extends RoverServerRunnable{
 	private Thread t = null;
 	
-	boolean CHEMIN_Process() throws InterruptedException, IOException{
+	public Chemin_process(int port) throws IOException {
+		super(port);
+	}
+	
+	boolean launch_Chemin_Process() throws InterruptedException, IOException {
 		setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
 		Thread.sleep(2000);
@@ -112,11 +79,37 @@ class CHEMIN {
 		
 		CHEMIN_POWER_OFF();
 		
-		return true;
-		
-		
+		return true;				
 	}
 
+	void run() {
+		try{
+			
+			if(getRoverSocket().getSocket().getPort()==9013){
+				ObjectOutputStream outstr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
+				System.out.println("CHEMIN-->Power roup");
+				System.out.println("CHEMIN-->Sending you my requirements in a json file");
+				GlobalReader gr=new GlobalReader(Constants.ROOT_PATH+"PowerRequirement");
+				JSONObject json= gr.getJSONObject();
+				outstr.writeObject(json);
+			}
+				
+				if(getRoverSocket().getSocket().getPort()==9002){
+					System.out.println("contacting to tele success");
+					ObjectOutputStream ostr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
+					ostr.writeObject("Chemin--> telecommunication: Read this image json");
+					GlobalReader gr2=new GlobalReader(Constants.ROOT_PATH+"XrdDiffraction");
+					JSONObject jsonTele= gr2.getJSONObject();
+					ostr.writeObject(jsonTele);
+				}
+			
+		}	        
+        catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void CHEMIN_POWER_OFF() {
 		
 		System.out.println(" Cryo Cooler off !");

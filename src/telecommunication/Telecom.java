@@ -13,7 +13,6 @@ public class Telecom extends RoverServerRunnable {
 		super(port);
 	}
 
-	@Override
 	public void run() {
 		while(true)
 		try {				
