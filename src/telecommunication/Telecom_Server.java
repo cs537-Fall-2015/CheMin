@@ -2,17 +2,12 @@ package telecommunication;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import generic.RoverClientRunnable;
 import generic.RoverServerRunnable;
 import generic.RoverThreadHandler;
 
-public class Telecom extends RoverServerRunnable {
+public class Telecom_Server extends RoverServerRunnable {
 
-	public Telecom(int port) throws IOException {
+	public Telecom_Server(int port) throws IOException {
 		super(port);
 	}
 
@@ -41,10 +36,10 @@ public class Telecom extends RoverServerRunnable {
 	}
 	
 	public static void main(String[] args) {
-		Telecom ps=null;
+		Telecom_Server ps=null;
 		try {
 			// start the telecom process on port no. 9002
-			ps = new Telecom(9002);
+			ps = new Telecom_Server(9002);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,28 +48,4 @@ public class Telecom extends RoverServerRunnable {
 		serverPower.start();
 	}
 
-}
-
-class Telecom_Client extends RoverClientRunnable{
-	
-	public Telecom_Client(int port, InetAddress host)
-			throws UnknownHostException {
-		super(port, host);
-	}
-
-	@Override
-	public void run() {
-		try{
-			System.out.println(getRoverSocket().getSocket().getPort());
-			
-			// If the port no. is 9008 then create the new output stream and pass the message to Chemin Server
-			if(getRoverSocket().getSocket().getPort()==9008){
-				ObjectOutputStream outstr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
-				outstr.writeObject("File Received");
-				}
-		   }	        
-        catch (Exception e) {
-			e.printStackTrace();
-		}		
-	}
 }

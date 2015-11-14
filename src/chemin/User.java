@@ -1,4 +1,4 @@
-package command;
+package chemin;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Command extends JFrame{
+public class User extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	// Creating a text field for Port No.
@@ -24,7 +24,7 @@ public class Command extends JFrame{
 	JTextField message;
 	
 
-	Command(){
+	User(){
 		JPanel blank=new JPanel();
 		
 		// Layout for Port No.
@@ -81,7 +81,7 @@ public class Command extends JFrame{
 		}
 		
 	public static void main(String[] args) {
-	JFrame frame=new Command();	
+	JFrame frame=new User();	
 	frame.setLocationRelativeTo(null);
 	frame.setVisible(true);
 	frame.setSize(300,200);

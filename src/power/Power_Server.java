@@ -2,17 +2,12 @@ package power;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import generic.RoverClientRunnable;
 import generic.RoverServerRunnable;
 import generic.RoverThreadHandler;
 
-public class Power extends RoverServerRunnable {
+public class Power_Server extends RoverServerRunnable {
 
-	public Power(int port) throws IOException {
+	public Power_Server(int port) throws IOException {
 		super(port);
 	}
 	@Override
@@ -43,39 +38,15 @@ public class Power extends RoverServerRunnable {
 		
 		// initializing port no. 9013
 		int powerport = 9013;
-		Power powerserver=null;
+		Power_Server powerserver=null;
 		try {
 			// Create the new power port to listen power server
-			powerserver = new Power(powerport);
+			powerserver = new Power_Server(powerport);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		// get the thread for power server and start the thread
 		Thread serverPower=RoverThreadHandler.getRoverThreadHandler().getNewThread(powerserver);
 		serverPower.start();
-	}
-}
-
-class Power_Client extends RoverClientRunnable{
-	
-	public Power_Client(int port, InetAddress host)
-			throws UnknownHostException {
-		super(port, host);
-	}
-
-	@Override
-	public void run() {
-		try{
-			System.out.println(getRoverSocket().getSocket().getPort());
-			
-			// if the port is 9008, get the output string from the rover socket and send message power on to Chemin_Server
-			if(getRoverSocket().getSocket().getPort()==9008){
-				ObjectOutputStream outstr=new ObjectOutputStream(getRoverSocket().getSocket().getOutputStream());
-				outstr.writeObject("power on");
-				}
-		   }	        
-        catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }
