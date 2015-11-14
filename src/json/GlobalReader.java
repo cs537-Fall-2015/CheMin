@@ -1,0 +1,43 @@
+package json;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+
+public class GlobalReader {
+	
+	private JSONObject thatObject = null;
+	
+	public GlobalReader(String one) {
+		
+		String myFilePath = one + ".json";
+		
+			
+		JSONParser parser = new JSONParser();
+		
+		try {
+			Object obj = parser.parse(new FileReader(myFilePath));
+			JSONObject jsonObject = (JSONObject) obj;
+			this.thatObject = jsonObject;
+		} catch (FileNotFoundException e) {
+			System.out.println("No file found.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("I/O exception found.");
+			e.printStackTrace();
+		} catch (ParseException e) {
+			System.out.println("Parse exception found.");
+			e.printStackTrace();
+		}
+	}
+	
+	public JSONObject getJSONObject() {
+		return this.thatObject;
+	}
+	
+}
