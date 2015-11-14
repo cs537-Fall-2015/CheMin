@@ -80,6 +80,8 @@ public class CheMin_Server extends RoverServerRunnable {
 				// Stop getting request from CHEMIN_Client and close all the resources
 				inputFromAnotherObject.close();
 				}
+			
+			// case for power interrupt : added to be later
 				
 		} catch (IOException e) {
 			e.printStackTrace();
