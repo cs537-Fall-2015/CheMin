@@ -44,6 +44,7 @@ public class CheMin_Server extends RoverServerRunnable {
 				switch(message.toLowerCase()){
 				
 				// If message is chemin_on, set the CCU to True
+<<<<<<< HEAD
 				case "chemin_on":
 					ccuYes = true;
 					System.out.println("CCU has send request to CHEMIN to turn on");
@@ -82,6 +83,19 @@ public class CheMin_Server extends RoverServerRunnable {
 				}
 			
 			// case for power interrupt : added to be later
+=======
+					
+					break;
+				// If power is off,Call the CHEMIN_POWER_OFF function of CHEMIN module
+				case "power off":
+					System.out.println(" Deleting Thread ..");
+					new CheMin_Process().CHEMIN_POWER_OFF();
+					break;
+				}
+				// Stop getting request from CHEMIN_Client and close all the resources
+				inputFromAnotherObject.close();
+				}
+>>>>>>> refs/heads/master
 				
 		} catch (IOException e) {
 			e.printStackTrace();
