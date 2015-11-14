@@ -12,7 +12,7 @@ Way 1:
 8. Chemin will start working.
 
 
-Way2: 
+Way 2: 
 
 Download the jar file and run this file to start working.
 
