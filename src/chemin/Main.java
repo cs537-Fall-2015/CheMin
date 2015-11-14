@@ -8,10 +8,10 @@ import telecommunication.Telecom_Server;
 public class Main {
 
 	public static void main(String[] args) {
-		
+
 		// Defining a port for CheMin
 		int port_chemin = 9008;
-		
+
 		try {
 			
 			// Create a thread for CHEMIN SERVER
@@ -21,7 +21,7 @@ public class Main {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Create a thread for Power SERVER
 		Power_Server ps=null;
 		try {
@@ -43,5 +43,4 @@ public class Main {
 		Thread servertele=RoverThreadHandler.getRoverThreadHandler().getNewThread(ts);
 		servertele.start();
 	}
-	}
-
+}

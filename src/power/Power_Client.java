@@ -3,7 +3,6 @@ package power;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
 import generic.RoverClientRunnable;
 
 public class Power_Client extends RoverClientRunnable{

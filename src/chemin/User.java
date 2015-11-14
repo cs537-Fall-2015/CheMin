@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +21,6 @@ public class User extends JFrame{
 	
 	// Creating a text field for message
 	JTextField message;
-	
 
 	User(){
 		JPanel blank=new JPanel();
