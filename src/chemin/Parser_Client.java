@@ -11,9 +11,9 @@ import generic.RoverClientRunnable;
 import json.Constants;
 import json.GlobalReader;
 
-class Command_Client extends RoverClientRunnable{
+class Parser_Client extends RoverClientRunnable{
 
-	public Command_Client(int port, InetAddress host)
+	public Parser_Client(int port, InetAddress host)
 			throws UnknownHostException {
 		super(port, host);
 	}

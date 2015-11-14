@@ -160,7 +160,7 @@ public class CheMin_Process {
 private  MediaPlayer playMusic() {
 		// Create the media player and play the sound which is in the file Voice.mp3
 		new JFXPanel();
-		String bip = "Voice.mp3";
+		String bip = "/Users/RajnishKumar/Documents/Eclipse Mars/CS537/CS537_CheMin/Voice.mp3";
 		Media hit = new Media(new File(bip).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(hit);
 		mediaPlayer.play();
