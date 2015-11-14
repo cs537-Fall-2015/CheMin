@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+<<<<<<< HEAD
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +24,22 @@ public class User extends JFrame{
 	// Creating a text field for message
 	JTextField message;
 	
+=======
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class User extends JFrame{
+	
+	private static final long serialVersionUID = 1L;
+	// Creating a text field for Port No.
+	JTextField portno;
+	
+	// Creating a text field for message
+	JTextField message;
+>>>>>>> refs/heads/rajnish
 
 	User(){
 		JPanel blank=new JPanel();

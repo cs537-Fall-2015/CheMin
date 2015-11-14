@@ -20,6 +20,7 @@ public class Power_Server extends RoverServerRunnable {
 				String message=oinstr.readObject().toString();
 				System.out.println(message);
 				
+<<<<<<< HEAD
 				// Create the new Power_Client and make the client to listenon port no. 9008
 				Power_Client pclient=new Power_Client(9008,null);
 				
@@ -34,6 +35,22 @@ public class Power_Server extends RoverServerRunnable {
 		}
 	}
 	
+=======
+				// Create the new Power_Client and make the client to listen on port no. 9008
+				Power_Client pclient=new Power_Client(9008,null);
+				
+				// Get the thread for that client and start the thread
+				Thread cpower=RoverThreadHandler.getRoverThreadHandler().getNewThread(pclient);
+				cpower.start();
+		
+		}catch(IOException e){
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+>>>>>>> refs/heads/rajnish
 	public static void main(String[] args) {
 		
 		// initializing port no. 9013

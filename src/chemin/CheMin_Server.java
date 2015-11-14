@@ -45,6 +45,7 @@ public class CheMin_Server extends RoverServerRunnable {
 				
 				// If message is chemin_on, set the CCU to True
 <<<<<<< HEAD
+<<<<<<< HEAD
 				case "chemin_on":
 					ccuYes = true;
 					System.out.println("CCU has send request to CHEMIN to turn on");
@@ -96,6 +97,44 @@ public class CheMin_Server extends RoverServerRunnable {
 				inputFromAnotherObject.close();
 				}
 >>>>>>> refs/heads/master
+=======
+				case "chemin_on":
+					ccuYes = true;
+					System.out.println("CCU has send request to CHEMIN to turn on");
+					System.out.println("CHEMIN is requesting power and Sending a json file with power Requirements to Power group");
+					CheMin_Client client=new CheMin_Client(9013,null);
+					Thread power=RoverThreadHandler.getRoverThreadHandler().getNewThread(client);
+					power.start();
+					break;
+				// If message is power on, start the chemin process else print the required message 
+				case "power on":
+					
+					boolean process = false;
+					if(ccuYes){
+						CheMin_Process chemin = new CheMin_Process();
+						process=chemin.CHEMIN_Process();
+					}else{
+						System.out.println(" CHEMIN dont have permission from CCU ,Yet !");
+					}
+					// 	If process is true, Create the new CHEMIN_Client and make the client to listen on port no. 9002
+					if(process){
+						CheMin_Client teleclient=new CheMin_Client(9002,null);
+						Thread telecommunication=RoverThreadHandler.getRoverThreadHandler().getNewThread(teleclient);
+						telecommunication.start();
+						
+					}
+					
+					break;
+				// If power is off,Call the CHEMIN_POWER_OFF function of CHEMIN module
+				case "power off":
+					System.out.println(" Deleting Thread ..");
+					new CheMin_Process().CHEMIN_POWER_OFF();
+					break;
+				}
+				// Stop getting request from CHEMIN_Client and close all the resources
+				inputFromAnotherObject.close();
+				}
+>>>>>>> refs/heads/rajnish
 				
 		} catch (IOException e) {
 			e.printStackTrace();
