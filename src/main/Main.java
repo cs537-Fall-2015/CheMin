@@ -1,4 +1,4 @@
-package chemin;
+package main;
 
 import java.io.IOException;
 import generic.RoverThreadHandler;
@@ -15,7 +15,7 @@ public class Main {
 		try {
 			
 			// Create a thread for CHEMIN SERVER
-			CheMin_Server serverChemin = new CheMin_Server(port_chemin);
+			chemin.CheMin_Server serverChemin = new chemin.CheMin_Server(port_chemin);
 			Thread server_chemin = RoverThreadHandler.getRoverThreadHandler().getNewThread(serverChemin);
 			server_chemin.start();
 		}catch (IOException e) {

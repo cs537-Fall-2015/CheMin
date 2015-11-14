@@ -1,4 +1,4 @@
-package chemin;
+package testmain;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
