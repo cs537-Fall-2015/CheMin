@@ -11,19 +11,10 @@ import generic.RoverThreadHandler;
 public class CHEMIN_Server extends RoverServerRunnable {
 
 	private static boolean ccuYes = false;
-	Chemin_process processChemin=null;
 	
 	public CHEMIN_Server(int port) throws IOException {
 		super(port);
-		
-		//Creates Chemin process thread 
-		try {
-			processChemin = new Chemin_process(9018);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Thread thread_process_chemin=RoverThreadHandler.getRoverThreadHandler().getNewThread(processChemin);
-		thread_process_chemin.start();
+
 	}
 
 	@Override

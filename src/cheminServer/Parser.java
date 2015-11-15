@@ -16,7 +16,7 @@ import generic.RoverClientRunnable;
 import json.Constants;
 import json.GlobalReader;
 
-public class CCUMain {
+public class Parser {
 
 	public static void main(String[] args) {
 		int ccuport=9008;
