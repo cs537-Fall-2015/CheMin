@@ -69,7 +69,7 @@ public class Parser extends RoverClientRunnable{
 				return 2;
 			//If process is true, 
 			case "power off":
-				System.out.println(" Deleting Thread ..");
+				powerOn = false;
 				return 2;
 			default:
 				return 0;
