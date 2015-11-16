@@ -34,7 +34,19 @@ public class CheminServer extends RoverServerRunnable {
 				Thread.sleep(7000);
 				
 				//send message to parser
-				chemin_parser.check_message(message);
+				switch(chemin_parser.check_message(message)){
+					case 1:
+						System.out.println("Command sent to chemin process");
+						break;
+					case 2:
+						System.out.println("Command sent to chemin process");
+						break;
+					case 3:
+						System.out.println("This shouldnt happen yet");
+						break;
+					default:
+						System.out.println("Wrong or unknown command");
+				}
 /*				
 				Thread t=Thread.currentThread(); 
 				//If thread is interrupted, set the message to power off
