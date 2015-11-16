@@ -3,6 +3,8 @@ package chemin_module;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import com.sun.security.ntlm.Client;
+
 import generic.RoverServerRunnable;
 
 public class CheminServer extends RoverServerRunnable {
@@ -39,7 +41,9 @@ public class CheminServer extends RoverServerRunnable {
 						System.out.println("Command sent to chemin process");
 						break;
 					case 2:
-						System.out.println("Command sent to chemin process");
+						System.out.println("Command sent to chemin client");
+						CheminClient powerclient = new CheminClient(9013,null);
+						powerclient.send(message.toLowerCase());
 						break;
 					case 3:
 						System.out.println("This shouldnt happen yet");
