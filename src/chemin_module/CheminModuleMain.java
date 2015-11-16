@@ -33,6 +33,7 @@ public class CheminModuleMain{
 		}
 		Thread thread_process_chemin=RoverThreadHandler.getRoverThreadHandler().getNewThread(process);
 		thread_process_chemin.start();
+		thread_process_chemin.interrupt();
 		
 /*		//Create and run client thread 
 		try {

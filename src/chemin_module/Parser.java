@@ -51,6 +51,18 @@ public class Parser extends RoverClientRunnable{
 				startRequested=false;
 				//send message through socket to cheminProcess
 				try {
+					outstr.writeObject("full process");
+				} catch (IOException ez) {
+					ez.printStackTrace();
+				}
+			} else{
+				System.out.println(" CHEMIN is not turned on ,Yet !");
+			}
+			return 1;
+		case "ALL EXTRA COMMANDS SHOULD BE LIKE THAT":
+			if(powerOn) {
+				//send message through socket to cheminProcess
+				try {
 					outstr.writeObject(message.toLowerCase());
 				} catch (IOException ez) {
 					ez.printStackTrace();
