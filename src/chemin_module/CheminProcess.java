@@ -25,41 +25,44 @@ import json.GlobalReader;
 
 public class CheminProcess extends RoverServerRunnable{
 	private Thread t = null;
-	
+
 	public CheminProcess(int port) throws IOException {
 		super(port);
-		// TODO Auto-generated constructor stub
+
 	}
-	
+
 	@Override
 	public void run() {
-		try {				
-			System.out.println("Chemin process -> Waiting for Request");
-			getRoverServerSocket().openSocket();
-			/*	
-			 * at this stage, Chemin process can receive the following commands:
-			 * 		full process				:	Full chemin cycle starting (required: Power_is_on)
-			 * 		----> other commands yet to come
-			 */
-			ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
-			String message=oinstr.readObject().toString();
+		try {			
+			while(true){
+				System.out.println("Chemin process -> Waiting for Request");
+				getRoverServerSocket().openSocket();
+				/*	
+				 * at this stage, Chemin process can receive the following commands:
+				 * 		full process				:	Full chemin cycle starting (required: Power_is_on)
+				 * 		----> other commands yet to come
+				 */
+				ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
+				String message=oinstr.readObject().toString();
 
-			switch (message.toLowerCase()){
+				switch (message.toLowerCase()){
 				case "full process":
-				try {
-					launch_Chemin_Process();
-				} catch (InterruptedException iex) {
-				      System.err.println("Message printer interrupted");
-			    }
-				break;
-			}						
+					try {
+						launch_Chemin_Process();
+					} catch (InterruptedException iex) {
+						System.err.println("Message printer interrupted");
+					}
+					break;
+				}	
+			}
 		}catch(IOException e){
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+
 	}
-	
+
 	boolean launch_Chemin_Process() throws InterruptedException, IOException {
 		setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");

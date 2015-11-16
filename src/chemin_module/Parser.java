@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import generic.RoverClientRunnable;
+import generic.RoverThreadHandler;
 
 public class Parser extends RoverClientRunnable{
 	private ObjectOutputStream outstr=null;
@@ -80,7 +81,19 @@ public class Parser extends RoverClientRunnable{
 			startRequested = true;
 			System.out.println("client has send request to CHEMIN to turn on");
 			System.out.println("CHEMIN is requesting power and Sending a json file with power Requirements to Power group");
+			
+			CheminClient powerclient = null;
+			try {
+				powerclient = new CheminClient(9013,null);
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+			Thread powerclientthread=RoverThreadHandler.getRoverThreadHandler().getNewThread(powerclient);
+			powerclientthread.start();
 			return 2;
+		case "telecom ack":	
+			System.out.println("chemin receives telecom acknowledge");
+			return 1;
 /*		case "power on":		
 			powerOn = true;
 			return 2;

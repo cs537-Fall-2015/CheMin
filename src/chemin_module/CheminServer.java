@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import generic.RoverServerRunnable;
-import generic.RoverThreadHandler;
 
 public class CheminServer extends RoverServerRunnable {
 	
@@ -41,9 +40,6 @@ public class CheminServer extends RoverServerRunnable {
 						break;
 					case 2:
 						System.out.println("Command sent to chemin client");
-						CheminClient powerclient = new CheminClient(9013,null);
-						Thread powerclientthread=RoverThreadHandler.getRoverThreadHandler().getNewThread(powerclient);
-						powerclientthread.start();
 						break;
 					case 3:
 						System.out.println("This shouldnt happen yet");
