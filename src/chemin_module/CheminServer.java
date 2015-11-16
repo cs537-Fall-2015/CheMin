@@ -3,8 +3,6 @@ package chemin_module;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import com.sun.security.ntlm.Client;
-
 import generic.RoverServerRunnable;
 import generic.RoverThreadHandler;
 

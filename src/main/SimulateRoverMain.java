@@ -3,9 +3,7 @@ package main;
 import java.io.IOException;
 
 import generic.RoverThreadHandler;
-import power.Power;
 import power_module.PowerServer;
-import telecommunication.Telecom;
 import chemin_module.CheminModuleMain;
 
 public class SimulateRoverMain {
