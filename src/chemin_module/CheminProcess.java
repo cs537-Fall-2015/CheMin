@@ -91,16 +91,49 @@ public class CheminProcess extends RoverServerRunnable{
 		}
 	}
 	
-	void f_position_xray(){
-	}
-	void f_receive_sample(){
+	void f_xray_set_position(){
 	}
 	
-	void f_receive_sample(){
+	void f_xray_turn_on(){
 	}
-	void f_receive_sample(){
+	
+	void f_sample_receive(){
 	}
-	void f_receive_sample(){
+	
+	void f_cell_next(){
+	}
+	
+	void f_cell_go_to(int cell_number){
+	}
+	
+	void f_cell_clean_current(){
+	}
+	
+	void f_cell_empty_current(){
+	}
+	
+	void f_inlet_open(){
+	}
+	
+	void f_inlet_close() {
+	}
+	
+	void f_piezzo_tun_on(int piezzo_number) {
+	}
+	
+	void f_piezzo_turn_off(int piezzo_number){
+	}
+	
+	void f_analysis_start(){
+	}
+	
+	void f_cdd_read_erase(){
+	}
+	
+	void f_cdd_create_diffraction_image(){
+	}
+	
+	void f_cdd_create_1d_2t_plot(){
 	}
 	
 	boolean launch_Chemin_Process() throws InterruptedException, IOException {
@@ -108,18 +141,27 @@ public class CheminProcess extends RoverServerRunnable{
 		System.out.println("CHEMIN Process Started:");
 		
 		//xray beam
-		f_position_xray();
+		f_xray_set_position();
+		f_xray_turn_on();
 		//sample , sample cell sample wheel
-		f_receive_sample();
-		f_next_sample_cell();
-		f_go_to_sample_cell(int cell_number);
-		f_clean_sample_cell(int cell_number);
+		f_sample_receive();
+		f_cell_next();
+		f_cell_go_to(cell_number);
+		f_cell_clean_current();
+		f_cell_empty_current();
 		//inlet protection cover
-		f_open_inlet();
-		f_close_inlet();
+		f_inlet_open();
+		f_inlet_close();
 		//piezzo
-		f_tun_on_piezzo(int piezzo_number);
-		f_turn_off_piezzo(int piezzo_number);
+		f_piezzo_tun_on(piezzo_number);
+		f_piezzo_turn_off(piezzo_number);
+		
+		f_analysis_start();
+		
+		f_cdd_read_erase(); //1000times in analysis
+		f_cdd_create_diffraction_image();
+		f_cdd_create_1d_2t_plot();
+		
 
 		f_send_results();
 		
