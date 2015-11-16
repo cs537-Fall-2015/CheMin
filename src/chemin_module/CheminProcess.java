@@ -107,14 +107,20 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_sample_receive(){
-		System.out.println("receiving powder sample...");
-		Thread.sleep(500);
-		System.out.println("powder is in the scoop...");
-		Thread.sleep(500);
-		System.out.println("powder is in sorting assembly...");
-		Thread.sleep(500);
-		v_powder_received=true;
-		System.out.println("sample powder received");
+		System.out.println("launching the powder sample receiving procedure...");
+		if(v_inlet_cover_opened)
+		{
+			System.out.println("error: inlet cover is opened, please close inlet cover first");
+			System.out.println("operation aborted");
+		} else {
+			Thread.sleep(500);
+			System.out.println("powder is in the scoop...");
+			Thread.sleep(500);
+			System.out.println("powder is in sorting assembly...");
+			Thread.sleep(500);
+			v_powder_received=true;
+			System.out.println("sample powder received");
+		}
 	}
 
 	void f_cell_next(){
@@ -162,9 +168,26 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_cell_clean_current(){
+
 	}
 
 	void f_cell_empty_current(){
+		System.out.println("starting emptying procedure...");
+		System.out.println("turning the sample upside down...");
+		for(int i=0;i<16;i++)
+		{
+			f_cell_next();
+		}
+		System.out.println("sample is now upside down...");
+		f_piezzo_tun_on(v_current_sample_cell/2);
+		Thread.sleep(2000);
+		v_cell_full[v_current_sample_cell]=false;
+		System.out.println("sample is now empty");
+		System.out.println("turning the sample upside down...");
+		for(int i=0;i<16;i++)
+		{
+			f_cell_next();
+		}
 	}
 
 	void f_inlet_open(){
