@@ -34,9 +34,8 @@ public class Parser extends RoverClientRunnable{
 	private static boolean startRequested = false;
 	/*
 	 * returns 0 if message is wrong 
-	 * returns 1 if message has correctly been sent to chemin process
-	 * returns 2 if message should be sent to power
-	 * returns 3 if message should be sent to telecom
+	 * returns 1 if message is internal
+	 * returns 2 if message is external
 	 */
 	public int check_message(String message) {
 		switch(message.toLowerCase()) {	
@@ -81,7 +80,7 @@ public class Parser extends RoverClientRunnable{
 			startRequested = true;
 			System.out.println("client has send request to CHEMIN to turn on");
 			System.out.println("CHEMIN is requesting power and Sending a json file with power Requirements to Power group");
-			
+			//launch chemin client to create communication with power module
 			CheminClient powerclient = null;
 			try {
 				powerclient = new CheminClient(9013,null);
@@ -94,13 +93,6 @@ public class Parser extends RoverClientRunnable{
 		case "telecom ack":	
 			System.out.println("chemin receives telecom acknowledge");
 			return 1;
-/*		case "power on":		
-			powerOn = true;
-			return 2;
-			//If process is true, 
-		case "power off":
-			powerOn = false;
-			return 2;*/
 		default:
 			return 0;
 		}
