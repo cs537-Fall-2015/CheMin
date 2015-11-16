@@ -168,7 +168,7 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_cell_clean_current(){
-
+		//i wont implement this one, similar to empty procedure
 	}
 
 	void f_cell_empty_current(){
@@ -191,9 +191,29 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_inlet_open(){
+		System.out.println("opening inlet cover...");
+		if(v_inlet_cover_opened)
+		{
+			System.out.println("inlet cover is already opened");
+		} else {
+
+			Thread.sleep(1000);
+			v_inlet_cover_opened=true;
+			System.out.println("inlet cover now opened");
+		}
 	}
 
 	void f_inlet_close() {
+		System.out.println("closing inlet cover...");
+		if(!v_inlet_cover_opened)
+		{
+			System.out.println("inlet cover is already closed");
+		} else {
+
+			Thread.sleep(1000);
+			v_inlet_cover_opened=false;
+			System.out.println("inlet cover now closed");
+		}
 	}
 
 	void f_piezzo_tun_on(int piezzo_number) {
