@@ -92,9 +92,17 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 	
 	void f_xray_set_position(){
+		System.out.println("setting and configuring xray beam position...");
+		Thread.sleep(1000);
+		v_xray_positioned=true;
+		System.out.println("xray position set");
 	}
 	
 	void f_xray_turn_on(){
+		System.out.println("turning xray on...");
+		Thread.sleep(500);
+		v_xray_on=true;
+		System.out.println("xray on");
 	}
 	
 	void f_sample_receive(){
@@ -161,7 +169,6 @@ public class CheminProcess extends RoverServerRunnable{
 		f_cdd_read_erase(); //1000times in analysis
 		f_cdd_create_diffraction_image();
 		f_cdd_create_1d_2t_plot();
-		
 
 		f_send_results();
 		
