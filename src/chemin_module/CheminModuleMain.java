@@ -34,7 +34,7 @@ public class CheminModuleMain{
 		Thread thread_process_chemin=RoverThreadHandler.getRoverThreadHandler().getNewThread(process);
 		thread_process_chemin.start();
 		
-		//Create and run client thread 
+/*		//Create and run client thread 
 		try {
 			client = new CheminClient(output_port);
 		} catch (IOException e) {
@@ -43,5 +43,5 @@ public class CheminModuleMain{
 		Thread thread_client_chemin=RoverThreadHandler.getRoverThreadHandler().getNewThread(client);
 		thread_client_chemin.start();
 	}
-
+*/
 }

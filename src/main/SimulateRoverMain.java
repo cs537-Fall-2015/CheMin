@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import generic.RoverThreadHandler;
 import power.Power;
+import power_module.PowerServer;
 import telecommunication.Telecom;
 import chemin_module.CheminModuleMain;
 
@@ -16,21 +17,20 @@ public class SimulateRoverMain {
 
 		//modules creation
 		CheminModuleMain Chemin = null;
-//		Power power=null;
+		PowerServer Power=null;
 //		Telecom telecom=null;
 
 		//modules launching
 		Chemin = new CheminModuleMain(chemin_input_port,chemin_output_port);
 		
-/*
 		try {
-			power = new Power(9013);
+			Power = new PowerServer(9013);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		Thread thread_power=RoverThreadHandler.getRoverThreadHandler().getNewThread(power);
 		thread_power.start();
-
+/*
 		try {
 			telecom = new Telecom(9002);
 		} catch (IOException e) {

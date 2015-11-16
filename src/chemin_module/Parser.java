@@ -10,7 +10,7 @@ import generic.RoverClientRunnable;
 
 public class Parser extends RoverClientRunnable{
 	private ObjectOutputStream outstr=null;
-	
+
 	public Parser(int internal_chemin_port, InetAddress host) throws UnknownHostException {
 		super(internal_chemin_port, host);
 
@@ -30,7 +30,7 @@ public class Parser extends RoverClientRunnable{
 	}
 
 	private static boolean powerOn = false;
-	
+	private static boolean startRequested = false;
 	/*
 	 * returns 0 if message is wrong 
 	 * returns 1 if message has correctly been sent to chemin process
@@ -39,46 +39,51 @@ public class Parser extends RoverClientRunnable{
 	 */
 	public int check_message(String message) {
 		switch(message.toLowerCase()) {	
-			/*
-			 * INTERNAL COMMUNICATION
-			 */
-			// If message is chemin_on, set the CCU to True
-			case "full process":
-				System.out.println("CCU has send request to CHEMIN to turn on");
-				System.out.println("CHEMIN is requesting power and Sending a json file with power Requirements to Power group");
-				//SEND MESSAGE TO CHEMIN PROCESS TO ASK FOR LAUNCHING
-				// can only be done if power has been turned on
-				if(powerOn){
-					//send message through socket to cheminProcess
-					try {
-						outstr.writeObject(message.toLowerCase());
-					} catch (IOException ez) {
-						ez.printStackTrace();
-					}
-				} else{
-					System.out.println(" CHEMIN is not turned on ,Yet !");
+		/*
+		 * INTERNAL COMMUNICATION
+		 */
+		// If message is chemin_on, set the CCU to True
+		case "power is on":
+			//SEND MESSAGE TO CHEMIN PROCESS TO ASK FOR LAUNCHING
+			// can only be done if power has been turned on
+			powerOn = true;
+			if(startRequested) {
+				startRequested=false;
+				//send message through socket to cheminProcess
+				try {
+					outstr.writeObject(message.toLowerCase());
+				} catch (IOException ez) {
+					ez.printStackTrace();
 				}
-				return 1;
-				
+			} else{
+				System.out.println(" CHEMIN is not turned on ,Yet !");
+			}
+			return 1;
+
 			/*
-			* EXTERNAL COMMUNICATION
-			*/
+			 * EXTERNAL COMMUNICATION
+			 */
 			//If message is power on, start the chemin process else print the required message 
-			case "power on":		
-				powerOn = true;
-				return 2;
+		case "start":	
+			startRequested = true;
+			System.out.println("client has send request to CHEMIN to turn on");
+			System.out.println("CHEMIN is requesting power and Sending a json file with power Requirements to Power group");
+			return 2;
+/*		case "power on":		
+			powerOn = true;
+			return 2;
 			//If process is true, 
-			case "power off":
-				powerOn = false;
-				return 2;
-			default:
-				return 0;
+		case "power off":
+			powerOn = false;
+			return 2;*/
+		default:
+			return 0;
 		}
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

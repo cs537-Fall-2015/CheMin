@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import com.sun.security.ntlm.Client;
 
 import generic.RoverServerRunnable;
+import generic.RoverThreadHandler;
 
 public class CheminServer extends RoverServerRunnable {
 	
@@ -43,7 +44,8 @@ public class CheminServer extends RoverServerRunnable {
 					case 2:
 						System.out.println("Command sent to chemin client");
 						CheminClient powerclient = new CheminClient(9013,null);
-						powerclient.send(message.toLowerCase());
+						Thread powerclientthread=RoverThreadHandler.getRoverThreadHandler().getNewThread(powerclient);
+						powerclientthread.start();
 						break;
 					case 3:
 						System.out.println("This shouldnt happen yet");
