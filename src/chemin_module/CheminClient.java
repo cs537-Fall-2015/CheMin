@@ -1,16 +1,15 @@
 package chemin_module;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.json.simple.JSONObject;
 
-import com.sun.org.apache.bcel.internal.Constants;
-
 import generic.RoverClientRunnable;
+import json.Constants;
 import json.GlobalReader;
+
 
 public class CheminClient extends RoverClientRunnable {
 

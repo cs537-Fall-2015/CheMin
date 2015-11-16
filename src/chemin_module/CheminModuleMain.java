@@ -27,8 +27,8 @@ public class CheminModuleMain{
 		
 		//Create and run process thread 
 		try {
-			process = new CheminProcess(????);
-		} catch (IOException e) {
+			process = new CheminProcess(9010); //port can be modified
+		} catch (IOException e) { 
 			e.printStackTrace();
 		}
 		Thread thread_process_chemin=RoverThreadHandler.getRoverThreadHandler().getNewThread(process);

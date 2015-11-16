@@ -25,7 +25,6 @@ import json.GlobalReader;
 
 public class CheminProcess extends RoverServerRunnable{
 	private Thread t = null;
-	private boolean power_is_on = false;
 	
 	public CheminProcess(int port) throws IOException {
 		super(port);
@@ -37,34 +36,23 @@ public class CheminProcess extends RoverServerRunnable{
 		try {				
 			System.out.println("Chemin process -> Waiting for Request");
 			getRoverServerSocket().openSocket();
-			/*		------------------------> NEED TO BE DONE <-------------------------------
+			/*	
 			 * at this stage, Chemin process can receive the following commands:
-			 * 		POWER_IS_ON (from power)	:	chemin knows that it is turned on and is ready to receive orders to start working 
-			 * 		POWER_IS_OFF (from power)	:	chemin knows that the power has been turned off and needs to stop everything immediatly
-			 * 		CHEMIN_START				:	Full chemin cycle starting (required: Power_is_on)
+			 * 		full process				:	Full chemin cycle starting (required: Power_is_on)
 			 * 		----> other commands yet to come
 			 */
 			ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
 			String message=oinstr.readObject().toString();
-			System.out.println(message);
-			// TO BE CONTINUED HERE 
-			if(message.toLowerCase()=="POWER_IS_ON" && getRoverServerSocket().getSocket().getPort()==POWER_SOCKET) //to be corrected
-			{
-				power_is_on = true;
-			}
-			if(message.toLowerCase()=="POWER_IS_OFF" && getRoverServerSocket().getSocket().getPort()==POWER_SOCKET) //to be corrected
-			{
-				power_is_on = true;
-			}
-			if(getRoverServerSocket().getSocket().getPort()==CHEMIN_SERVER_SOCKET) //to be corrected
-			{
-				switch (message.toLowerCase()){
-				case "CHEMIN_START": 
+
+			switch (message.toLowerCase()){
+				case "full process":
+				try {
 					launch_Chemin_Process();
-					break;
-				}
-			}
-			
+				} catch (InterruptedException iex) {
+				      System.err.println("Message printer interrupted");
+			    }
+				break;
+			}						
 		}catch(IOException e){
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
