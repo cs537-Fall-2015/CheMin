@@ -31,12 +31,17 @@ public class Parser extends RoverClientRunnable{
 
 	private static boolean powerOn = false;
 	
-
-	public void check_message(String message) {
+	/*
+	 * returns 0 if message is wrong 
+	 * returns 1 if message has correctly been sent to chemin process
+	 * returns 2 if message should be sent to power
+	 * returns 3 if message should be sent to telecom
+	 */
+	public int check_message(String message) {
 		switch(message.toLowerCase()) {	
-		/*
-		 * INTERNAL COMMUNICATION
-		 */
+			/*
+			 * INTERNAL COMMUNICATION
+			 */
 			// If message is chemin_on, set the CCU to True
 			case "full process":
 				System.out.println("CCU has send request to CHEMIN to turn on");
@@ -53,21 +58,21 @@ public class Parser extends RoverClientRunnable{
 				} else{
 					System.out.println(" CHEMIN is not turned on ,Yet !");
 				}
-				break;
-		/*
-		* EXTERNAL COMMUNICATION
-		*/
+				return 1;
+				
+			/*
+			* EXTERNAL COMMUNICATION
+			*/
 			//If message is power on, start the chemin process else print the required message 
 			case "power on":		
-		//!!!!!!!!!!!!!!!!!!!		 SEND MESSAGE TO POWER TO ASK FOR TURN ON
-				
 				powerOn = true;
-				break;
+				return 2;
 			//If process is true, 
 			case "power off":
 				System.out.println(" Deleting Thread ..");
-		!!!!!!!!!!!!!!!!!!! SEND MESSAGE TO POWER TO ASK FOR TURN OFF
-				break;
+				return 2;
+			default:
+				return 0;
 		}
 	}
 

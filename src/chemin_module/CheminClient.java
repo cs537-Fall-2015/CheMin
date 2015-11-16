@@ -1,13 +1,15 @@
 package chemin_module;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-import generic.RoverServerRunnable;
+import generic.RoverClientRunnable;
 
-public class CheminClient extends RoverServerRunnable {
+public class CheminClient extends RoverClientRunnable {
 
-	public CheminClient(int port) throws IOException {
-		super(port);
+	public CheminClient(int port, InetAddress host) throws UnknownHostException {
+		super(port, host);
 		// TODO Auto-generated constructor stub
 	}
 
