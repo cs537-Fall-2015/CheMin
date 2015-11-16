@@ -33,6 +33,7 @@ public class CheminServer extends RoverServerRunnable {
 				//wait for 7 sec
 				Thread.sleep(7000);
 				
+				//send message to parser
 				chemin_parser.check_message(message);
 /*				
 				Thread t=Thread.currentThread(); 
