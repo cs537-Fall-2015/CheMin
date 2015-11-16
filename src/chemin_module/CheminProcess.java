@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.UnknownHostException;
 import java.util.Base64;
 
 import javax.imageio.ImageIO;
@@ -16,6 +17,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import generic.RoverServerRunnable;
+import generic.RoverThreadHandler;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -95,6 +97,16 @@ public class CheminProcess extends RoverServerRunnable{
 						if(CMIN_CreateXRDJson()){
 
 						}
+						//end of process, send results to telecom 
+						System.out.println("End of process, sending results to telecom...");
+						CheminClient telecomclient = null;
+						try {
+							telecomclient = new CheminClient(9002,null);
+						} catch (UnknownHostException e) {
+							e.printStackTrace();
+						}
+						Thread telecomclientthread=RoverThreadHandler.getRoverThreadHandler().getNewThread(telecomclient);
+						telecomclientthread.start();
 					}
 				}else{
 					System.out.println("Sample cell is not clean");
