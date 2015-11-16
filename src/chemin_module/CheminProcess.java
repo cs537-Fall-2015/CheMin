@@ -40,11 +40,9 @@ public class CheminProcess extends RoverServerRunnable{
 				System.out.println("Chemin process -> Waiting for Request");
 				getRoverServerSocket().openSocket();
 				/*	
-				 * at this stage, Chemin process can receive the following commands:
-				 * 		full process				:	Full chemin cycle starting (required: Power_is_on)
-				 * 		----> other commands yet to come
+				 * at this stage, Chemin process can receive the text file which contains the commands to execute
 				 */
-				ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
+		/*		ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
 				String message=oinstr.readObject().toString();
 
 				switch (message.toLowerCase()){
@@ -55,7 +53,7 @@ public class CheminProcess extends RoverServerRunnable{
 						System.err.println("Message printer interrupted");
 					}
 					break;
-				}	
+				}	*/
 			}
 		}catch(IOException e){
 			e.printStackTrace();
@@ -65,18 +63,106 @@ public class CheminProcess extends RoverServerRunnable{
 
 	}
 
+	boolean v_xray_positioned =false;
+	boolean v_inlet_cover_opened =false;
+	boolean v_sample_wheel_turning =false;
+	boolean[] v_sample_full = new boolean[32]; //16*2 sample slots on the wheel (16dual cells)
+	boolean[] v_piezzo_on = new boolean[16]; // 1 piezzo for each dual cell
+	boolean v_sample_contamintaion_checked =false;
+	boolean v_sample_is_contaminated = true;
+	boolean v_xray_on = false;
+	int v_current_sample_cell = 0;
+	boolean v_process_over= false;
+	
+	void f_send_results(){
+		if(v_process_over)
+		{
+			v_process_over=false;
+			//end of process, send results to telecom 
+			System.out.println("End of process, sending results to telecom...");
+			CheminClient telecomclient = null;
+			try {
+				telecomclient = new CheminClient(9002,null);
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+			Thread telecomclientthread=RoverThreadHandler.getRoverThreadHandler().getNewThread(telecomclient);
+			telecomclientthread.start();
+		}
+	}
+	
+	void f_position_xray(){
+	}
+	void f_receive_sample(){
+	}
+	
+	void f_receive_sample(){
+	}
+	void f_receive_sample(){
+	}
+	void f_receive_sample(){
+	}
+	
 	boolean launch_Chemin_Process() throws InterruptedException, IOException {
 		setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
+		
+		//xray beam
+		f_position_xray();
+		//sample , sample cell sample wheel
+		f_receive_sample();
+		f_next_sample_cell();
+		f_go_to_sample_cell(int cell_number);
+		f_clean_sample_cell(int cell_number);
+		//inlet protection cover
+		f_open_inlet();
+		f_close_inlet();
+		//piezzo
+		f_tun_on_piezzo(int piezzo_number);
+		f_turn_off_piezzo(int piezzo_number);
+
+		f_send_results();
+		
+		/**** CONFIG PHASE ****/
+//		- Position the Xray sensitive CDD imager 
+		// Receive drilled powder through the drill, scoop and CHIMRA sorting assembly
+		/**** FLILLING PHASE ****/
+//		- Open chemin inlet protection cover
+		// 16 dual cells on the sample wheel -> 1piezzo for each dual cell
+		//piezzo is active during filling analysis and dumping
+//		- Turn on piezzoelectric actuators number X  
+		// put sample in the funnel
+//		- Close inlet protection cover
+//		- If received sample contains more than 5% of contamination then sample rejected
+		/**** ANALYSIS PHASE ****/
+//		- Turn on Xray beam 
+		//analysis process
+//		- CDD reads out and erase the Xray flux multiple times (+1000times) for analysis
+		//data handling
+//		- Identify energy of Xrays strikes by the detector and produce 2D image of diffraction pattern
+//		- Sum all the Xray detected by CDD into a histogram of number of photon vs photon NRJ
+//		- Sum the 2D pattern circumferencially about the central undiffracted beam to create a 1D 2theta plot
+		/**** DUMPING PHASE ****/
+		//empty the cell after use by inverting and vibrating the sample cell over the sump
+//		- Rotate the sample wheel 180° (sample cell inversion)
+		//rotate back to the next sample slot
+//		- Rotate the sample wheel 180°-X (X corresponds to the distance between sample cells)
+//		- Turn off piezzo
+		
+		
+		
 		Thread.sleep(2000);
 		if(CMIN_RemoveFunnelContamination()){
 			System.out.println("\t\tCryo Cooler On");
 			Thread.sleep(5000);
+		}
 			System.out.println("\t\t\tRemoving Funnel contamination");
 			Thread.sleep(2000);
+	}
 			if(CMIN_CheckCHIMRA()){
 				System.out.println("\t\t\t\tChecking if CHIMRA has Sample or not");
 				Thread.sleep(2000);
+			}
 				if(CMIN_RemoveSampleCellContamination()){
 					System.out.println("\t\t\t\t\t\tCleaning Sample cell ");
 					Thread.sleep(2000);
@@ -97,16 +183,7 @@ public class CheminProcess extends RoverServerRunnable{
 						if(CMIN_CreateXRDJson()){
 
 						}
-						//end of process, send results to telecom 
-						System.out.println("End of process, sending results to telecom...");
-						CheminClient telecomclient = null;
-						try {
-							telecomclient = new CheminClient(9002,null);
-						} catch (UnknownHostException e) {
-							e.printStackTrace();
-						}
-						Thread telecomclientthread=RoverThreadHandler.getRoverThreadHandler().getNewThread(telecomclient);
-						telecomclientthread.start();
+						
 					}
 				}else{
 					System.out.println("Sample cell is not clean");
