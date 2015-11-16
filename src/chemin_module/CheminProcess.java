@@ -63,6 +63,65 @@ public class CheminProcess extends RoverServerRunnable{
 
 	}
 
+	/*******************************
+	 *  FULL PROCEDRE EXPLANATION
+	 ****************************/
+	/**** CONFIG PHASE ****/
+	//		- Position the Xray sensitive CDD imager 
+	// Receive drilled powder through the drill, scoop and CHIMRA sorting assembly
+	/**** FLILLING PHASE ****/
+	//		- Open chemin inlet protection cover
+	// 16 dual cells on the sample wheel -> 1piezzo for each dual cell
+	//piezzo is active during filling analysis and dumping
+	//		- Turn on piezzoelectric actuators number X  
+	// put sample in the funnel
+	//		- Close inlet protection cover
+	//		- If received sample contains more than 5% of contamination then sample rejected
+	/**** ANALYSIS PHASE ****/
+	//		- Turn on Xray beam 
+	//analysis process
+	//		- CDD reads out and erase the Xray flux multiple times (+1000times) for analysis
+	//data handling
+	//		- Identify energy of Xrays strikes by the detector and produce 2D image of diffraction pattern
+	//		- Sum all the Xray detected by CDD into a histogram of number of photon vs photon NRJ
+	//		- Sum the 2D pattern circumferencially about the central undiffracted beam to create a 1D 2theta plot
+	/**** DUMPING PHASE ****/
+	//empty the cell after use by inverting and vibrating the sample cell over the sump
+	//		- Rotate the sample wheel 180° (sample cell inversion)
+	//rotate back to the next sample slot
+	//		- Rotate the sample wheel 180°-X (X corresponds to the distance between sample cells)
+	//		- Turn off piezzo
+	
+	
+	/********************************
+	 * COMANDS LIST
+	 * *******************************
+		//xray beam
+		f_xray_set_position();
+		f_xray_turn_on();
+		//sample , sample cell sample wheel
+		f_sample_receive();
+		f_cell_next();
+		f_cell_go_to(cell_number);
+		f_cell_clean_current();
+		f_cell_empty_current();
+		//inlet protection cover
+		f_inlet_open();
+		f_inlet_close();
+		//piezzo
+		f_piezzo_tun_on(piezzo_number);
+		f_piezzo_turn_off(piezzo_number);
+
+		f_analysis_start();
+
+		f_cdd_read_erase(); //1000times in analysis
+		f_cdd_create_diffraction_image();
+		f_cdd_create_1d_2t_plot();
+
+		f_send_results();
+	 ********/
+	
+	
 	boolean v_xray_positioned =false;
 	boolean v_inlet_cover_opened =false;
 	boolean v_wheel_turning =false;
@@ -217,6 +276,7 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_piezzo_tun_on(int piezzo_number) {
+		
 	}
 
 	void f_piezzo_turn_off(int piezzo_number){
@@ -237,59 +297,8 @@ public class CheminProcess extends RoverServerRunnable{
 	boolean launch_Chemin_Process() throws InterruptedException, IOException {
 		setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
-
-		//xray beam
-		f_xray_set_position();
-		f_xray_turn_on();
-		//sample , sample cell sample wheel
-		f_sample_receive();
-		f_cell_next();
-		f_cell_go_to(cell_number);
-		f_cell_clean_current();
-		f_cell_empty_current();
-		//inlet protection cover
-		f_inlet_open();
-		f_inlet_close();
-		//piezzo
-		f_piezzo_tun_on(piezzo_number);
-		f_piezzo_turn_off(piezzo_number);
-
-		f_analysis_start();
-
-		f_cdd_read_erase(); //1000times in analysis
-		f_cdd_create_diffraction_image();
-		f_cdd_create_1d_2t_plot();
-
-		f_send_results();
-
-		/**** CONFIG PHASE ****/
-		//		- Position the Xray sensitive CDD imager 
-		// Receive drilled powder through the drill, scoop and CHIMRA sorting assembly
-		/**** FLILLING PHASE ****/
-		//		- Open chemin inlet protection cover
-		// 16 dual cells on the sample wheel -> 1piezzo for each dual cell
-		//piezzo is active during filling analysis and dumping
-		//		- Turn on piezzoelectric actuators number X  
-		// put sample in the funnel
-		//		- Close inlet protection cover
-		//		- If received sample contains more than 5% of contamination then sample rejected
-		/**** ANALYSIS PHASE ****/
-		//		- Turn on Xray beam 
-		//analysis process
-		//		- CDD reads out and erase the Xray flux multiple times (+1000times) for analysis
-		//data handling
-		//		- Identify energy of Xrays strikes by the detector and produce 2D image of diffraction pattern
-		//		- Sum all the Xray detected by CDD into a histogram of number of photon vs photon NRJ
-		//		- Sum the 2D pattern circumferencially about the central undiffracted beam to create a 1D 2theta plot
-		/**** DUMPING PHASE ****/
-		//empty the cell after use by inverting and vibrating the sample cell over the sump
-		//		- Rotate the sample wheel 180° (sample cell inversion)
-		//rotate back to the next sample slot
-		//		- Rotate the sample wheel 180°-X (X corresponds to the distance between sample cells)
-		//		- Turn off piezzo
-
-
-
+	
+/*
 		Thread.sleep(2000);
 		if(CMIN_RemoveFunnelContamination()){
 			System.out.println("\t\tCryo Cooler On");
@@ -320,7 +329,7 @@ public class CheminProcess extends RoverServerRunnable{
 			Thread.sleep(10000);
 			CMIN_ReadCCD();  //each 30 seconds and compress
 			if(CMIN_CreateXRDJson()){
-
+*/
 			}
 
 		}
