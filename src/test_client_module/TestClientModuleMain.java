@@ -19,10 +19,15 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.awt.event.ActionEvent;
+
+import json.Constants;
 
 public class TestClientModuleMain {
 
@@ -159,14 +164,27 @@ public class TestClientModuleMain {
 			public void actionPerformed(ActionEvent arg0) {
 				//when send button is pressed, create txt command files and send command file path to chemin
 				///// .txt command file creation
+				PrintWriter writer = null;
+				try {
+					writer = new PrintWriter(Constants.ROOT_PATH+"command_file.txt", "UTF-8");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				if(settings_selection.getSelectedItem()=="Run full process")
 				{
-					
+					//fill .txt file
+					writer.println("launch_Chemin_Process");
+					writer.close();
 				} else if(settings_selection.getSelectedItem()=="Manual selection")
 				{
 					frmTestClient.setTitle("sis");
 					chckbxNewCheckBox_1.setEnabled(false);
-					
+					//fill .txt file
 				}
 				
 	/*			Socket socket=null;
