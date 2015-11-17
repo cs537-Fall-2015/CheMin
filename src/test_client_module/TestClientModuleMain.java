@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
 import javax.swing.JList;
+import javax.security.auth.callback.ChoiceCallback;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -17,6 +18,11 @@ import javax.swing.JSplitPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.awt.event.ActionEvent;
 
 public class TestClientModuleMain {
 
@@ -54,15 +60,16 @@ public class TestClientModuleMain {
 		frmTestClient.setBounds(100, 100, 450, 352);
 		frmTestClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Run full process", "Manual selection"}));
-		frmTestClient.getContentPane().add(comboBox, BorderLayout.NORTH);
+		JComboBox settings_selection = new JComboBox();
+		settings_selection.setModel(new DefaultComboBoxModel(new String[] {"Run full process", "Manual selection"}));
+		frmTestClient.getContentPane().add(settings_selection, BorderLayout.NORTH);
 		
-		JButton btnSendCommandsTo = new JButton("Send commands to chemin");
-		frmTestClient.getContentPane().add(btnSendCommandsTo, BorderLayout.CENTER);
+		JButton send_button = new JButton("Send commands to chemin");
 		
-		JPanel panel = new JPanel();
-		frmTestClient.getContentPane().add(panel, BorderLayout.WEST);
+		frmTestClient.getContentPane().add(send_button, BorderLayout.CENTER);
+		
+		JPanel commands_selection = new JPanel();
+		frmTestClient.getContentPane().add(commands_selection, BorderLayout.WEST);
 		
 		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("New check box");
 		
@@ -83,46 +90,46 @@ public class TestClientModuleMain {
 		JCheckBox chckbxNewCheckBox_8 = new JCheckBox("New check box");
 		
 		JCheckBox chckbxNewCheckBox_9 = new JCheckBox("New check box");
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
+		GroupLayout gl_commands_selection = new GroupLayout(commands_selection);
+		gl_commands_selection.setHorizontalGroup(
+			gl_commands_selection.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_commands_selection.createSequentialGroup()
+					.addGroup(gl_commands_selection.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_2))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_3))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_4))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_5))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_6))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_7))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_8))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_9))
-						.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_commands_selection.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(chckbxNewCheckBox_1)))
 					.addContainerGap(101, Short.MAX_VALUE))
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
+		gl_commands_selection.setVerticalGroup(
+			gl_commands_selection.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_commands_selection.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(chckbxNewCheckBox_1)
 					.addGap(1)
@@ -145,6 +152,41 @@ public class TestClientModuleMain {
 					.addComponent(chckbxNewCheckBox_9)
 					.addContainerGap(32, Short.MAX_VALUE))
 		);
-		panel.setLayout(gl_panel);
+		commands_selection.setLayout(gl_commands_selection);
+		
+		
+		send_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//when send button is pressed, create txt command files and send command file path to chemin
+				///// .txt command file creation
+				if(settings_selection.getSelectedItem()=="Run full process")
+				{
+					
+				} else if(settings_selection.getSelectedItem()=="Manual selection")
+				{
+					frmTestClient.setTitle("sis");
+					chckbxNewCheckBox_1.setEnabled(false);
+					
+				}
+				
+	/*			Socket socket=null;
+				try {
+					socket = new Socket("localhost",9008);
+				} catch (IOException ex) {
+				ex.printStackTrace();
+				}
+				ObjectOutputStream outstr=null;
+				try {
+					outstr = new ObjectOutputStream(socket.getOutputStream());
+				} catch (IOException ey) {
+				ey.printStackTrace();
+				}
+				try {
+					outstr.writeObject(msg);
+				} catch (IOException ez) {
+				ez.printStackTrace();
+				}*/
+			}
+		});
 	}
 }
