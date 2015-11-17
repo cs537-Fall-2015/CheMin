@@ -10,7 +10,7 @@ public class CheminModuleMain{
 	private CheminServer server=null;
 
 	//module constructor
-	public CheminModuleMain(int input_port, int output_port) throws IOException {
+	public CheminModuleMain(int input_port) throws IOException {
 
 		//Create and run server thread 
 		try {	

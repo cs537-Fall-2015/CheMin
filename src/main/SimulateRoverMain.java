@@ -12,7 +12,6 @@ public class SimulateRoverMain {
 	public static void main(String[] args) {
 
 		int chemin_input_port = 9008;
-		int chemin_output_port = 9010; //can be modified
 
 		//modules creation
 		CheminModuleMain Chemin = null;
@@ -21,7 +20,7 @@ public class SimulateRoverMain {
 
 		//modules launching
 		try {
-			Chemin = new CheminModuleMain(chemin_input_port,chemin_output_port);
+			Chemin = new CheminModuleMain(chemin_input_port);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
