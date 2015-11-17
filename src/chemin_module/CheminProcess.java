@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.UnknownHostException;
 import java.util.Base64;
 
@@ -22,7 +21,6 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import json.Constants;
-import json.GlobalReader;
 
 
 public class CheminProcess extends RoverServerRunnable{
@@ -126,7 +124,6 @@ public class CheminProcess extends RoverServerRunnable{
 
 	boolean v_xray_positioned =false;
 	boolean v_inlet_cover_opened =false;
-	boolean v_wheel_turning =false;
 	boolean v_powder_received =false;
 	boolean[] v_cell_full = new boolean[32]; //16*2 sample slots on the wheel (16dual cells)
 	boolean[] v_piezzo_on = new boolean[16]; // 1 piezzo for each dual cell
