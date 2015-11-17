@@ -41,13 +41,24 @@ public class CheminProcess extends RoverServerRunnable{
 				/*	
 				 * at this stage, Chemin process can receive the text file which contains the commands to execute
 				 */
-				//ONLY FOR TEST PURPOSE:
+				ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
+				String message = null;
 				try {
-					launch_Chemin_Process();
-				} catch (InterruptedException e) {
+					message = oinstr.readObject().toString();
+				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+
+				switch (message.toLowerCase()){
+				case "full process":
+					try {
+						launch_Chemin_Process();
+					} catch (InterruptedException iex) {
+						System.err.println("Message printer interrupted");
+					}
+					break;
+				}	
 			}
 		}catch(IOException e){
 			e.printStackTrace();
