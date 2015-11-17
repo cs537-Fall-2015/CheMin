@@ -300,6 +300,7 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_analysis_start(){
+		
 	}
 
 	void f_cdd_read_erase(){
@@ -368,39 +369,7 @@ CHEMIN_POWER_OFF();
 return true;				
 }
 
-void send_requirments_to_power() {
-	try{
-		if(getRoverServerSocket().getSocket().getPort()==9013){
-			ObjectOutputStream outstr=new ObjectOutputStream(getRoverServerSocket().getSocket().getOutputStream());
-			System.out.println("CHEMIN-->Power roup");
-			System.out.println("CHEMIN-->Sending you my requirements in a json file");
-			GlobalReader gr=new GlobalReader(Constants.ROOT_PATH+"PowerRequirement");
-			JSONObject json= gr.getJSONObject();
-			outstr.writeObject(json);
-		}
-	}
-	catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}	
-}
-
-void send_image_to_telecom() {
-	try{
-		if(getRoverServerSocket().getSocket().getPort()==9002){
-			System.out.println("contacting to tele success");
-			ObjectOutputStream ostr=new ObjectOutputStream(getRoverServerSocket().getSocket().getOutputStream());
-			ostr.writeObject("Chemin--> telecommunication: Read this image json");
-			GlobalReader gr2=new GlobalReader(Constants.ROOT_PATH+"XrdDiffraction");
-			JSONObject jsonTele= gr2.getJSONObject();
-			ostr.writeObject(jsonTele);
-		}
-	}
-	catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}	
-}	        
+       
 
 public void CHEMIN_POWER_OFF() {
 
@@ -413,42 +382,6 @@ public void CHEMIN_POWER_OFF() {
 	System.out.println("Xray off!");
 }
 
-public boolean CMIN_RemoveFunnelContamination(){
-	return true;
-}
-
-public boolean CMIN_RemoveSampleCellContamination(){ 
-	return true;
-}
-boolean CMIN_CheckCHIMRA(){
-	return true;
-}
-
-public boolean CMIN_FunnelPiezoOn() {
-
-	return true;
-}
-public boolean CMIN_FunnelPiezoOff(){
-	return true;
-}
-
-public boolean CMIN_SamlecellPiezoOn(){
-
-	return true;
-}
-
-public boolean CMIN_SamlecellPiezoOff(){
-	return true;
-}
-public boolean CMIN_XrayOn(){
-	return true;
-}
-public boolean CMIN_XrayOff(){
-	return true;
-}
-public boolean CMIN_ReadCCD(){
-	return true;
-}
 public boolean CMIN_CreateXRDJson() throws IOException{
 	JSONObject jsonObject = createJsonFromImage();
 
@@ -466,7 +399,7 @@ public boolean CMIN_CreateXRDJson() throws IOException{
 	return true;
 }
 
-private  MediaPlayer playMusic() {
+private  MediaPlayer playSound() {
 
 	new JFXPanel();
 	String bip = Constants.ROOT_PATH+"Voice.mp3";
@@ -499,11 +432,4 @@ private static String getStringFromImage() throws IOException {
 	return encoded;
 }
 
-public Thread getT() {
-	return t;
-}
-
-public void setT(Thread t) {
-	this.t = t;
-}
 }

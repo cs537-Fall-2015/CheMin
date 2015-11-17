@@ -37,6 +37,7 @@ public class CheminClient extends RoverClientRunnable {
 				outstr.writeObject(json);
 			}
 			
+			
 			// If the value returned by getPort method = 9002
 			if(getRoverSocket().getSocket().getPort()==9002){
 
