@@ -189,6 +189,17 @@ public class CheminProcess extends RoverServerRunnable{
 		{
 			v_current_sample_cell=0;
 		}
+		if(v_current_sample_cell>=16)
+		{
+			v_cell_full[v_current_sample_cell-16]=false;
+			Thread.sleep(1000);
+			System.out.println("current sample cell is now: "+v_current_sample_cell);
+		}else if(v_current_sample_cell<16)
+		{
+			v_cell_full[16+v_current_sample_cell]=false;
+			Thread.sleep(1000);
+			System.out.println("current sample cell is now: "+v_current_sample_cell);
+		}
 		Thread.sleep(1000);
 		System.out.println("current sample cell is now: "+v_current_sample_cell);
 	}
@@ -200,10 +211,21 @@ public class CheminProcess extends RoverServerRunnable{
 		{
 			v_current_sample_cell=15;
 		}
+		if(v_current_sample_cell>=16)
+		{
+			v_cell_full[v_current_sample_cell-16]=false;
+			Thread.sleep(1000);
+			System.out.println("current sample cell is now: "+v_current_sample_cell);
+		}else if(v_current_sample_cell<16)
+		{
+			v_cell_full[16+v_current_sample_cell]=false;
+			Thread.sleep(1000);
+			System.out.println("current sample cell is now: "+v_current_sample_cell);
+		}
 		Thread.sleep(1000);
 		System.out.println("current sample cell is now: "+v_current_sample_cell);
 	}
-
+//
 	void f_cell_go_to(int cell_number){
 		if((cell_number<16)&&(cell_number>=0))
 		{
@@ -225,7 +247,7 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 		}
 	}
-
+//
 	void f_cell_clean_current(){
 		System.out.println("starting cleaning procedure...");
 		f_cell_empty_current();
@@ -303,7 +325,7 @@ public class CheminProcess extends RoverServerRunnable{
 		}
 	}
 
-	
+//
 	void f_analysis_start(){
 		System.out.println("verification that every components ready to start analysis phase....");
 		if(v_xray_positioned)
@@ -359,10 +381,13 @@ public class CheminProcess extends RoverServerRunnable{
 	void f_cdd_read_erase(){
 		System.out.println("read... erase....");
 	}
-
+//
 	void f_cdd_create_diffraction_image(){
+		System.out.println("creating diffraction image....");
+		Thread.sleep(2000);
+		System.out.println("diffraction image created");
 	}
-
+//
 	void f_cdd_create_1d_2t_plot(){
 		System.out.println("creating 1D 2theta plot image....");
 		Thread.sleep(2000);
