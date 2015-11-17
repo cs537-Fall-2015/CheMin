@@ -66,6 +66,7 @@ public class TestClientModuleMain {
 		frmTestClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JComboBox settings_selection = new JComboBox();
+		
 		settings_selection.setModel(new DefaultComboBoxModel(new String[] {"Run full process", "Manual selection"}));
 		frmTestClient.getContentPane().add(settings_selection, BorderLayout.NORTH);
 		
@@ -95,51 +96,44 @@ public class TestClientModuleMain {
 		JCheckBox chckbxNewCheckBox_8 = new JCheckBox("New check box");
 		
 		JCheckBox chckbxNewCheckBox_9 = new JCheckBox("New check box");
+		
+		chckbxNewCheckBox.setEnabled(false);
+		chckbxNewCheckBox_1.setEnabled(false);
+		chckbxNewCheckBox_2.setEnabled(false);
+		chckbxNewCheckBox_3.setEnabled(false);
+		chckbxNewCheckBox_4.setEnabled(false);
+		chckbxNewCheckBox_5.setEnabled(false);
+		chckbxNewCheckBox_6.setEnabled(false);
+		chckbxNewCheckBox_7.setEnabled(false);
+		chckbxNewCheckBox_8.setEnabled(false);
+		chckbxNewCheckBox_9.setEnabled(false);
+		
 		GroupLayout gl_commands_selection = new GroupLayout(commands_selection);
 		gl_commands_selection.setHorizontalGroup(
 			gl_commands_selection.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_commands_selection.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_commands_selection.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_2))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_3))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_4))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_5))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_6))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_7))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_8))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_9))
-						.addGroup(gl_commands_selection.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(chckbxNewCheckBox_1)))
-					.addContainerGap(101, Short.MAX_VALUE))
+						.addComponent(chckbxNewCheckBox_2)
+						.addComponent(chckbxNewCheckBox_3)
+						.addComponent(chckbxNewCheckBox_4)
+						.addComponent(chckbxNewCheckBox_5)
+						.addComponent(chckbxNewCheckBox_6)
+						.addComponent(chckbxNewCheckBox_7)
+						.addComponent(chckbxNewCheckBox_8)
+						.addComponent(chckbxNewCheckBox_9)
+						.addComponent(chckbxNewCheckBox)
+						.addComponent(chckbxNewCheckBox_1))
+					.addContainerGap(121, Short.MAX_VALUE))
 		);
 		gl_commands_selection.setVerticalGroup(
 			gl_commands_selection.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_commands_selection.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(chckbxNewCheckBox_1)
-					.addGap(1)
 					.addComponent(chckbxNewCheckBox)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(chckbxNewCheckBox_1)
+					.addGap(1)
 					.addComponent(chckbxNewCheckBox_2)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(chckbxNewCheckBox_3)
@@ -159,14 +153,47 @@ public class TestClientModuleMain {
 		);
 		commands_selection.setLayout(gl_commands_selection);
 		
+		settings_selection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(settings_selection.getSelectedItem()=="Run full process")
+				{
+					chckbxNewCheckBox.setEnabled(false);
+					chckbxNewCheckBox_1.setEnabled(false);
+					chckbxNewCheckBox_2.setEnabled(false);
+					chckbxNewCheckBox_3.setEnabled(false);
+					chckbxNewCheckBox_4.setEnabled(false);
+					chckbxNewCheckBox_5.setEnabled(false);
+					chckbxNewCheckBox_6.setEnabled(false);
+					chckbxNewCheckBox_7.setEnabled(false);
+					chckbxNewCheckBox_8.setEnabled(false);
+					chckbxNewCheckBox_9.setEnabled(false);
+					//fill .txt file
+				} else if(settings_selection.getSelectedItem()=="Manual selection")
+				{
+					chckbxNewCheckBox.setEnabled(true);
+					chckbxNewCheckBox_1.setEnabled(true);
+					chckbxNewCheckBox_2.setEnabled(true);
+					chckbxNewCheckBox_3.setEnabled(true);
+					chckbxNewCheckBox_4.setEnabled(true);
+					chckbxNewCheckBox_5.setEnabled(true);
+					chckbxNewCheckBox_6.setEnabled(true);
+					chckbxNewCheckBox_7.setEnabled(true);
+					chckbxNewCheckBox_8.setEnabled(true);
+					chckbxNewCheckBox_9.setEnabled(true);
+					//fill .txt file
+				}
+			}
+		});
+		
 		
 		send_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//when send button is pressed, create txt command files and send command file path to chemin
 				///// .txt command file creation
+				String command_file_name = "command_file.txt";
 				PrintWriter writer = null;
 				try {
-					writer = new PrintWriter(Constants.ROOT_PATH+"command_file.txt", "UTF-8");
+					writer = new PrintWriter(Constants.ROOT_PATH+command_file_name, "UTF-8");
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -187,7 +214,7 @@ public class TestClientModuleMain {
 					//fill .txt file
 				}
 				
-	/*			Socket socket=null;
+				Socket socket=null;
 				try {
 					socket = new Socket("localhost",9008);
 				} catch (IOException ex) {
@@ -200,10 +227,10 @@ public class TestClientModuleMain {
 				ey.printStackTrace();
 				}
 				try {
-					outstr.writeObject(msg);
+					outstr.writeObject(Constants.ROOT_PATH+command_file_name);
 				} catch (IOException ez) {
 				ez.printStackTrace();
-				}*/
+				}
 			}
 		});
 	}
