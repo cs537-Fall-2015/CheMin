@@ -300,17 +300,80 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_analysis_start(){
-		
+		System.out.println("WARNING: now entering the analysis phase....");
+		Thread.sleep(5000);
+		for(int i = 0 ; i<50;i++) //NORMALLY MRE THAN 1000times
+		{
+			f_cdd_read_erase();
+		}
 	}
 
 	void f_cdd_read_erase(){
+		System.out.println("read... erase....");
 	}
 
 	void f_cdd_create_diffraction_image(){
 	}
 
 	void f_cdd_create_1d_2t_plot(){
+		System.out.println("creating 1D 2theta plot image....");
+		Thread.sleep(2000);
+		CMIN_CreateXRDJson();
+		v_process_over=true;
+		System.out.println("results created and ready to be sent");
+		System.out.println("process now over");
 	}
+	
+	public boolean CMIN_CreateXRDJson() throws IOException{
+		JSONObject jsonObject = createJsonFromImage();
+
+		File file = new File(Constants.ROOT_PATH+"XrdDiffraction.json");
+
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+
+		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(jsonObject.toString());
+		bw.close();
+
+		return true;
+	}
+
+	private  MediaPlayer playSound() {
+
+		new JFXPanel();
+		String bip = Constants.ROOT_PATH+"Voice.mp3";
+		Media hit = new Media(new File(bip).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(hit);
+		mediaPlayer.play();
+
+		return mediaPlayer;
+	}
+
+	private JSONObject createJsonFromImage() throws IOException {
+
+		String encodedImage = getStringFromImage();
+
+		JSONObject jsonObj = (JSONObject) JSONValue.parse("{\"image\":\"" + encodedImage + "\"}");
+		return jsonObj;
+	}
+
+	private static String getStringFromImage() throws IOException {
+
+		BufferedImage originalImage = ImageIO.read(new File(Constants.ROOT_PATH+"xrayDiffraction.jpg"));
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write( originalImage, "jpg", baos );
+		baos.flush();
+
+		byte[] imageInByte = baos.toByteArray();
+		baos.close();
+
+		String encoded = Base64.getEncoder().encodeToString(imageInByte);
+		return encoded;
+	}
+	
 
 	boolean launch_Chemin_Process() throws InterruptedException, IOException {
 		setT(Thread.currentThread());
@@ -370,7 +433,7 @@ return true;
 }
 
        
-
+/*
 public void CHEMIN_POWER_OFF() {
 
 	System.out.println(" Cryo Cooler off !");
@@ -380,56 +443,6 @@ public void CHEMIN_POWER_OFF() {
 	System.out.println("SamplePiezo off !");
 	CMIN_XrayOff();
 	System.out.println("Xray off!");
-}
-
-public boolean CMIN_CreateXRDJson() throws IOException{
-	JSONObject jsonObject = createJsonFromImage();
-
-	File file = new File(Constants.ROOT_PATH+"XrdDiffraction.json");
-
-	if (!file.exists()) {
-		file.createNewFile();
-	}
-
-	FileWriter fw = new FileWriter(file.getAbsoluteFile());
-	BufferedWriter bw = new BufferedWriter(fw);
-	bw.write(jsonObject.toString());
-	bw.close();
-
-	return true;
-}
-
-private  MediaPlayer playSound() {
-
-	new JFXPanel();
-	String bip = Constants.ROOT_PATH+"Voice.mp3";
-	Media hit = new Media(new File(bip).toURI().toString());
-	MediaPlayer mediaPlayer = new MediaPlayer(hit);
-	mediaPlayer.play();
-
-	return mediaPlayer;
-}
-
-private JSONObject createJsonFromImage() throws IOException {
-
-	String encodedImage = getStringFromImage();
-
-	JSONObject jsonObj = (JSONObject) JSONValue.parse("{\"image\":\"" + encodedImage + "\"}");
-	return jsonObj;
-}
-
-private static String getStringFromImage() throws IOException {
-
-	BufferedImage originalImage = ImageIO.read(new File(Constants.ROOT_PATH+"xrayDiffraction.jpg"));
-	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	ImageIO.write( originalImage, "jpg", baos );
-	baos.flush();
-
-	byte[] imageInByte = baos.toByteArray();
-	baos.close();
-
-	String encoded = Base64.getEncoder().encodeToString(imageInByte);
-	return encoded;
-}
+}*/
 
 }
