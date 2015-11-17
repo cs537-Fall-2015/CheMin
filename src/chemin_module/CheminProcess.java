@@ -320,6 +320,20 @@ public class CheminProcess extends RoverServerRunnable{
 						if((v_sample_current_contamintaion_checked)&&(!v_sample_current_is_contaminated)){
 							System.out.println("sample cell contamination checked OK");
 							System.out.println("sample is not contaminated OK");		
+							f_piezzo_turn_off(v_current_sample_cell);
+							/************************
+							 * ANALYSIS START
+							 ************************/
+							System.out.println("WARNING: now entering the analysis phase....");
+							Thread.sleep(5000);
+							playSound();
+							for(int i = 0 ; i<50;i++) //NORMALLY MRE THAN 1000times
+							{
+								Thread.sleep(100);
+								f_cdd_read_erase();
+							}
+							v_xray_positioned=false;
+							
 						}else{
 							System.out.println("sample cell contamination not checked or sample contaminated");
 							System.out.println("operation aborted");
@@ -340,16 +354,6 @@ public class CheminProcess extends RoverServerRunnable{
 			System.out.println("xray not positioned");
 			System.out.println("operation aborted");
 		}
-		
-		System.out.println("WARNING: now entering the analysis phase....");
-		Thread.sleep(5000);
-		playSound();
-		for(int i = 0 ; i<50;i++) //NORMALLY MRE THAN 1000times
-		{
-			Thread.sleep(100);
-			f_cdd_read_erase();
-		}
-		v_xray_positioned=false;
 	}
 
 	void f_cdd_read_erase(){
