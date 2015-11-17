@@ -128,8 +128,8 @@ public class CheminProcess extends RoverServerRunnable{
 	boolean v_powder_received =false;
 	boolean[] v_cell_full = new boolean[32]; //16*2 sample slots on the wheel (16dual cells)
 	boolean[] v_piezzo_on = new boolean[16]; // 1 piezzo for each dual cell
-	boolean v_sample_contamintaion_checked =false;
-	boolean v_sample_is_contaminated = true;
+	boolean v_sample_current_contamintaion_checked =false;
+	boolean v_sample_current_is_contaminated = true;
 	boolean v_xray_on = false;
 	int v_current_sample_cell = 0;
 	boolean v_process_over= false;
@@ -227,7 +227,11 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_cell_clean_current(){
-		//i wont implement this one, similar to empty procedure
+		System.out.println("starting cleaning procedure...");
+		f_cell_empty_current();
+		v_sample_current_contamintaion_checked=true;
+		v_sample_current_is_contaminated=false;
+		System.out.println("sample is clean...");
 	}
 
 	void f_cell_empty_current(){
@@ -299,13 +303,53 @@ public class CheminProcess extends RoverServerRunnable{
 		}
 	}
 
+	
 	void f_analysis_start(){
+		System.out.println("verification that every components ready to start analysis phase....");
+		if(v_xray_positioned)
+		{
+			System.out.println("xray position OK");
+			if(v_xray_on)
+			{
+				System.out.println("xray on OK");
+				if(!v_inlet_cover_opened)
+				{
+					System.out.println("inlet cover closed OK");
+					if(v_cell_full[v_current_sample_cell])
+					{
+						if((v_sample_current_contamintaion_checked)&&(!v_sample_current_is_contaminated)){
+							System.out.println("sample cell contamination checked OK");
+							System.out.println("sample is not contaminated OK");		
+						}else{
+							System.out.println("sample cell contamination not checked or sample contaminated");
+							System.out.println("operation aborted");
+						}
+					}else{
+						System.out.println("sample not full");
+						System.out.println("operation aborted");
+					}
+				}else{
+					System.out.println("inlet cover is opened");
+					System.out.println("operation aborted");
+				}
+			} else{
+				System.out.println("xray not on");
+				System.out.println("operation aborted");
+			}
+		} else{
+			System.out.println("xray not positioned");
+			System.out.println("operation aborted");
+		}
+		
 		System.out.println("WARNING: now entering the analysis phase....");
 		Thread.sleep(5000);
+		playSound();
 		for(int i = 0 ; i<50;i++) //NORMALLY MRE THAN 1000times
 		{
+			Thread.sleep(100);
 			f_cdd_read_erase();
 		}
+		v_xray_positioned=false;
 	}
 
 	void f_cdd_read_erase(){
