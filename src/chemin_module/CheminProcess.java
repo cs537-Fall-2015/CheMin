@@ -1,9 +1,12 @@
 package chemin_module;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,7 +27,7 @@ import json.Constants;
 
 
 public class CheminProcess extends RoverServerRunnable{
-	
+
 	public CheminProcess(int port) throws IOException {
 		super(port);
 
@@ -48,6 +51,112 @@ public class CheminProcess extends RoverServerRunnable{
 					e.printStackTrace();
 				}
 
+				// The name of the file to open.
+				String fileName = message;
+
+				// This will reference one line at a time
+				String line = null;
+
+				try {
+					// FileReader reads text files in the default encoding.
+					FileReader fileReader = 
+							new FileReader(fileName);
+
+					// Always wrap FileReader in BufferedReader.
+					BufferedReader bufferedReader = 
+							new BufferedReader(fileReader);
+
+					while((line = bufferedReader.readLine()) != null) {
+						switch(line.toLowerCase()){
+						case "launch_Chemin_Process":
+							try {
+								launch_Chemin_Process();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						case "xray_set_position":
+							f_xray_set_position();
+							break;
+						case "xray_turn_on":
+							f_xray_turn_on();
+							break;
+						case "sample_receive":
+							f_sample_receive();
+							break;
+						case "cell_next":
+							f_cell_next();
+							break;
+						case "cell_clean_current":
+							f_cell_clean_current();
+							break;
+						case "cell_empty_current":
+							f_cell_empty_current();
+							break;
+						case "inlet_open":
+							f_inlet_open();
+							break;
+						case "inlet_close":
+							f_inlet_close();
+							break;
+						case "analysis_start":
+							f_analysis_start();
+							break;
+						case "cdd_read_erase":
+							f_cdd_read_erase(); //1000times in analysis
+							break;
+						case "cdd_create_diffraction_image":
+							f_cdd_create_diffraction_image();
+							break;
+						case "cdd_create_1d_2t_plot":
+							f_cdd_create_1d_2t_plot();
+							break;
+						case "send_results":
+							f_send_results();
+							break;
+						default:
+							break;
+						}
+						for(int i= 0;i<16;i++) {
+							if((line.toLowerCase()) == ("cell_go_to "+i)){
+								f_cell_go_to(i);
+								i=16;
+							}
+							if((line.toLowerCase()) == ("piezzo_tun_on "+i)) {
+								f_piezzo_tun_on(i);
+								i=16;
+							}
+							if((line.toLowerCase()) == ("piezzo_turn_off "+i)){
+								f_piezzo_turn_off(i);
+								i=16;
+							}
+						}
+
+					}
+					// Always close files.
+					bufferedReader.close();         
+				} catch(FileNotFoundException ex) {
+					System.out.println(
+							"Unable to open file '" + 
+									fileName + "'");                
+				} catch(IOException ex) {
+					System.out.println(
+							"Error reading file '" 
+									+ fileName + "'");  
+				}
+
+
+				/*
+				ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
+				String message = null;
+				try {
+					message = oinstr.readObject().toString();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 				switch (message.toLowerCase()){
 				case "full process":
 					try {
@@ -56,7 +165,7 @@ public class CheminProcess extends RoverServerRunnable{
 						System.err.println("Message printer interrupted");
 					}
 					break;
-				}	
+				}*/	
 			}
 		}catch(IOException e){
 			e.printStackTrace();
@@ -555,7 +664,7 @@ public class CheminProcess extends RoverServerRunnable{
 
 
 	void launch_Chemin_Process() throws InterruptedException, IOException {
-	//	setT(Thread.currentThread());
+		//	setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
 
 		//
