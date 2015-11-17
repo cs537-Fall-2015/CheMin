@@ -552,7 +552,7 @@ public class CheminProcess extends RoverServerRunnable{
 
 
 	boolean launch_Chemin_Process() throws InterruptedException, IOException {
-		setT(Thread.currentThread());
+	//	setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
 
 		//
