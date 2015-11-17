@@ -276,10 +276,27 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_piezzo_tun_on(int piezzo_number) {
-		
+		System.out.println("turning piezzo on...");
+		if(v_piezzo_on[piezzo_number])
+		{
+			System.out.println("piezzo "+piezzo_number+ " already on");
+		} else {
+			Thread.sleep(1000);
+			v_piezzo_on[piezzo_number]=true;
+			System.out.println("piezzo "+piezzo_number+ " now on");
+		}
 	}
 
 	void f_piezzo_turn_off(int piezzo_number){
+		System.out.println("turning piezzo off...");
+		if(!v_piezzo_on[piezzo_number])
+		{
+			System.out.println("piezzo "+piezzo_number+ " already off");
+		} else {
+			Thread.sleep(1000);
+			v_piezzo_on[piezzo_number]=false;
+			System.out.println("piezzo "+piezzo_number+ " now off");
+		}
 	}
 
 	void f_analysis_start(){
