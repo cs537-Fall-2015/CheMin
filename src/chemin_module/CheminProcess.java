@@ -551,47 +551,34 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 
-	boolean launch_Chemin_Process() throws InterruptedException, IOException {
+	void launch_Chemin_Process() throws InterruptedException, IOException {
 	//	setT(Thread.currentThread());
 		System.out.println("CHEMIN Process Started:");
 
 		//
 		f_xray_set_position();
-
 		//
 		f_sample_receive();
-
 		//
-		f_cell_go_to(cell_number);
-
+		f_cell_go_to(4);
 		//
 		f_cell_clean_current();
 
-
 		f_inlet_open();
 
-
-		f_piezzo_tun_on(piezzo_number) ;
-
+		f_piezzo_tun_on(v_current_sample_cell/2) ;
 
 		f_inlet_close();
 
-
-		f_piezzo_turn_off(piezzo_number);
-
+		f_piezzo_turn_off(v_current_sample_cell/2);
 		//
 		f_xray_turn_on();
-
 		//
 		f_analysis_start();
-
 		//
 		f_cdd_create_diffraction_image();
-
 		//
 		f_cdd_create_1d_2t_plot();
-
-
 		//
 		f_send_results();
 	}
