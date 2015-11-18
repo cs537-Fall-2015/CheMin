@@ -62,7 +62,7 @@ public class TestClientModuleMain {
 	private void initialize() {
 		frmTestClient = new JFrame();
 		frmTestClient.setTitle("Test client");
-		frmTestClient.setBounds(100, 100, 450, 352);
+		frmTestClient.setBounds(100, 100, 497, 363);
 		frmTestClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JComboBox settings_selection = new JComboBox();
@@ -77,25 +77,27 @@ public class TestClientModuleMain {
 		JPanel commands_selection = new JPanel();
 		frmTestClient.getContentPane().add(commands_selection, BorderLayout.WEST);
 		
-		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("sample_receive");
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox = new JCheckBox("xray_set_position");
 		
-		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("cell_next");
 		
-		JCheckBox chckbxNewCheckBox_3 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_3 = new JCheckBox("cell_clean_current");
 		
-		JCheckBox chckbxNewCheckBox_4 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_4 = new JCheckBox("inlet_open");
 		
-		JCheckBox chckbxNewCheckBox_5 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_5 = new JCheckBox("inlet_close");
 		
-		JCheckBox chckbxNewCheckBox_6 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_6 = new JCheckBox("xray_turn_on");
 		
-		JCheckBox chckbxNewCheckBox_7 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_7 = new JCheckBox("analysis_start");
 		
-		JCheckBox chckbxNewCheckBox_8 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_8 = new JCheckBox("cdd_create_diffraction_image");
 		
-		JCheckBox chckbxNewCheckBox_9 = new JCheckBox("New check box");
+		JCheckBox chckbxNewCheckBox_9 = new JCheckBox("cdd_create_1d_2t_plot");
+		
+		JCheckBox chckbxNewCheckBox_10 = new JCheckBox("send_results");
 		
 		chckbxNewCheckBox.setEnabled(false);
 		chckbxNewCheckBox_1.setEnabled(false);
@@ -107,6 +109,7 @@ public class TestClientModuleMain {
 		chckbxNewCheckBox_7.setEnabled(false);
 		chckbxNewCheckBox_8.setEnabled(false);
 		chckbxNewCheckBox_9.setEnabled(false);
+		chckbxNewCheckBox_10.setEnabled(false);
 		
 		GroupLayout gl_commands_selection = new GroupLayout(commands_selection);
 		gl_commands_selection.setHorizontalGroup(
@@ -123,7 +126,8 @@ public class TestClientModuleMain {
 						.addComponent(chckbxNewCheckBox_8)
 						.addComponent(chckbxNewCheckBox_9)
 						.addComponent(chckbxNewCheckBox)
-						.addComponent(chckbxNewCheckBox_1))
+						.addComponent(chckbxNewCheckBox_1)
+						.addComponent(chckbxNewCheckBox_10))
 					.addContainerGap(121, Short.MAX_VALUE))
 		);
 		gl_commands_selection.setVerticalGroup(
@@ -149,7 +153,9 @@ public class TestClientModuleMain {
 					.addComponent(chckbxNewCheckBox_8)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(chckbxNewCheckBox_9)
-					.addContainerGap(32, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(chckbxNewCheckBox_10)
+					.addContainerGap(17, Short.MAX_VALUE))
 		);
 		commands_selection.setLayout(gl_commands_selection);
 		
@@ -167,6 +173,7 @@ public class TestClientModuleMain {
 					chckbxNewCheckBox_7.setEnabled(false);
 					chckbxNewCheckBox_8.setEnabled(false);
 					chckbxNewCheckBox_9.setEnabled(false);
+					chckbxNewCheckBox_10.setEnabled(false);
 					//fill .txt file
 				} else if(settings_selection.getSelectedItem()=="Manual selection")
 				{
@@ -180,6 +187,7 @@ public class TestClientModuleMain {
 					chckbxNewCheckBox_7.setEnabled(true);
 					chckbxNewCheckBox_8.setEnabled(true);
 					chckbxNewCheckBox_9.setEnabled(true);
+					chckbxNewCheckBox_10.setEnabled(true);
 					//fill .txt file
 				}
 			}
@@ -209,9 +217,52 @@ public class TestClientModuleMain {
 					writer.close();
 				} else if(settings_selection.getSelectedItem()=="Manual selection")
 				{
-					frmTestClient.setTitle("sis");
-					chckbxNewCheckBox_1.setEnabled(false);
 					//fill .txt file
+					if(chckbxNewCheckBox.isSelected())
+					{
+						writer.println("xray_set_position");
+					}
+					if(chckbxNewCheckBox_1.isSelected())
+					{
+						writer.println("sample_receive");
+					}
+					if(chckbxNewCheckBox_2.isSelected())
+					{
+						writer.println("cell_next");
+					}
+					if(chckbxNewCheckBox_3.isSelected())
+					{
+						writer.println("cell_clean_current");
+					}
+					if(chckbxNewCheckBox_4.isSelected())
+					{
+						writer.println("inlet_open");
+					}
+					if(chckbxNewCheckBox_5.isSelected())
+					{
+						writer.println("inlet_close");
+					}
+					if(chckbxNewCheckBox_6.isSelected())
+					{
+						writer.println("xray_turn_on");
+					}
+					if(chckbxNewCheckBox_7.isSelected())
+					{
+						writer.println("analysis_start");
+					}
+					if(chckbxNewCheckBox_8.isSelected())
+					{
+						writer.println("cdd_create_diffraction_image");
+					}
+					if(chckbxNewCheckBox_9.isSelected())
+					{
+						writer.println("cdd_create_1d_2t_plot");
+					}
+					if(chckbxNewCheckBox_10.isSelected())
+					{
+						writer.println("send_results");
+					}
+					writer.close();
 				}
 				
 				Socket socket=null;
