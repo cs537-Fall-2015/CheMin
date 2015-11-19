@@ -49,14 +49,15 @@ public class GuiCheminControlPannel {
 	private JTextArea txtrCheminControlPanel=null;
 	
 	private ActionListener taskPerformer= null;
-	static private String message= "hello";
+	static private String message= " ";
+	static private String text= " ";
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frmCheminControlPanel = new JFrame();
 		frmCheminControlPanel.setTitle("Chemin control panel");
-		frmCheminControlPanel.setBounds(100, 500, 470, 100);
+		frmCheminControlPanel.setBounds(100, 500, 470, 367);
 		frmCheminControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		txtrCheminControlPanel = new JTextArea();
@@ -93,6 +94,9 @@ public class GuiCheminControlPannel {
 	
 	public void write(String mess) {
 		message = mess;
+	//	text.concat("\n");
+		text = text + message + "\n";
+		message = text;
 		taskPerformer.actionPerformed(null);
 	}
 }

@@ -55,7 +55,7 @@ public class GuiPowerControlPanel {
 		private void initialize() {
 			frmPowerControlPanel = new JFrame();
 			frmPowerControlPanel.setTitle("Power control panel");
-			frmPowerControlPanel.setBounds(100, 720, 470, 100);
+			frmPowerControlPanel.setBounds(580, 500, 470, 100);
 			frmPowerControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 			txtrPowerControlPanel = new JTextArea();

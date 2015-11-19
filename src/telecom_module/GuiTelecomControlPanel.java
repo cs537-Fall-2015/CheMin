@@ -56,7 +56,7 @@ public class GuiTelecomControlPanel {
 	private void initialize() {
 		frmTelecomControlPanel = new JFrame();
 		frmTelecomControlPanel.setTitle("Telecom control panel");
-		frmTelecomControlPanel.setBounds(100, 610, 470, 100);
+		frmTelecomControlPanel.setBounds(580, 610, 470, 100);
 		frmTelecomControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		txtrTelecomControlPanel = new JTextArea();
