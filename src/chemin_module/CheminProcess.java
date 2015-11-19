@@ -245,6 +245,7 @@ public class CheminProcess extends RoverServerRunnable{
 	boolean v_xray_on = false;
 	int v_current_sample_cell = 0;
 	boolean v_process_over= false;
+	boolean v_sample_received=false;
 
 	//
 	void f_xray_set_position(){
@@ -300,13 +301,14 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 			v_powder_received=true;
 			System.out.println("sample powder received");
+			v_sample_received=true;
 		}
 	}
 
 	void f_cell_next(){
 		System.out.println("turning sample wheel to next sample slot...");
 		v_current_sample_cell = v_current_sample_cell++;
-		if (v_current_sample_cell>=16)
+		if (v_current_sample_cell>32)
 		{
 			v_current_sample_cell=0;
 		}
@@ -343,7 +345,7 @@ public class CheminProcess extends RoverServerRunnable{
 		v_current_sample_cell = v_current_sample_cell--;
 		if (v_current_sample_cell<0)
 		{
-			v_current_sample_cell=15;
+			v_current_sample_cell=31;
 		}
 		if(v_current_sample_cell>=16)
 		{
@@ -354,7 +356,6 @@ public class CheminProcess extends RoverServerRunnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("current sample cell is now: "+v_current_sample_cell);
 		}else if(v_current_sample_cell<16)
 		{
 			v_cell_full[16+v_current_sample_cell]=false;
@@ -364,7 +365,6 @@ public class CheminProcess extends RoverServerRunnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("current sample cell is now: "+v_current_sample_cell);
 		}
 		try {
 			Thread.sleep(1000);
@@ -378,8 +378,8 @@ public class CheminProcess extends RoverServerRunnable{
 	void f_cell_go_to(int cell_number){
 		if((cell_number<16)&&(cell_number>=0))
 		{
+			System.out.println("current sample cell is : "+v_current_sample_cell);
 			System.out.println("going to sample number: "+cell_number);
-			System.out.println("current sample cell is currently: "+v_current_sample_cell);
 			if(cell_number<v_current_sample_cell)
 			{
 				for(int i=0;i<v_current_sample_cell-cell_number;i++)
@@ -444,6 +444,32 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 			v_inlet_cover_opened=true;
 			System.out.println("inlet cover now opened");
+		}
+	}
+	
+	void f_fill_sample_cell(){
+		System.out.println("filling sample cell...");
+		if(!v_inlet_cover_opened)
+		{
+			System.out.println("error: inlet cover is not opened");
+			System.out.println("aborting procedure");
+		} else {
+			if(v_sample_received)
+			{
+				f_piezzo_tun_on(v_current_sample_cell/2);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("sample cell is now full");
+				v_cell_full[v_current_sample_cell]=true;
+				v_powder_received=false;
+			} else {
+				System.out.println("error: no powder received, please receive powder first");
+				System.out.println("aborting procedure");
+			}
 		}
 	}
 
@@ -538,6 +564,8 @@ public class CheminProcess extends RoverServerRunnable{
 								}
 								f_cdd_read_erase();
 							}
+							System.out.println("Analysis terminated, no error detected");
+							v_xray_positioned
 							v_xray_positioned=false;
 
 						}else{
