@@ -28,9 +28,11 @@ import json.Constants;
 
 public class CheminProcess extends RoverServerRunnable{
 
+	GuiCheminControlPannel control_pannel=null;
+	
 	public CheminProcess(int port) throws IOException {
 		super(port);
-
+		control_pannel = new GuiCheminControlPannel();
 	}
 
 	@Override
