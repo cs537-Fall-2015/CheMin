@@ -308,7 +308,7 @@ public class CheminProcess extends RoverServerRunnable{
 
 	void f_cell_next(){
 		System.out.println("turning sample wheel to next sample slot...");
-		v_current_sample_cell = v_current_sample_cell++;
+		v_current_sample_cell++;
 		if (v_current_sample_cell>32)
 		{
 			v_current_sample_cell=0;
@@ -331,7 +331,7 @@ public class CheminProcess extends RoverServerRunnable{
 
 	void f_cell_prev(){
 		System.out.println("turning sample wheel to previous sample slot...");
-		v_current_sample_cell = v_current_sample_cell--;
+		v_current_sample_cell--;
 		if (v_current_sample_cell<0)
 		{
 			v_current_sample_cell=31;
@@ -696,7 +696,7 @@ public class CheminProcess extends RoverServerRunnable{
 
 		f_inlet_open();
 
-		f_piezzo_tun_on(v_current_sample_cell/2) ;
+		f_fill_sample_cell();
 
 		f_inlet_close();
 

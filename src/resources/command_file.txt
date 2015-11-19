@@ -1,1 +1,2 @@
-launch_Chemin_Process
+inlet_open
+inlet_close
