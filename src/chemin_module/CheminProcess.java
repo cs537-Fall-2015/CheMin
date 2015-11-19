@@ -35,7 +35,7 @@ public class CheminProcess extends RoverServerRunnable{
 		control_pannel = new GuiCheminControlPannel();
 		GuiCheminControlPannel.main(null);
 	}
-
+//
 	@Override
 	public void run() {
 		try {			
