@@ -20,6 +20,7 @@ import javax.swing.JButton;
 public class GuiCheminControlPannel {
 
 	private JFrame frmCheminControlPanel;
+	private static GuiCheminControlPannel window=null;
 
 	/**
 	 * Launch the application.
@@ -28,7 +29,7 @@ public class GuiCheminControlPannel {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GuiCheminControlPannel window = new GuiCheminControlPannel();
+					window = new GuiCheminControlPannel();
 					window.frmCheminControlPanel.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,12 +62,12 @@ public class GuiCheminControlPannel {
 		txtrCheminControlPanel = new JTextArea();
 		txtrCheminControlPanel.setEditable(false);
 		
-
+		txtrCheminControlPanel.append(message);
 		txtrCheminControlPanel.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		frmCheminControlPanel.getContentPane().add(txtrCheminControlPanel, BorderLayout.CENTER);
 		
-		JButton btnBitch = new JButton("press");
-		btnBitch.addActionListener(new ActionListener() {
+		JButton btnBut = new JButton("press");
+		btnBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txtrCheminControlPanel.append(message);
 				txtrCheminControlPanel.append("\n");
@@ -78,13 +79,11 @@ public class GuiCheminControlPannel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				txtrCheminControlPanel.append(message);
-				txtrCheminControlPanel.append("\n");
-				System.out.println("reach");
+				System.out.println(message);
 			}
 	      };
 	      
-		frmCheminControlPanel.getContentPane().add(btnBitch, BorderLayout.SOUTH);
+		frmCheminControlPanel.getContentPane().add(btnBut, BorderLayout.SOUTH);
 	}
 
 	
