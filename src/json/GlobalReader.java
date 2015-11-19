@@ -1,5 +1,10 @@
 package json;
 
+/*	
+ * Created by: 	Jonathan Young
+ * Date: 		May 14, 2015
+ */
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +20,7 @@ public class GlobalReader {
 	
 	public GlobalReader(String one) {
 		
+		// You no longer need to specify a filepath, only a filename
 		String myFilePath = one + ".json";
 		
 			

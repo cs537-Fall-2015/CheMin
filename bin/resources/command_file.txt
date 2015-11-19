@@ -1,0 +1,9 @@
+xray_set_position
+sample_receive
+cell_next
+cell_clean_current
+inlet_open
+inlet_close
+xray_turn_on
+analysis_start
+cdd_create_diffraction_image
