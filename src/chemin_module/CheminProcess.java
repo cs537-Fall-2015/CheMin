@@ -246,6 +246,7 @@ public class CheminProcess extends RoverServerRunnable{
 	int v_current_sample_cell = 0;
 	boolean v_process_over= false;
 	boolean v_sample_received=false;
+	boolean v_analysis_done=false;
 
 	//
 	void f_xray_set_position(){
@@ -565,7 +566,7 @@ public class CheminProcess extends RoverServerRunnable{
 								f_cdd_read_erase();
 							}
 							System.out.println("Analysis terminated, no error detected");
-							v_xray_positioned
+							v_analysis_done=true;
 							v_xray_positioned=false;
 
 						}else{
