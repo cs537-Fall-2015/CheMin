@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 import generic.RoverClientRunnable;
 
 public class PowerClient  extends RoverClientRunnable{
-
+	
 	public PowerClient(int port, InetAddress host) throws UnknownHostException {
 		super(port, host);
 		// TODO Auto-generated constructor stub

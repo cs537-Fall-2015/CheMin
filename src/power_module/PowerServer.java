@@ -8,8 +8,11 @@ import generic.RoverThreadHandler;
 
 public class PowerServer extends RoverServerRunnable {
 
+	GuiPowerControlPanel gui=null;
+	
 	public PowerServer(int port) throws IOException {
 		super(port);
+		gui=new GuiPowerControlPanel();
 	}
 
 	@Override
@@ -17,11 +20,11 @@ public class PowerServer extends RoverServerRunnable {
 		try {	
 			while(true){
 				// Start listening from the socket and read the message
-				System.out.println("Power Server -> Waiting for Request");
+				gui.write("Power Server -> Waiting for Request");
 				getRoverServerSocket().openSocket();
 				ObjectInputStream oinstr=new ObjectInputStream(getRoverServerSocket().getSocket().getInputStream());
 				String message=oinstr.readObject().toString();
-				System.out.println(message);
+				gui.write(message);
 
 				// Create the new Power_Client and make the client to listen on port no. 9008
 				PowerClient pclient=new PowerClient(9008,null);

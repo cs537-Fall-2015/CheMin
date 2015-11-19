@@ -262,6 +262,12 @@ public class CheminProcess extends RoverServerRunnable{
 		}
 		v_xray_positioned=true;
 		control_pannel.write("xray position set");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	//
 	void f_xray_turn_on(){
@@ -274,13 +280,31 @@ public class CheminProcess extends RoverServerRunnable{
 		}
 		v_xray_on=true;
 		control_pannel.write("xray on");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	//
 	void f_sample_receive(){
 		control_pannel.write("launching the powder sample receiving procedure...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(v_inlet_cover_opened)
 		{
 			control_pannel.write("error: inlet cover is opened, please close inlet cover first");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			control_pannel.write("operation aborted");
 		} else {
 			try {
@@ -305,12 +329,24 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 			v_powder_received=true;
 			control_pannel.write("sample powder received");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			v_sample_received=true;
 		}
 	}
 
 	void f_cell_next(){
 		control_pannel.write("turning sample wheel to next sample slot...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		v_current_sample_cell++;
 		if (v_current_sample_cell>32)
 		{
@@ -330,10 +366,22 @@ public class CheminProcess extends RoverServerRunnable{
 			e.printStackTrace();
 		}
 		control_pannel.write("current sample cell is now: "+v_current_sample_cell);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	void f_cell_prev(){
 		control_pannel.write("turning sample wheel to previous sample slot...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		v_current_sample_cell--;
 		if (v_current_sample_cell<0)
 		{
@@ -353,13 +401,31 @@ public class CheminProcess extends RoverServerRunnable{
 			e.printStackTrace();
 		}
 		control_pannel.write("current sample cell is now: "+v_current_sample_cell);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	//
 	void f_cell_go_to(int cell_number){
 		if((cell_number<16)&&(cell_number>=0))
 		{
 			control_pannel.write("current sample cell is : "+v_current_sample_cell);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			control_pannel.write("going to sample number: "+cell_number);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(cell_number<v_current_sample_cell)
 			{
 				for(int i=0;i<v_current_sample_cell-cell_number;i++)
@@ -379,20 +445,50 @@ public class CheminProcess extends RoverServerRunnable{
 	//
 	void f_cell_clean_current(){
 		control_pannel.write("starting cleaning procedure...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		f_cell_empty_current();
 		v_sample_current_contamintaion_checked=true;
 		v_sample_current_is_contaminated=false;
 		control_pannel.write("sample is clean...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	void f_cell_empty_current(){
 		control_pannel.write("starting emptying procedure...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		control_pannel.write("turning the sample upside down...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(int i=0;i<16;i++)
 		{
 			f_cell_next();
 		}
 		control_pannel.write("sample is now upside down...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		f_piezzo_tun_on(v_current_sample_cell/2);
 		try {
 			Thread.sleep(2000);
@@ -402,7 +498,19 @@ public class CheminProcess extends RoverServerRunnable{
 		}
 		v_cell_full[v_current_sample_cell]=false;
 		control_pannel.write("sample is now empty");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		control_pannel.write("turning the sample upside down...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(int i=0;i<16;i++)
 		{
 			f_cell_next();
@@ -411,9 +519,21 @@ public class CheminProcess extends RoverServerRunnable{
 
 	void f_inlet_open(){
 		control_pannel.write("opening inlet cover...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(v_inlet_cover_opened)
 		{
 			control_pannel.write("inlet cover is already opened");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 
 			try {
@@ -424,14 +544,32 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 			v_inlet_cover_opened=true;
 			control_pannel.write("inlet cover now opened");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	void f_fill_sample_cell(){
 		control_pannel.write("filling sample cell...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(!v_inlet_cover_opened)
 		{
 			control_pannel.write("error: inlet cover is not opened");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			control_pannel.write("aborting procedure");
 		} else {
 			if(v_sample_received)
@@ -444,10 +582,22 @@ public class CheminProcess extends RoverServerRunnable{
 					e.printStackTrace();
 				}
 				control_pannel.write("sample cell is now full");
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				v_cell_full[v_current_sample_cell]=true;
 				v_powder_received=false;
 			} else {
 				control_pannel.write("error: no powder received, please receive powder first");
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				control_pannel.write("aborting procedure");
 			}
 		}
@@ -455,9 +605,21 @@ public class CheminProcess extends RoverServerRunnable{
 
 	void f_inlet_close() {
 		control_pannel.write("closing inlet cover...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(!v_inlet_cover_opened)
 		{
 			control_pannel.write("inlet cover is already closed");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 
 			try {
@@ -468,14 +630,32 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 			v_inlet_cover_opened=false;
 			control_pannel.write("inlet cover now closed");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	void f_piezzo_tun_on(int piezzo_number) {
 		control_pannel.write("turning piezzo on...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(v_piezzo_on[piezzo_number])
 		{
 			control_pannel.write("piezzo "+piezzo_number+ " already on");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			try {
 				Thread.sleep(1000);
@@ -485,14 +665,32 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 			v_piezzo_on[piezzo_number]=true;
 			control_pannel.write("piezzo "+piezzo_number+ " now on");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	void f_piezzo_turn_off(int piezzo_number){
 		control_pannel.write("turning piezzo off...");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(!v_piezzo_on[piezzo_number])
 		{
 			control_pannel.write("piezzo "+piezzo_number+ " already off");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			try {
 				Thread.sleep(1000);
@@ -502,33 +700,75 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 			v_piezzo_on[piezzo_number]=false;
 			control_pannel.write("piezzo "+piezzo_number+ " now off");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	//
 	void f_analysis_start(){
 		control_pannel.write("verification that every components ready to start analysis phase....");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(v_xray_positioned)
 		{
 			control_pannel.write("xray position OK");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if(v_xray_on)
 			{
 				control_pannel.write("xray on OK");
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if(!v_inlet_cover_opened)
 				{
 					control_pannel.write("inlet cover closed OK");
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					if(v_cell_full[v_current_sample_cell])
 					{
 						if((v_sample_current_contamintaion_checked)&&(!v_sample_current_is_contaminated)){
 							control_pannel.write("sample cell contamination checked OK");
-							control_pannel.write("sample is not contaminated OK");		
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							control_pannel.write("sample is not contaminated OK");	
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							f_piezzo_turn_off(v_current_sample_cell);
 							/************************
 							 * ANALYSIS START
 							 ************************/
 							control_pannel.write("WARNING: now entering the analysis phase....");
 							try {
-								Thread.sleep(5000);
+								Thread.sleep(1000);
 							} catch (InterruptedException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -545,27 +785,63 @@ public class CheminProcess extends RoverServerRunnable{
 								f_cdd_read_erase();
 							}
 							control_pannel.write("Analysis terminated, no error detected");
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							v_analysis_done=true;
 							v_xray_positioned=false;
 
 						}else{
 							control_pannel.write("sample cell contamination not checked or sample contaminated");
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							control_pannel.write("operation aborted");
 						}
 					}else{
 						control_pannel.write("sample not full");
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						control_pannel.write("operation aborted");
 					}
 				}else{
 					control_pannel.write("inlet cover is opened");
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					control_pannel.write("operation aborted");
 				}
 			} else{
 				control_pannel.write("xray not on");
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				control_pannel.write("operation aborted");
 			}
 		} else{
 			control_pannel.write("xray not positioned");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			control_pannel.write("operation aborted");
 		}
 	}
@@ -576,6 +852,12 @@ public class CheminProcess extends RoverServerRunnable{
 	//
 	void f_cdd_create_diffraction_image(){
 		control_pannel.write("creating diffraction image....");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(v_analysis_done){
 			try {
 				Thread.sleep(2000);
@@ -584,8 +866,20 @@ public class CheminProcess extends RoverServerRunnable{
 				e.printStackTrace();
 			}
 			control_pannel.write("diffraction image created");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else{
 			control_pannel.write("error: no analysis to create diffraction image");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			control_pannel.write("operation aborted");
 		}
 
@@ -593,6 +887,12 @@ public class CheminProcess extends RoverServerRunnable{
 	//
 	void f_cdd_create_1d_2t_plot(){
 		control_pannel.write("creating 1D 2theta plot image....");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(v_analysis_done){
 			try {
 				Thread.sleep(2000);
@@ -608,9 +908,27 @@ public class CheminProcess extends RoverServerRunnable{
 			}
 			v_process_over=true;
 			control_pannel.write("results created and ready to be sent");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			control_pannel.write("process now over");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else{
 			control_pannel.write("error: no analysis to create diffraction image");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			control_pannel.write("operation aborted");
 		}
 	}
@@ -672,6 +990,12 @@ public class CheminProcess extends RoverServerRunnable{
 			v_process_over=false;
 			//end of process, send results to telecom 
 			control_pannel.write("End of process, sending results to telecom...");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			CheminClient telecomclient = null;
 			try {
 				telecomclient = new CheminClient(9002,null);
@@ -687,6 +1011,12 @@ public class CheminProcess extends RoverServerRunnable{
 	void launch_Chemin_Process() throws InterruptedException, IOException {
 		//	setT(Thread.currentThread());
 		control_pannel.write("CHEMIN Process Started:");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		//
 		f_xray_set_position();

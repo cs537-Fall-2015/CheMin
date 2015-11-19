@@ -1,5 +1,4 @@
-package chemin_module;
-
+package telecom_module;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,10 +16,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 
-public class GuiCheminControlPannel {
 
-	private JFrame frmCheminControlPanel;
-	private static GuiCheminControlPannel window=null;
+public class GuiTelecomControlPanel {
+
+	private JFrame frmTelecomControlPanel;
+	private static GuiTelecomControlPanel window=null;
 
 	/**
 	 * Launch the application.
@@ -29,8 +29,8 @@ public class GuiCheminControlPannel {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					window = new GuiCheminControlPannel();
-					window.frmCheminControlPanel.setVisible(true);
+					window = new GuiTelecomControlPanel();
+					window.frmTelecomControlPanel.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,38 +42,38 @@ public class GuiCheminControlPannel {
 	/**
 	 * Create the application.
 	 */
-	public GuiCheminControlPannel() {
+	public GuiTelecomControlPanel() {
 		initialize();
 	}
 
-	private JTextArea txtrCheminControlPanel=null;
-	
+	private JTextArea txtrTelecomControlPanel=null;
+
 	private ActionListener taskPerformer= null;
 	static private String message= "hello";
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmCheminControlPanel = new JFrame();
-		frmCheminControlPanel.setTitle("Chemin control panel");
-		frmCheminControlPanel.setBounds(100, 500, 470, 100);
-		frmCheminControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		txtrCheminControlPanel = new JTextArea();
-		txtrCheminControlPanel.setEditable(false);
-		
-		txtrCheminControlPanel.append(message);
-		txtrCheminControlPanel.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		frmCheminControlPanel.getContentPane().add(txtrCheminControlPanel, BorderLayout.CENTER);
-		
+		frmTelecomControlPanel = new JFrame();
+		frmTelecomControlPanel.setTitle("Telecom control panel");
+		frmTelecomControlPanel.setBounds(100, 610, 470, 100);
+		frmTelecomControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		txtrTelecomControlPanel = new JTextArea();
+		txtrTelecomControlPanel.setEditable(false);
+
+		txtrTelecomControlPanel.append(message);
+		txtrTelecomControlPanel.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		frmTelecomControlPanel.getContentPane().add(txtrTelecomControlPanel, BorderLayout.CENTER);
+
 		JButton btnBut = new JButton("press");
 		btnBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				txtrCheminControlPanel.append(message);
-				txtrCheminControlPanel.append("\n");
+				txtrTelecomControlPanel.append(message);
+				txtrTelecomControlPanel.append("\n");
 			}
 		});
-		
+
 		taskPerformer = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -81,18 +81,19 @@ public class GuiCheminControlPannel {
 				System.out.println(message);
 				main(null);
 				/* THIS DOES NOT WORK, DIDNT FIND HOW TO REFRESH VIEW*/
-				txtrCheminControlPanel.append(message);
-				txtrCheminControlPanel.append("\n");
+				txtrTelecomControlPanel.append(message);
+				txtrTelecomControlPanel.append("\n");
 				/* THIS DOES NOT WORK, DIDNT FIND HOW TO REFRESH VIEW*/
 			}
-	      };
-	      
-		frmCheminControlPanel.getContentPane().add(btnBut, BorderLayout.SOUTH);
+		};
+
+		frmTelecomControlPanel.getContentPane().add(btnBut, BorderLayout.SOUTH);
 	}
 
-	
+
 	public void write(String mess) {
 		message = mess;
 		taskPerformer.actionPerformed(null);
 	}
 }
+
