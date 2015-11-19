@@ -33,13 +33,14 @@ public class CheminProcess extends RoverServerRunnable{
 	public CheminProcess(int port) throws IOException {
 		super(port);
 		control_pannel = new GuiCheminControlPannel();
+		GuiCheminControlPannel.main(null);
 	}
 
 	@Override
 	public void run() {
 		try {			
 			while(true){
-				System.out.println("Chemin process -> Waiting for Request");
+				control_pannel.write("Chemin process -> Waiting for Request");
 				getRoverServerSocket().openSocket();
 				/*	
 				 * at this stage, Chemin process can receive the text file which contains the commands to execute
@@ -48,7 +49,7 @@ public class CheminProcess extends RoverServerRunnable{
 				String message = null;
 				try {
 					message = oinstr.readObject().toString();
-					System.out.println("log message" + message);
+					control_pannel.write("log message" + message);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -68,14 +69,14 @@ public class CheminProcess extends RoverServerRunnable{
 					// Always wrap FileReader in BufferedReader.
 					BufferedReader bufferedReader = 
 							new BufferedReader(fileReader);
-					//System.out.println("log message2" + bufferedReader.readLine());
+					//control_pannel.write("log message2" + bufferedReader.readLine());
 					while((line = bufferedReader.readLine()) != null) {
 
 						switch(line){
 
 						case "launch_Chemin_Process":
 							try {
-								//System.out.println("Successfully matche" );
+								//control_pannel.write("Successfully matche" );
 								launch_Chemin_Process();
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
@@ -143,11 +144,11 @@ public class CheminProcess extends RoverServerRunnable{
 					// Always close files.
 					bufferedReader.close();         
 				} catch(FileNotFoundException ex) {
-					System.out.println(
+					control_pannel.write(
 							"Unable to open file '" + 
 									fileName + "'");                
 				} catch(IOException ex) {
-					System.out.println(
+					control_pannel.write(
 							"Error reading file '" 
 									+ fileName + "'");  
 				}
@@ -252,7 +253,7 @@ public class CheminProcess extends RoverServerRunnable{
 
 	//
 	void f_xray_set_position(){
-		System.out.println("setting and configuring xray beam position...");
+		control_pannel.write("setting and configuring xray beam position...");
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -260,11 +261,11 @@ public class CheminProcess extends RoverServerRunnable{
 			//e.printStackTrace();
 		}
 		v_xray_positioned=true;
-		System.out.println("xray position set");
+		control_pannel.write("xray position set");
 	}
 	//
 	void f_xray_turn_on(){
-		System.out.println("turning xray on...");
+		control_pannel.write("turning xray on...");
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -272,15 +273,15 @@ public class CheminProcess extends RoverServerRunnable{
 			e.printStackTrace();
 		}
 		v_xray_on=true;
-		System.out.println("xray on");
+		control_pannel.write("xray on");
 	}
 	//
 	void f_sample_receive(){
-		System.out.println("launching the powder sample receiving procedure...");
+		control_pannel.write("launching the powder sample receiving procedure...");
 		if(v_inlet_cover_opened)
 		{
-			System.out.println("error: inlet cover is opened, please close inlet cover first");
-			System.out.println("operation aborted");
+			control_pannel.write("error: inlet cover is opened, please close inlet cover first");
+			control_pannel.write("operation aborted");
 		} else {
 			try {
 				Thread.sleep(500);
@@ -288,14 +289,14 @@ public class CheminProcess extends RoverServerRunnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("powder is in the scoop...");
+			control_pannel.write("powder is in the scoop...");
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("powder is in sorting assembly...");
+			control_pannel.write("powder is in sorting assembly...");
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -303,13 +304,13 @@ public class CheminProcess extends RoverServerRunnable{
 				e.printStackTrace();
 			}
 			v_powder_received=true;
-			System.out.println("sample powder received");
+			control_pannel.write("sample powder received");
 			v_sample_received=true;
 		}
 	}
 
 	void f_cell_next(){
-		System.out.println("turning sample wheel to next sample slot...");
+		control_pannel.write("turning sample wheel to next sample slot...");
 		v_current_sample_cell++;
 		if (v_current_sample_cell>32)
 		{
@@ -328,11 +329,11 @@ public class CheminProcess extends RoverServerRunnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("current sample cell is now: "+v_current_sample_cell);
+		control_pannel.write("current sample cell is now: "+v_current_sample_cell);
 	}
 
 	void f_cell_prev(){
-		System.out.println("turning sample wheel to previous sample slot...");
+		control_pannel.write("turning sample wheel to previous sample slot...");
 		v_current_sample_cell--;
 		if (v_current_sample_cell<0)
 		{
@@ -351,14 +352,14 @@ public class CheminProcess extends RoverServerRunnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("current sample cell is now: "+v_current_sample_cell);
+		control_pannel.write("current sample cell is now: "+v_current_sample_cell);
 	}
 	//
 	void f_cell_go_to(int cell_number){
 		if((cell_number<16)&&(cell_number>=0))
 		{
-			System.out.println("current sample cell is : "+v_current_sample_cell);
-			System.out.println("going to sample number: "+cell_number);
+			control_pannel.write("current sample cell is : "+v_current_sample_cell);
+			control_pannel.write("going to sample number: "+cell_number);
 			if(cell_number<v_current_sample_cell)
 			{
 				for(int i=0;i<v_current_sample_cell-cell_number;i++)
@@ -377,21 +378,21 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 	//
 	void f_cell_clean_current(){
-		System.out.println("starting cleaning procedure...");
+		control_pannel.write("starting cleaning procedure...");
 		f_cell_empty_current();
 		v_sample_current_contamintaion_checked=true;
 		v_sample_current_is_contaminated=false;
-		System.out.println("sample is clean...");
+		control_pannel.write("sample is clean...");
 	}
 
 	void f_cell_empty_current(){
-		System.out.println("starting emptying procedure...");
-		System.out.println("turning the sample upside down...");
+		control_pannel.write("starting emptying procedure...");
+		control_pannel.write("turning the sample upside down...");
 		for(int i=0;i<16;i++)
 		{
 			f_cell_next();
 		}
-		System.out.println("sample is now upside down...");
+		control_pannel.write("sample is now upside down...");
 		f_piezzo_tun_on(v_current_sample_cell/2);
 		try {
 			Thread.sleep(2000);
@@ -400,8 +401,8 @@ public class CheminProcess extends RoverServerRunnable{
 			e.printStackTrace();
 		}
 		v_cell_full[v_current_sample_cell]=false;
-		System.out.println("sample is now empty");
-		System.out.println("turning the sample upside down...");
+		control_pannel.write("sample is now empty");
+		control_pannel.write("turning the sample upside down...");
 		for(int i=0;i<16;i++)
 		{
 			f_cell_next();
@@ -409,10 +410,10 @@ public class CheminProcess extends RoverServerRunnable{
 	}
 
 	void f_inlet_open(){
-		System.out.println("opening inlet cover...");
+		control_pannel.write("opening inlet cover...");
 		if(v_inlet_cover_opened)
 		{
-			System.out.println("inlet cover is already opened");
+			control_pannel.write("inlet cover is already opened");
 		} else {
 
 			try {
@@ -422,16 +423,16 @@ public class CheminProcess extends RoverServerRunnable{
 				e.printStackTrace();
 			}
 			v_inlet_cover_opened=true;
-			System.out.println("inlet cover now opened");
+			control_pannel.write("inlet cover now opened");
 		}
 	}
 
 	void f_fill_sample_cell(){
-		System.out.println("filling sample cell...");
+		control_pannel.write("filling sample cell...");
 		if(!v_inlet_cover_opened)
 		{
-			System.out.println("error: inlet cover is not opened");
-			System.out.println("aborting procedure");
+			control_pannel.write("error: inlet cover is not opened");
+			control_pannel.write("aborting procedure");
 		} else {
 			if(v_sample_received)
 			{
@@ -442,21 +443,21 @@ public class CheminProcess extends RoverServerRunnable{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println("sample cell is now full");
+				control_pannel.write("sample cell is now full");
 				v_cell_full[v_current_sample_cell]=true;
 				v_powder_received=false;
 			} else {
-				System.out.println("error: no powder received, please receive powder first");
-				System.out.println("aborting procedure");
+				control_pannel.write("error: no powder received, please receive powder first");
+				control_pannel.write("aborting procedure");
 			}
 		}
 	}
 
 	void f_inlet_close() {
-		System.out.println("closing inlet cover...");
+		control_pannel.write("closing inlet cover...");
 		if(!v_inlet_cover_opened)
 		{
-			System.out.println("inlet cover is already closed");
+			control_pannel.write("inlet cover is already closed");
 		} else {
 
 			try {
@@ -466,15 +467,15 @@ public class CheminProcess extends RoverServerRunnable{
 				e.printStackTrace();
 			}
 			v_inlet_cover_opened=false;
-			System.out.println("inlet cover now closed");
+			control_pannel.write("inlet cover now closed");
 		}
 	}
 
 	void f_piezzo_tun_on(int piezzo_number) {
-		System.out.println("turning piezzo on...");
+		control_pannel.write("turning piezzo on...");
 		if(v_piezzo_on[piezzo_number])
 		{
-			System.out.println("piezzo "+piezzo_number+ " already on");
+			control_pannel.write("piezzo "+piezzo_number+ " already on");
 		} else {
 			try {
 				Thread.sleep(1000);
@@ -483,15 +484,15 @@ public class CheminProcess extends RoverServerRunnable{
 				e.printStackTrace();
 			}
 			v_piezzo_on[piezzo_number]=true;
-			System.out.println("piezzo "+piezzo_number+ " now on");
+			control_pannel.write("piezzo "+piezzo_number+ " now on");
 		}
 	}
 
 	void f_piezzo_turn_off(int piezzo_number){
-		System.out.println("turning piezzo off...");
+		control_pannel.write("turning piezzo off...");
 		if(!v_piezzo_on[piezzo_number])
 		{
-			System.out.println("piezzo "+piezzo_number+ " already off");
+			control_pannel.write("piezzo "+piezzo_number+ " already off");
 		} else {
 			try {
 				Thread.sleep(1000);
@@ -500,32 +501,32 @@ public class CheminProcess extends RoverServerRunnable{
 				e.printStackTrace();
 			}
 			v_piezzo_on[piezzo_number]=false;
-			System.out.println("piezzo "+piezzo_number+ " now off");
+			control_pannel.write("piezzo "+piezzo_number+ " now off");
 		}
 	}
 
 	//
 	void f_analysis_start(){
-		System.out.println("verification that every components ready to start analysis phase....");
+		control_pannel.write("verification that every components ready to start analysis phase....");
 		if(v_xray_positioned)
 		{
-			System.out.println("xray position OK");
+			control_pannel.write("xray position OK");
 			if(v_xray_on)
 			{
-				System.out.println("xray on OK");
+				control_pannel.write("xray on OK");
 				if(!v_inlet_cover_opened)
 				{
-					System.out.println("inlet cover closed OK");
+					control_pannel.write("inlet cover closed OK");
 					if(v_cell_full[v_current_sample_cell])
 					{
 						if((v_sample_current_contamintaion_checked)&&(!v_sample_current_is_contaminated)){
-							System.out.println("sample cell contamination checked OK");
-							System.out.println("sample is not contaminated OK");		
+							control_pannel.write("sample cell contamination checked OK");
+							control_pannel.write("sample is not contaminated OK");		
 							f_piezzo_turn_off(v_current_sample_cell);
 							/************************
 							 * ANALYSIS START
 							 ************************/
-							System.out.println("WARNING: now entering the analysis phase....");
+							control_pannel.write("WARNING: now entering the analysis phase....");
 							try {
 								Thread.sleep(5000);
 							} catch (InterruptedException e1) {
@@ -543,38 +544,38 @@ public class CheminProcess extends RoverServerRunnable{
 								}
 								f_cdd_read_erase();
 							}
-							System.out.println("Analysis terminated, no error detected");
+							control_pannel.write("Analysis terminated, no error detected");
 							v_analysis_done=true;
 							v_xray_positioned=false;
 
 						}else{
-							System.out.println("sample cell contamination not checked or sample contaminated");
-							System.out.println("operation aborted");
+							control_pannel.write("sample cell contamination not checked or sample contaminated");
+							control_pannel.write("operation aborted");
 						}
 					}else{
-						System.out.println("sample not full");
-						System.out.println("operation aborted");
+						control_pannel.write("sample not full");
+						control_pannel.write("operation aborted");
 					}
 				}else{
-					System.out.println("inlet cover is opened");
-					System.out.println("operation aborted");
+					control_pannel.write("inlet cover is opened");
+					control_pannel.write("operation aborted");
 				}
 			} else{
-				System.out.println("xray not on");
-				System.out.println("operation aborted");
+				control_pannel.write("xray not on");
+				control_pannel.write("operation aborted");
 			}
 		} else{
-			System.out.println("xray not positioned");
-			System.out.println("operation aborted");
+			control_pannel.write("xray not positioned");
+			control_pannel.write("operation aborted");
 		}
 	}
 
 	void f_cdd_read_erase(){
-		System.out.println("read... erase....");
+		control_pannel.write("read... erase....");
 	}
 	//
 	void f_cdd_create_diffraction_image(){
-		System.out.println("creating diffraction image....");
+		control_pannel.write("creating diffraction image....");
 		if(v_analysis_done){
 			try {
 				Thread.sleep(2000);
@@ -582,16 +583,16 @@ public class CheminProcess extends RoverServerRunnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("diffraction image created");
+			control_pannel.write("diffraction image created");
 		} else{
-			System.out.println("error: no analysis to create diffraction image");
-			System.out.println("operation aborted");
+			control_pannel.write("error: no analysis to create diffraction image");
+			control_pannel.write("operation aborted");
 		}
 
 	}
 	//
 	void f_cdd_create_1d_2t_plot(){
-		System.out.println("creating 1D 2theta plot image....");
+		control_pannel.write("creating 1D 2theta plot image....");
 		if(v_analysis_done){
 			try {
 				Thread.sleep(2000);
@@ -606,11 +607,11 @@ public class CheminProcess extends RoverServerRunnable{
 				e.printStackTrace();
 			}
 			v_process_over=true;
-			System.out.println("results created and ready to be sent");
-			System.out.println("process now over");
+			control_pannel.write("results created and ready to be sent");
+			control_pannel.write("process now over");
 		} else{
-			System.out.println("error: no analysis to create diffraction image");
-			System.out.println("operation aborted");
+			control_pannel.write("error: no analysis to create diffraction image");
+			control_pannel.write("operation aborted");
 		}
 	}
 
@@ -670,7 +671,7 @@ public class CheminProcess extends RoverServerRunnable{
 		{
 			v_process_over=false;
 			//end of process, send results to telecom 
-			System.out.println("End of process, sending results to telecom...");
+			control_pannel.write("End of process, sending results to telecom...");
 			CheminClient telecomclient = null;
 			try {
 				telecomclient = new CheminClient(9002,null);
@@ -685,7 +686,7 @@ public class CheminProcess extends RoverServerRunnable{
 
 	void launch_Chemin_Process() throws InterruptedException, IOException {
 		//	setT(Thread.currentThread());
-		System.out.println("CHEMIN Process Started:");
+		control_pannel.write("CHEMIN Process Started:");
 
 		//
 		f_xray_set_position();
@@ -719,13 +720,13 @@ public class CheminProcess extends RoverServerRunnable{
 /*
 public void CHEMIN_POWER_OFF() {
 
-	System.out.println(" Cryo Cooler off !");
+	control_pannel.write(" Cryo Cooler off !");
 	CMIN_FunnelPiezoOff();
-	System.out.println("Funnel Piezo off !");
+	control_pannel.write("Funnel Piezo off !");
 	CMIN_SamlecellPiezoOff();
-	System.out.println("SamplePiezo off !");
+	control_pannel.write("SamplePiezo off !");
 	CMIN_XrayOff();
-	System.out.println("Xray off!");
+	control_pannel.write("Xray off!");
 }*/
 
 
