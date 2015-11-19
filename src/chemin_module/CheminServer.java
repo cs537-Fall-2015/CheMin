@@ -11,7 +11,7 @@ public class CheminServer extends RoverServerRunnable {
 	
 	public CheminServer(int port) throws IOException {
 		super(port);
-		chemin_parser = new Parser(9010,null); //port can be modified
+		chemin_parser = new Parser(9008,null); //port can be modified
 	}
 
 	@Override

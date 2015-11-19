@@ -24,6 +24,8 @@ public class SimulateRoverMain {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+		
 
 		try {
 			Power = new PowerServer(9013);

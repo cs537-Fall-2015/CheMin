@@ -46,6 +46,7 @@ public class CheminProcess extends RoverServerRunnable{
 				String message = null;
 				try {
 					message = oinstr.readObject().toString();
+					System.out.println("log message" + message);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -65,11 +66,14 @@ public class CheminProcess extends RoverServerRunnable{
 					// Always wrap FileReader in BufferedReader.
 					BufferedReader bufferedReader = 
 							new BufferedReader(fileReader);
-
+					//System.out.println("log message2" + bufferedReader.readLine());
 					while((line = bufferedReader.readLine()) != null) {
-						switch(line.toLowerCase()){
+						
+						switch(line){
+						
 						case "launch_Chemin_Process":
 							try {
+								//System.out.println("Successfully matche" );
 								launch_Chemin_Process();
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
@@ -196,9 +200,9 @@ public class CheminProcess extends RoverServerRunnable{
 	//		- Sum the 2D pattern circumferencially about the central undiffracted beam to create a 1D 2theta plot
 	/**** DUMPING PHASE ****/
 	//empty the cell after use by inverting and vibrating the sample cell over the sump
-	//		- Rotate the sample wheel 180° (sample cell inversion)
+	//		- Rotate the sample wheel 180ï¿½ (sample cell inversion)
 	//rotate back to the next sample slot
-	//		- Rotate the sample wheel 180°-X (X corresponds to the distance between sample cells)
+	//		- Rotate the sample wheel 180ï¿½-X (X corresponds to the distance between sample cells)
 	//		- Turn off piezzo
 
 
@@ -246,10 +250,10 @@ public class CheminProcess extends RoverServerRunnable{
 	void f_xray_set_position(){
 		System.out.println("setting and configuring xray beam position...");
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		v_xray_positioned=true;
 		System.out.println("xray position set");
@@ -315,7 +319,6 @@ public class CheminProcess extends RoverServerRunnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("current sample cell is now: "+v_current_sample_cell);
 		}else if(v_current_sample_cell<16)
 		{
 			v_cell_full[16+v_current_sample_cell]=false;
@@ -325,7 +328,6 @@ public class CheminProcess extends RoverServerRunnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("current sample cell is now: "+v_current_sample_cell);
 		}
 		try {
 			Thread.sleep(1000);

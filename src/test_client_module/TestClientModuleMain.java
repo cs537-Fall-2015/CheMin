@@ -215,6 +215,7 @@ public class TestClientModuleMain {
 					//fill .txt file
 					writer.println("launch_Chemin_Process");
 					writer.close();
+					
 				} else if(settings_selection.getSelectedItem()=="Manual selection")
 				{
 					//fill .txt file
@@ -264,7 +265,15 @@ public class TestClientModuleMain {
 					}
 					writer.close();
 				}
+				try {
+					Socket socket = new Socket("localhost",9010);
+					ObjectOutputStream outstr = new ObjectOutputStream(socket.getOutputStream());
 				
+					outstr.writeObject(Constants.ROOT_PATH+command_file_name);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Socket socket=null;
 				try {
 					socket = new Socket("localhost",9008);
@@ -283,6 +292,7 @@ public class TestClientModuleMain {
 				ez.printStackTrace();
 				}
 			}
+			
 		});
 	}
 }
