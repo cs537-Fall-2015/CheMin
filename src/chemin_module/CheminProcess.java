@@ -68,9 +68,9 @@ public class CheminProcess extends RoverServerRunnable{
 							new BufferedReader(fileReader);
 					//System.out.println("log message2" + bufferedReader.readLine());
 					while((line = bufferedReader.readLine()) != null) {
-						
+
 						switch(line){
-						
+
 						case "launch_Chemin_Process":
 							try {
 								//System.out.println("Successfully matche" );
@@ -316,21 +316,9 @@ public class CheminProcess extends RoverServerRunnable{
 		if(v_current_sample_cell>=16)
 		{
 			v_cell_full[v_current_sample_cell-16]=false;
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}else if(v_current_sample_cell<16)
 		{
 			v_cell_full[16+v_current_sample_cell]=false;
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		try {
 			Thread.sleep(1000);
@@ -351,21 +339,9 @@ public class CheminProcess extends RoverServerRunnable{
 		if(v_current_sample_cell>=16)
 		{
 			v_cell_full[v_current_sample_cell-16]=false;
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}else if(v_current_sample_cell<16)
 		{
 			v_cell_full[16+v_current_sample_cell]=false;
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		try {
 			Thread.sleep(1000);
@@ -447,7 +423,7 @@ public class CheminProcess extends RoverServerRunnable{
 			System.out.println("inlet cover now opened");
 		}
 	}
-	
+
 	void f_fill_sample_cell(){
 		System.out.println("filling sample cell...");
 		if(!v_inlet_cover_opened)
@@ -597,32 +573,43 @@ public class CheminProcess extends RoverServerRunnable{
 	//
 	void f_cdd_create_diffraction_image(){
 		System.out.println("creating diffraction image....");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(v_analysis_done){
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("diffraction image created");
+		} else{
+			System.out.println("error: no analysis to create diffraction image");
+			System.out.println("operation aborted");
 		}
-		System.out.println("diffraction image created");
+
 	}
 	//
 	void f_cdd_create_1d_2t_plot(){
 		System.out.println("creating 1D 2theta plot image....");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(v_analysis_done){
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				CMIN_CreateXRDJson();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			v_process_over=true;
+			System.out.println("results created and ready to be sent");
+			System.out.println("process now over");
+		} else{
+			System.out.println("error: no analysis to create diffraction image");
+			System.out.println("operation aborted");
 		}
-		try {
-			CMIN_CreateXRDJson();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		v_process_over=true;
-		System.out.println("results created and ready to be sent");
-		System.out.println("process now over");
 	}
 
 	public boolean CMIN_CreateXRDJson() throws IOException{
