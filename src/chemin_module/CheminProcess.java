@@ -254,6 +254,7 @@ public class CheminProcess extends RoverServerRunnable{
 	//
 	void f_xray_set_position(){
 		control_pannel.write("setting and configuring xray beam position...");
+		playSound_xraypos();
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -348,7 +349,7 @@ public class CheminProcess extends RoverServerRunnable{
 			e.printStackTrace();
 		}
 		v_current_sample_cell++;
-		if (v_current_sample_cell>32)
+		if (v_current_sample_cell>=32)
 		{
 			v_current_sample_cell=0;
 		}
@@ -647,6 +648,7 @@ public class CheminProcess extends RoverServerRunnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		playSound_piezzo();
 		if(v_piezzo_on[piezzo_number])
 		{
 			control_pannel.write("piezzo "+piezzo_number+ " already on");
@@ -773,7 +775,7 @@ public class CheminProcess extends RoverServerRunnable{
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							playSound();
+							playSound_analysis();
 							for(int i = 0 ; i<50;i++) //NORMALLY MRE THAN 1000times
 							{
 								try {
@@ -950,10 +952,21 @@ public class CheminProcess extends RoverServerRunnable{
 		return true;
 	}
 
-	private  MediaPlayer playSound() {
+	private  MediaPlayer playSound_analysis() {
 
 		new JFXPanel();
-		String bip = Constants.ROOT_PATH+"Voice.mp3";
+		String bip = Constants.ROOT_PATH+"Analysis.mp3";
+		Media hit = new Media(new File(bip).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(hit);
+		mediaPlayer.play();
+
+		return mediaPlayer;
+	}
+	
+	private  MediaPlayer playSound_piezzo() {
+
+		new JFXPanel();
+		String bip = Constants.ROOT_PATH+"Wheel.mp3";
 		Media hit = new Media(new File(bip).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(hit);
 		mediaPlayer.play();
@@ -961,6 +974,18 @@ public class CheminProcess extends RoverServerRunnable{
 		return mediaPlayer;
 	}
 
+	private  MediaPlayer playSound_xraypos() {
+
+		new JFXPanel();
+		String bip = Constants.ROOT_PATH+"Xraypos.mp3";
+		Media hit = new Media(new File(bip).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(hit);
+		mediaPlayer.play();
+
+		return mediaPlayer;
+	}
+
+	
 	private JSONObject createJsonFromImage() throws IOException {
 
 		String encodedImage = getStringFromImage();
