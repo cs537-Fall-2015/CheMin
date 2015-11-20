@@ -5,7 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.JTextPane;
+import javax.swing.text.DefaultCaret;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -48,23 +50,28 @@ public class GuiPowerControlPanel {
 		private JTextArea txtrPowerControlPanel=null;
 
 		private ActionListener taskPerformer= null;
-		static private String message= "hello";
+		static private String message= " ";
+		static private String text= " ";
 		/**
 		 * Initialize the contents of the frame.
 		 */
 		private void initialize() {
 			frmPowerControlPanel = new JFrame();
 			frmPowerControlPanel.setTitle("Power control panel");
-			frmPowerControlPanel.setBounds(580, 500, 470, 100);
+			frmPowerControlPanel.setBounds(580, 500, 470, 200);
 			frmPowerControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+			
 			txtrPowerControlPanel = new JTextArea();
 			txtrPowerControlPanel.setEditable(false);
-
+			
+			JScrollPane scrollPane = new JScrollPane(txtrPowerControlPanel);	
+			
 			txtrPowerControlPanel.append(message);
 			txtrPowerControlPanel.setFont(new Font("Monospaced", Font.PLAIN, 13));
-			frmPowerControlPanel.getContentPane().add(txtrPowerControlPanel, BorderLayout.CENTER);
-
+			DefaultCaret caret = (DefaultCaret)txtrPowerControlPanel.getCaret();
+			caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+			
+			frmPowerControlPanel.getContentPane().add(scrollPane, BorderLayout.CENTER);
 			taskPerformer = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -82,6 +89,9 @@ public class GuiPowerControlPanel {
 
 		public void write(String mess) {
 			message = mess;
+		//	text.concat("\n");
+			text = text + message + "\n";
+			message = text;
 			taskPerformer.actionPerformed(null);
 		}
 	}

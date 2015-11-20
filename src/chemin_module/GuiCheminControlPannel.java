@@ -60,15 +60,13 @@ public class GuiCheminControlPannel {
 	private void initialize() {
 		frmCheminControlPanel = new JFrame();
 		frmCheminControlPanel.setTitle("Chemin control panel");
-		frmCheminControlPanel.setBounds(100, 500, 470, 367);
+		frmCheminControlPanel.setBounds(100, 500, 470, 410);
 		frmCheminControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		txtrCheminControlPanel = new JTextArea();
 		txtrCheminControlPanel.setEditable(false);
 		
-		JScrollPane scrollPane = new JScrollPane(txtrCheminControlPanel);
-		//setPreferredSize(new Dimension(450, 110));
-		
+		JScrollPane scrollPane = new JScrollPane(txtrCheminControlPanel);	
 		
 		txtrCheminControlPanel.append(message);
 		txtrCheminControlPanel.setFont(new Font("Monospaced", Font.PLAIN, 13));
