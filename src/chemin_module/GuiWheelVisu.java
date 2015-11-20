@@ -12,7 +12,7 @@ import java.awt.BorderLayout;
 
 public class GuiWheelVisu {
 
-	private JFrame frame;
+	private JFrame frmCheminSampleWheel;
 
 	/**
 	 * Launch the application.
@@ -22,7 +22,7 @@ public class GuiWheelVisu {
 			public void run() {
 				try {
 					GuiWheelVisu window = new GuiWheelVisu();
-					window.frame.setVisible(true);
+					window.frmCheminSampleWheel.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,9 +44,10 @@ public class GuiWheelVisu {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 611, 654);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCheminSampleWheel = new JFrame();
+		frmCheminSampleWheel.setTitle("Chemin sample wheel");
+		frmCheminSampleWheel.setBounds(1100, 100, 611, 654);
+		frmCheminSampleWheel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		lblImagelbl = new JLabel("imagelbl");
 		Image img = null;
@@ -150,7 +151,7 @@ public class GuiWheelVisu {
 		}
 		
 		lblImagelbl.setIcon(new ImageIcon(img));
-		frame.getContentPane().add(lblImagelbl, BorderLayout.CENTER);
+		frmCheminSampleWheel.getContentPane().add(lblImagelbl, BorderLayout.CENTER);
 
 
 		taskPerformer = new ActionListener() {
@@ -165,7 +166,7 @@ public class GuiWheelVisu {
 	}
 
 
-	public void write(int sample_nbr) {
+	public void update_wheel(int sample_nbr) {
 		sample_number = sample_nbr;
 		taskPerformer.actionPerformed(null);
 	}

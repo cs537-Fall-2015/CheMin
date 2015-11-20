@@ -29,11 +29,14 @@ import json.Constants;
 public class CheminProcess extends RoverServerRunnable{
 
 	GuiCheminControlPannel control_pannel=null;
+	GuiWheelVisu wheel_visu=null;
 	
 	public CheminProcess(int port) throws IOException {
 		super(port);
 		control_pannel = new GuiCheminControlPannel();
+		wheel_visu = new GuiWheelVisu();
 		GuiCheminControlPannel.main(null);
+		GuiWheelVisu.main(null);
 	}
 //
 	@Override
@@ -366,6 +369,7 @@ public class CheminProcess extends RoverServerRunnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		wheel_visu.update_wheel(v_current_sample_cell);
 		control_pannel.write("current sample cell is now: "+v_current_sample_cell);
 		try {
 			Thread.sleep(500);
@@ -401,6 +405,7 @@ public class CheminProcess extends RoverServerRunnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		wheel_visu.update_wheel(v_current_sample_cell);
 		control_pannel.write("current sample cell is now: "+v_current_sample_cell);
 		try {
 			Thread.sleep(500);
@@ -427,16 +432,19 @@ public class CheminProcess extends RoverServerRunnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			int index = 0;
 			if(cell_number<v_current_sample_cell)
 			{
-				for(int i=0;i<v_current_sample_cell-cell_number;i++)
+				index = v_current_sample_cell-cell_number;
+				for(int i=0;i<index;i++)
 				{
 					f_cell_prev();
 				}
 			}
 			else if(cell_number>v_current_sample_cell)
 			{
-				for(int i=0;i<cell_number-v_current_sample_cell;i++)
+				index = cell_number-v_current_sample_cell;
+				for(int i=0;i<index;i++)
 				{
 					f_cell_next();
 				}
@@ -1048,7 +1056,7 @@ public class CheminProcess extends RoverServerRunnable{
 		//
 		f_sample_receive();
 		//
-		f_cell_go_to(5);
+		f_cell_go_to(4);
 		//
 		f_cell_clean_current();
 
