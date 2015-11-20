@@ -65,14 +65,6 @@ public class GuiPowerControlPanel {
 			txtrPowerControlPanel.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			frmPowerControlPanel.getContentPane().add(txtrPowerControlPanel, BorderLayout.CENTER);
 
-			JButton btnBut = new JButton("press");
-			btnBut.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					txtrPowerControlPanel.append(message);
-					txtrPowerControlPanel.append("\n");
-				}
-			});
-
 			taskPerformer = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -85,8 +77,6 @@ public class GuiPowerControlPanel {
 					/* THIS DOES NOT WORK, DIDNT FIND HOW TO REFRESH VIEW*/
 				}
 			};
-
-			frmPowerControlPanel.getContentPane().add(btnBut, BorderLayout.SOUTH);
 		}
 
 

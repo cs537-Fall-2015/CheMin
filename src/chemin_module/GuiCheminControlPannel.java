@@ -6,7 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.JTextPane;
+import javax.swing.text.DefaultCaret;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -31,6 +33,7 @@ public class GuiCheminControlPannel {
 				try {
 					window = new GuiCheminControlPannel();
 					window.frmCheminControlPanel.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,17 +66,16 @@ public class GuiCheminControlPannel {
 		txtrCheminControlPanel = new JTextArea();
 		txtrCheminControlPanel.setEditable(false);
 		
+		JScrollPane scrollPane = new JScrollPane(txtrCheminControlPanel);
+		//setPreferredSize(new Dimension(450, 110));
+		
+		
 		txtrCheminControlPanel.append(message);
 		txtrCheminControlPanel.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		frmCheminControlPanel.getContentPane().add(txtrCheminControlPanel, BorderLayout.CENTER);
+		DefaultCaret caret = (DefaultCaret)txtrCheminControlPanel.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		
-		JButton btnBut = new JButton("press");
-		btnBut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				txtrCheminControlPanel.append(message);
-				txtrCheminControlPanel.append("\n");
-			}
-		});
+		frmCheminControlPanel.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		taskPerformer = new ActionListener() {
 			@Override
@@ -87,8 +89,6 @@ public class GuiCheminControlPannel {
 				/* THIS DOES NOT WORK, DIDNT FIND HOW TO REFRESH VIEW*/
 			}
 	      };
-	      
-		frmCheminControlPanel.getContentPane().add(btnBut, BorderLayout.SOUTH);
 	}
 
 	

@@ -66,19 +66,12 @@ public class GuiTelecomControlPanel {
 		txtrTelecomControlPanel.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		frmTelecomControlPanel.getContentPane().add(txtrTelecomControlPanel, BorderLayout.CENTER);
 
-		JButton btnBut = new JButton("press");
-		btnBut.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				txtrTelecomControlPanel.append(message);
-				txtrTelecomControlPanel.append("\n");
-			}
-		});
-
 		taskPerformer = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				System.out.println(message);
+				frmTelecomControlPanel.setVisible(false);
 				main(null);
 				/* THIS DOES NOT WORK, DIDNT FIND HOW TO REFRESH VIEW*/
 				txtrTelecomControlPanel.append(message);
@@ -86,8 +79,6 @@ public class GuiTelecomControlPanel {
 				/* THIS DOES NOT WORK, DIDNT FIND HOW TO REFRESH VIEW*/
 			}
 		};
-
-		frmTelecomControlPanel.getContentPane().add(btnBut, BorderLayout.SOUTH);
 	}
 
 
