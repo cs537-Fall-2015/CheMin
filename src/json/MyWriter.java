@@ -1,5 +1,9 @@
 package json;
 
+/*	
+ * Created by: 	Jonathan Young
+ * Date: 		May 14, 2015
+ */
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,7 +20,7 @@ public class MyWriter {
 		// This file is saved into the source folder for this Java Project
 		String myFilePath = groupNumber + ".json";
 		
-		// json is used to create a json object that is spaced nicely
+		// Gson is used to create a json object that is spaced nicely
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 		// Instantiate the writer since we're writing to a JSON file.
