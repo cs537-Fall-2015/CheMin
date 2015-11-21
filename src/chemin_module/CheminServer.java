@@ -3,9 +3,12 @@ package chemin_module;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 import generic.RoverServerRunnable;
+import generic.RoverThreadHandler;
+import json.Constants;
 
 public class CheminServer extends RoverServerRunnable {
 	
@@ -47,7 +50,6 @@ public class CheminServer extends RoverServerRunnable {
 				if(message.equals("power_off")) {
 					
 					process.isExit = true;
-					@SuppressWarnings("resource")
 					Socket socket = new Socket("localhost",9013);
 					ObjectOutputStream outstr = null;
 					try {

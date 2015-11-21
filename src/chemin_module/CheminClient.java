@@ -13,7 +13,6 @@ import json.GlobalReader;
 
 public class CheminClient extends RoverClientRunnable {
 
-	@SuppressWarnings("unused")
 	private String message_to_send = null;
 
 	public CheminClient(int port, InetAddress host) throws UnknownHostException {
