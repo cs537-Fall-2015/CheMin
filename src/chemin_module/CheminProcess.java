@@ -20,8 +20,6 @@ import javax.imageio.ImageIO;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import com.sun.xml.internal.ws.resources.SoapMessages;
-
 import generic.RoverServerRunnable;
 import generic.RoverThreadHandler;
 import javafx.embed.swing.JFXPanel;
