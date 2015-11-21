@@ -3,18 +3,12 @@ package test_client_module;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JRadioButton;
 import java.awt.BorderLayout;
-import javax.swing.JList;
-import javax.security.auth.callback.ChoiceCallback;
-import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -32,11 +26,14 @@ import json.Constants;
 public class TestClientModuleMain {
 
 	private JFrame frmTestClient;
+	protected int flag = 0;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+
+		//int flag = 0;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -62,92 +59,90 @@ public class TestClientModuleMain {
 	private void initialize() {
 		frmTestClient = new JFrame();
 		frmTestClient.setTitle("Test client");
-		frmTestClient.setBounds(100, 100, 497, 363);
+		frmTestClient.setBounds(100, 100, 500, 289);
 		frmTestClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		JComboBox settings_selection = new JComboBox();
-		
 		settings_selection.setModel(new DefaultComboBoxModel(new String[] {"Run full process", "Manual selection"}));
-		frmTestClient.getContentPane().add(settings_selection, BorderLayout.NORTH);
-		
-		JButton send_button = new JButton("Send commands to chemin");
-		
-		frmTestClient.getContentPane().add(send_button, BorderLayout.CENTER);
-		
 		JPanel commands_selection = new JPanel();
-		frmTestClient.getContentPane().add(commands_selection, BorderLayout.WEST);
-		
 		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("sample_receive");
-		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("xray_set_position");
-		
 		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("cell_next");
-		
 		JCheckBox chckbxNewCheckBox_3 = new JCheckBox("cell_clean_current");
-		
 		JCheckBox chckbxNewCheckBox_4 = new JCheckBox("inlet_open");
-		
 		JCheckBox chckbxNewCheckBox_5 = new JCheckBox("inlet_close");
-		
-		JCheckBox chckbxNewCheckBox_6 = new JCheckBox("xray_turn_on");
-		
-		JCheckBox chckbxNewCheckBox_7 = new JCheckBox("analysis_start");
-		
-		JCheckBox chckbxNewCheckBox_8 = new JCheckBox("cdd_create_diffraction_image");
-		
-		JCheckBox chckbxNewCheckBox_9 = new JCheckBox("cdd_create_1d_2t_plot");
-		
-		JCheckBox chckbxNewCheckBox_10 = new JCheckBox("send_results");
-		
 		chckbxNewCheckBox.setEnabled(false);
 		chckbxNewCheckBox_1.setEnabled(false);
 		chckbxNewCheckBox_2.setEnabled(false);
 		chckbxNewCheckBox_3.setEnabled(false);
 		chckbxNewCheckBox_4.setEnabled(false);
 		chckbxNewCheckBox_5.setEnabled(false);
-		chckbxNewCheckBox_6.setEnabled(false);
-		chckbxNewCheckBox_7.setEnabled(false);
-		chckbxNewCheckBox_8.setEnabled(false);
-		chckbxNewCheckBox_9.setEnabled(false);
-		chckbxNewCheckBox_10.setEnabled(false);
-		
 		GroupLayout gl_commands_selection = new GroupLayout(commands_selection);
 		gl_commands_selection.setHorizontalGroup(
-			gl_commands_selection.createParallelGroup(Alignment.LEADING)
+				gl_commands_selection.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_commands_selection.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_commands_selection.createParallelGroup(Alignment.LEADING)
+						.addContainerGap()
+						.addGroup(gl_commands_selection.createParallelGroup(Alignment.LEADING)
+								.addComponent(chckbxNewCheckBox)
+								.addGroup(gl_commands_selection.createParallelGroup(Alignment.LEADING)
+										.addComponent(chckbxNewCheckBox_2)
+										.addComponent(chckbxNewCheckBox_3)
+										.addComponent(chckbxNewCheckBox_4)
+										.addComponent(chckbxNewCheckBox_5)
+										.addComponent(chckbxNewCheckBox_1)))
+						.addContainerGap(177, Short.MAX_VALUE))
+				);
+		gl_commands_selection.setVerticalGroup(
+				gl_commands_selection.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_commands_selection.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(chckbxNewCheckBox)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(chckbxNewCheckBox_1)
+						.addGap(1)
 						.addComponent(chckbxNewCheckBox_2)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(chckbxNewCheckBox_3)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(chckbxNewCheckBox_4)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(chckbxNewCheckBox_5)
+						.addContainerGap(186, Short.MAX_VALUE))
+				);
+		commands_selection.setLayout(gl_commands_selection);
+		
+		JPanel panel_1 = new JPanel();
+		JCheckBox chckbxNewCheckBox_11 = new JCheckBox("power_off");
+		chckbxNewCheckBox_11.setEnabled(false);
+		JCheckBox chckbxNewCheckBox_10 = new JCheckBox("send_results");
+		chckbxNewCheckBox_10.setEnabled(false);
+		JCheckBox chckbxNewCheckBox_9 = new JCheckBox("cdd_create_1d_2t_plot");
+		chckbxNewCheckBox_9.setEnabled(false);
+		JCheckBox chckbxNewCheckBox_8 = new JCheckBox("cdd_create_diffraction_image");
+		chckbxNewCheckBox_8.setEnabled(false);
+		JCheckBox chckbxNewCheckBox_7 = new JCheckBox("analysis_start");
+		chckbxNewCheckBox_7.setEnabled(false);
+		JCheckBox chckbxNewCheckBox_6 = new JCheckBox("xray_turn_on");
+		chckbxNewCheckBox_6.setEnabled(false);
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addComponent(chckbxNewCheckBox_6)
 						.addComponent(chckbxNewCheckBox_7)
 						.addComponent(chckbxNewCheckBox_8)
 						.addComponent(chckbxNewCheckBox_9)
-						.addComponent(chckbxNewCheckBox)
-						.addComponent(chckbxNewCheckBox_1)
-						.addComponent(chckbxNewCheckBox_10))
-					.addContainerGap(121, Short.MAX_VALUE))
+						.addComponent(chckbxNewCheckBox_10)
+						.addComponent(chckbxNewCheckBox_11))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		gl_commands_selection.setVerticalGroup(
-			gl_commands_selection.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_commands_selection.createSequentialGroup()
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(chckbxNewCheckBox)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(chckbxNewCheckBox_1)
-					.addGap(1)
-					.addComponent(chckbxNewCheckBox_2)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(chckbxNewCheckBox_3)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(chckbxNewCheckBox_4)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(chckbxNewCheckBox_5)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(chckbxNewCheckBox_6)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(chckbxNewCheckBox_7)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(chckbxNewCheckBox_8)
@@ -155,45 +150,16 @@ public class TestClientModuleMain {
 					.addComponent(chckbxNewCheckBox_9)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(chckbxNewCheckBox_10)
-					.addContainerGap(17, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(chckbxNewCheckBox_11)
+					.addContainerGap(187, Short.MAX_VALUE))
 		);
-		commands_selection.setLayout(gl_commands_selection);
-		
-		settings_selection.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(settings_selection.getSelectedItem()=="Run full process")
-				{
-					chckbxNewCheckBox.setEnabled(false);
-					chckbxNewCheckBox_1.setEnabled(false);
-					chckbxNewCheckBox_2.setEnabled(false);
-					chckbxNewCheckBox_3.setEnabled(false);
-					chckbxNewCheckBox_4.setEnabled(false);
-					chckbxNewCheckBox_5.setEnabled(false);
-					chckbxNewCheckBox_6.setEnabled(false);
-					chckbxNewCheckBox_7.setEnabled(false);
-					chckbxNewCheckBox_8.setEnabled(false);
-					chckbxNewCheckBox_9.setEnabled(false);
-					chckbxNewCheckBox_10.setEnabled(false);
-					//fill .txt file
-				} else if(settings_selection.getSelectedItem()=="Manual selection")
-				{
-					chckbxNewCheckBox.setEnabled(true);
-					chckbxNewCheckBox_1.setEnabled(true);
-					chckbxNewCheckBox_2.setEnabled(true);
-					chckbxNewCheckBox_3.setEnabled(true);
-					chckbxNewCheckBox_4.setEnabled(true);
-					chckbxNewCheckBox_5.setEnabled(true);
-					chckbxNewCheckBox_6.setEnabled(true);
-					chckbxNewCheckBox_7.setEnabled(true);
-					chckbxNewCheckBox_8.setEnabled(true);
-					chckbxNewCheckBox_9.setEnabled(true);
-					chckbxNewCheckBox_10.setEnabled(true);
-					//fill .txt file
-				}
-			}
-		});
+		panel_1.setLayout(gl_panel_1);
 		
 		
+		JPanel panel = new JPanel();
+		JButton send_button = new JButton("Send commands to chemin");
+		panel.add(send_button);
 		send_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//when send button is pressed, create txt command files and send command file path to chemin
@@ -209,13 +175,11 @@ public class TestClientModuleMain {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				if(settings_selection.getSelectedItem()=="Run full process")
 				{
 					//fill .txt file
 					writer.println("launch_Chemin_Process");
 					writer.close();
-					
 				} else if(settings_selection.getSelectedItem()=="Manual selection")
 				{
 					//fill .txt file
@@ -263,36 +227,174 @@ public class TestClientModuleMain {
 					{
 						writer.println("send_results");
 					}
+					if(chckbxNewCheckBox_11.isSelected())
+					{
+						writer.print("");
+						writer.close();
+						try {
+							writer = new PrintWriter(Constants.ROOT_PATH+command_file_name, "UTF-8");
+						} catch (FileNotFoundException | UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						writer.println("power_off");
+						flag = 1;
+					}
 					writer.close();
 				}
-				try {
-					Socket socket = new Socket("localhost",9010);
-					ObjectOutputStream outstr = new ObjectOutputStream(socket.getOutputStream());
-				
-					outstr.writeObject(Constants.ROOT_PATH+command_file_name);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				Socket socket = null;
+				if(flag == 0) {
+					try {
+
+						socket = new Socket("localhost",9010);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					ObjectOutputStream outstr = null;
+					try {
+						outstr = new ObjectOutputStream(socket.getOutputStream());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+
+						outstr.writeObject(Constants.ROOT_PATH+command_file_name);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				} else {
+
+					try {
+
+
+						flag = 0;
+						socket = new Socket("localhost",9008);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					ObjectOutputStream outstr = null;
+					try {
+						outstr = new ObjectOutputStream(socket.getOutputStream());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+
+						outstr.writeObject("power_off");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
-				Socket socket=null;
+
+
+
+
+			}});
+		JButton reset_button = new JButton("Reset");
+		panel.add(reset_button);
+		GroupLayout groupLayout = new GroupLayout(frmTestClient.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(settings_selection, GroupLayout.PREFERRED_SIZE, 484, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(commands_selection, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+							.addGap(69)
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 484, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(settings_selection, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(commands_selection, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		);
+		frmTestClient.getContentPane().setLayout(groupLayout);
+
+
+		reset_button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Socket socket = null;
 				try {
+
+
+
 					socket = new Socket("localhost",9008);
-				} catch (IOException ex) {
-				ex.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				ObjectOutputStream outstr=null;
+				ObjectOutputStream outstr = null;
 				try {
 					outstr = new ObjectOutputStream(socket.getOutputStream());
-				} catch (IOException ey) {
-				ey.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 				try {
-					outstr.writeObject(Constants.ROOT_PATH+command_file_name);
-				} catch (IOException ez) {
-				ez.printStackTrace();
+
+					outstr.writeObject("reset");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+
+			}
+		});
+		settings_selection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(settings_selection.getSelectedItem()=="Run full process")
+				{
+					chckbxNewCheckBox.setEnabled(false);
+					chckbxNewCheckBox_1.setEnabled(false);
+					chckbxNewCheckBox_2.setEnabled(false);
+					chckbxNewCheckBox_3.setEnabled(false);
+					chckbxNewCheckBox_4.setEnabled(false);
+					chckbxNewCheckBox_5.setEnabled(false);
+					chckbxNewCheckBox_6.setEnabled(false);
+					chckbxNewCheckBox_7.setEnabled(false);
+					chckbxNewCheckBox_8.setEnabled(false);
+					chckbxNewCheckBox_9.setEnabled(false);
+					chckbxNewCheckBox_10.setEnabled(false);
+					chckbxNewCheckBox_11.setEnabled(false);
+					//fill .txt file
+				} else if(settings_selection.getSelectedItem()=="Manual selection")
+				{
+					chckbxNewCheckBox.setEnabled(true);
+					chckbxNewCheckBox_1.setEnabled(true);
+					chckbxNewCheckBox_2.setEnabled(true);
+					chckbxNewCheckBox_3.setEnabled(true);
+					chckbxNewCheckBox_4.setEnabled(true);
+					chckbxNewCheckBox_5.setEnabled(true);
+					chckbxNewCheckBox_6.setEnabled(true);
+					chckbxNewCheckBox_7.setEnabled(true);
+					chckbxNewCheckBox_8.setEnabled(true);
+					chckbxNewCheckBox_9.setEnabled(true);
+					chckbxNewCheckBox_10.setEnabled(true);
+					chckbxNewCheckBox_11.setEnabled(true);
+					//fill .txt file
 				}
 			}
-			
 		});
+
 	}
 }
+

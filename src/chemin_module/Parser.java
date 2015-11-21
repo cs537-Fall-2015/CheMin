@@ -15,14 +15,15 @@ import json.GlobalReader;
 
 public class Parser extends RoverClientRunnable{
 	private ObjectOutputStream outstr=null;
-
-	public Parser(int internal_chemin_port, InetAddress host) throws UnknownHostException {
+	CheminProcess process = null;
+	public Parser(int internal_chemin_port, InetAddress host, CheminProcess p) throws UnknownHostException {
 		super(internal_chemin_port, host);
 
 		//create socket to connect to cheminProcess
 		Socket socket = null;
 		try {
 			socket = new Socket("localhost",internal_chemin_port);
+			process = p;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -63,6 +64,14 @@ public class Parser extends RoverClientRunnable{
 				System.out.println(" CHEMIN is not turned on ,Yet !");
 			}
 			return 1;
+		
+		case "power_off":
+		
+			System.out.println("turning off power");
+			Thread thread_process_chemin=RoverThreadHandler.getRoverThreadHandler().getNewThread(process);
+			thread_process_chemin.stop();
+			return 1;
+		
 		case "ALL EXTRA COMMANDS SHOULD BE LIKE THAT":
 			if(powerOn) {
 				//send message through socket to cheminProcess
