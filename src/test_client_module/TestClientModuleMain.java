@@ -59,7 +59,7 @@ public class TestClientModuleMain {
 	private void initialize() {
 		frmTestClient = new JFrame();
 		frmTestClient.setTitle("Test client");
-		frmTestClient.setBounds(100, 100, 500, 289);
+		frmTestClient.setBounds(100, 100, 500, 346);
 		frmTestClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JComboBox settings_selection = new JComboBox();
 		settings_selection.setModel(new DefaultComboBoxModel(new String[] {"Run full process", "Manual selection"}));
@@ -70,44 +70,49 @@ public class TestClientModuleMain {
 		JCheckBox chckbxNewCheckBox_3 = new JCheckBox("cell_clean_current");
 		JCheckBox chckbxNewCheckBox_4 = new JCheckBox("inlet_open");
 		JCheckBox chckbxNewCheckBox_5 = new JCheckBox("inlet_close");
+		JCheckBox chckbxFillsamplecell = new JCheckBox("fill_sample_cell");
 		chckbxNewCheckBox.setEnabled(false);
 		chckbxNewCheckBox_1.setEnabled(false);
 		chckbxNewCheckBox_2.setEnabled(false);
 		chckbxNewCheckBox_3.setEnabled(false);
 		chckbxNewCheckBox_4.setEnabled(false);
 		chckbxNewCheckBox_5.setEnabled(false);
+		chckbxFillsamplecell.setEnabled(false);
+		
 		GroupLayout gl_commands_selection = new GroupLayout(commands_selection);
 		gl_commands_selection.setHorizontalGroup(
-				gl_commands_selection.createParallelGroup(Alignment.LEADING)
+			gl_commands_selection.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_commands_selection.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(gl_commands_selection.createParallelGroup(Alignment.LEADING)
-								.addComponent(chckbxNewCheckBox)
-								.addGroup(gl_commands_selection.createParallelGroup(Alignment.LEADING)
-										.addComponent(chckbxNewCheckBox_2)
-										.addComponent(chckbxNewCheckBox_3)
-										.addComponent(chckbxNewCheckBox_4)
-										.addComponent(chckbxNewCheckBox_5)
-										.addComponent(chckbxNewCheckBox_1)))
-						.addContainerGap(177, Short.MAX_VALUE))
-				);
-		gl_commands_selection.setVerticalGroup(
-				gl_commands_selection.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_commands_selection.createSequentialGroup()
-						.addContainerGap()
+					.addContainerGap()
+					.addGroup(gl_commands_selection.createParallelGroup(Alignment.LEADING)
 						.addComponent(chckbxNewCheckBox)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(chckbxNewCheckBox_1)
-						.addGap(1)
 						.addComponent(chckbxNewCheckBox_2)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(chckbxNewCheckBox_3)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(chckbxNewCheckBox_4)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(chckbxNewCheckBox_5)
-						.addContainerGap(186, Short.MAX_VALUE))
-				);
+						.addComponent(chckbxNewCheckBox_1)
+						.addComponent(chckbxFillsamplecell)
+						.addComponent(chckbxNewCheckBox_5))
+					.addContainerGap(81, Short.MAX_VALUE))
+		);
+		gl_commands_selection.setVerticalGroup(
+			gl_commands_selection.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_commands_selection.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(chckbxNewCheckBox)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(chckbxNewCheckBox_1)
+					.addGap(1)
+					.addComponent(chckbxNewCheckBox_2)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(chckbxNewCheckBox_3)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(chckbxNewCheckBox_4)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(chckbxFillsamplecell)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(chckbxNewCheckBox_5)
+					.addContainerGap(22, Short.MAX_VALUE))
+		);
 		commands_selection.setLayout(gl_commands_selection);
 		
 		JPanel panel_1 = new JPanel();
@@ -202,6 +207,10 @@ public class TestClientModuleMain {
 					if(chckbxNewCheckBox_4.isSelected())
 					{
 						writer.println("inlet_open");
+					}
+					if(chckbxFillsamplecell.isSelected())
+					{
+						writer.println("sample_fill");
 					}
 					if(chckbxNewCheckBox_5.isSelected())
 					{
@@ -318,10 +327,11 @@ public class TestClientModuleMain {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(settings_selection, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(commands_selection, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
+						.addComponent(commands_selection, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))
+					.addGap(38)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		frmTestClient.getContentPane().setLayout(groupLayout);
 
@@ -374,6 +384,8 @@ public class TestClientModuleMain {
 					chckbxNewCheckBox_8.setEnabled(false);
 					chckbxNewCheckBox_9.setEnabled(false);
 					chckbxNewCheckBox_10.setEnabled(false);
+					chckbxFillsamplecell.setEnabled(false);
+					
 					chckbxNewCheckBox_11.setEnabled(false);
 					//fill .txt file
 				} else if(settings_selection.getSelectedItem()=="Manual selection")
@@ -390,6 +402,7 @@ public class TestClientModuleMain {
 					chckbxNewCheckBox_9.setEnabled(true);
 					chckbxNewCheckBox_10.setEnabled(true);
 					chckbxNewCheckBox_11.setEnabled(true);
+					chckbxFillsamplecell.setEnabled(true);
 					//fill .txt file
 				}
 			}
