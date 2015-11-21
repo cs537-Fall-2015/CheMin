@@ -1,1 +1,3 @@
-launch_Chemin_Process
+cdd_create_diffraction_image
+cdd_create_1d_2t_plot
+send_results
