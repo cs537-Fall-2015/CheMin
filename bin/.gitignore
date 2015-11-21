@@ -1,3 +1,10 @@
-/test_client_module/
-/resources/
+/.DS_Store
 /chemin_module/
+/generic/
+/json/
+/main/
+/power_module/
+/resources/
+/telecom_module/
+/test_client_module/
+/test_main/
